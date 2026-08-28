@@ -486,8 +486,7 @@ select.val-select{
 /* ===== Portrait ===== */
 .portrait-box{
   width:100%;
-  aspect-ratio:3 / 4;
-  max-height:280px;
+  aspect-ratio:4 / 3;
   border-radius:6px;
   margin-bottom:16px;
   position:relative;
@@ -569,21 +568,27 @@ select.val-select{
 ::selection{background:var(--gold); color:var(--ink);}
 
 /* ===== Print (A4) ===== */
-/* ===== Printable official-style sheet (2 pages, populated only in print) ===== */
+/* ===== Printable official-style sheet — a single flowing document that
+   paginates naturally wherever the content actually runs out, instead of
+   forcing fixed pages (which either leaves large blank areas for short
+   characters or cuts off content for dense ones). The same fixed physical
+   width (190mm) is used on screen (in the preview overlay, zoomed to fit)
+   and on paper, so the preview always matches the printed result. ===== */
 #printSheet{ display:none; }
 @media print {
   @page { size: A4; margin: 9mm; }
   html, body{ background:#fff !important; }
   .app, .preview-overlay{ display:none !important; }
   #printSheet{ display:block !important; }
+  .ps-voies-section{ break-before:page; page-break-before:always; }
 }
-.ps-page{
+.ps-sheet{
   font-family:'EB Garamond', serif;
   color:#241a10;
-  page-break-after:always;
   font-size:9.5px;
+  width:190mm;
+  margin:0 auto;
 }
-.ps-page:last-child{ page-break-after:auto; }
 .ps-titlebar{
   display:flex; align-items:flex-end; justify-content:space-between;
   border-bottom:3px solid #a9852f; padding-bottom:5px; margin-bottom:7px;
@@ -594,11 +599,11 @@ select.val-select{
 .ps-namefield .lab{ display:block; font-family:'Cinzel', serif; font-size:7.5px; letter-spacing:2px; color:#6b5730; text-transform:uppercase; }
 .ps-namefield .val{ font-family:'Cinzel', serif; font-size:17px; font-weight:600; border-bottom:1px solid #a9852f; min-width:230px; padding:1px 4px 3px; }
 
-.ps-cols{ display:flex; gap:9px; align-items:flex-start; margin-top:8px; }
+.ps-cols{ display:flex; gap:9px; align-items:flex-start; margin-top:8px; break-inside:avoid; page-break-inside:avoid; }
 .ps-colA{ flex:0 0 32%; }
 .ps-colB{ flex:1 1 auto; }
 
-.ps-statstrip{ display:flex; gap:5px; margin-top:2px; }
+.ps-statstrip{ display:flex; gap:5px; margin-top:2px; break-inside:avoid; page-break-inside:avoid; }
 .ps-statstrip .ps-sidebox{ flex:1; margin-bottom:0; }
 .ps-microhint{ font-size:6.6px; color:#8a7b5c; text-align:center; margin-top:2px; }
 
@@ -626,7 +631,7 @@ table.ps-carac td.code{ font-family:'Cinzel', serif; font-weight:700; background
 .ps-idfields label{ display:block; font-family:'Cinzel', serif; font-size:7px; letter-spacing:1px; color:#6b5730; text-transform:uppercase; }
 .ps-idfields .v{ font-size:10px; }
 .ps-portrait{
-  width:100%; aspect-ratio:3/4; border:1px solid #c9b989; border-radius:3px;
+  width:100%; aspect-ratio:4/3; border:1px solid #c9b989; border-radius:3px;
   margin-bottom:6px; overflow:hidden; background:#f6efd9;
   display:flex; align-items:center; justify-content:center;
 }
@@ -637,7 +642,7 @@ table.ps-atk{ width:100%; border-collapse:collapse; margin-top:8px; }
 table.ps-atk th{ background:#a9852f; color:#fff; font-family:'Cinzel', serif; font-size:7px; padding:2px; text-transform:uppercase; font-weight:600; }
 table.ps-atk td{ border:1px solid #d8c99a; padding:3px 2px; text-align:center; font-size:9px; }
 
-.ps-voiebox{ border:1px solid #c9b989; }
+.ps-voiebox{ border:1px solid #c9b989; break-inside:avoid; page-break-inside:avoid; }
 .ps-voiehead{ background:#a9852f; color:#fff; display:flex; justify-content:space-between; gap:4px; padding:3px 6px; font-family:'Cinzel', serif; font-size:9px; text-transform:uppercase; }
 .ps-voiehead .vname{ font-weight:400; text-transform:none; opacity:0.95; }
 .ps-rank{ border-bottom:1px solid #d8c99a; padding:3px 6px; min-height:15px; }
@@ -660,7 +665,7 @@ table.ps-armes{ width:100%; border-collapse:collapse; margin-top:9px; }
 table.ps-armes th{ background:#a9852f; color:#fff; font-family:'Cinzel', serif; font-size:7px; padding:3px; text-transform:uppercase; font-weight:600; }
 table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
 
-.ps-equipbox{ border:1px solid #c9b989; margin-top:8px; }
+.ps-equipbox{ border:1px solid #c9b989; margin-top:8px; break-inside:avoid; page-break-inside:avoid; }
 .ps-equipbox .lab{ background:#a9852f; color:#fff; font-family:'Cinzel', serif; font-size:8px; padding:3px 6px; text-transform:uppercase; }
 .ps-equipbox p{ padding:5px 6px; font-size:8.7px; line-height:1.35; margin:0; }
 
@@ -671,7 +676,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
 .ps-histoire-blank{ margin-top:10px; }
 .ps-hline{ border-bottom:1px solid #d8c99a; height:22px; }
 .ps-hline.sm{ height:12px; }
-.ps-langbox{ border:1px solid #c9b989; border-radius:3px; margin-top:6px; padding:5px 6px 6px; }
+.ps-langbox{ border:1px solid #c9b989; border-radius:3px; margin-top:6px; padding:5px 6px 6px; break-inside:avoid; page-break-inside:avoid; }
 .ps-langbox .lab{ font-family:'Cinzel', serif; font-size:7.5px; letter-spacing:1px; color:#8a2a2f; text-transform:uppercase; margin-bottom:2px; }
 .ps-langbox p{ margin:0 0 4px; font-size:7.6px; line-height:1.35; color:#3a2e1c; }
 
@@ -741,54 +746,15 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
 .switch.on{ background:var(--gold); border-color:var(--gold); }
 .switch.on .knob{ left:20px; background:#241a10; }
 
-/* Enlarged, single-column, mobile-legible variant of the .ps-* print rules,
-   used only inside the preview overlay — the actual @media print rules
-   above stay untouched so the real PDF/print output keeps A4 sizing. */
-.preview-mode .ps-page{
+/* The preview overlay no longer uses a divergent mobile layout — it shows
+   the exact same .ps-sheet markup as print, just zoomed (see openPreview())
+   so what you see here always matches what comes out on paper. Only the
+   overlay's own chrome (a card-like frame around the sheet) is styled here. */
+.preview-mode .ps-sheet{
   background:#fdfaf2; color:#241a10;
   padding:16px; border-radius:8px;
-  margin:0 0 18px;
   box-shadow:0 10px 30px rgba(0,0,0,0.5);
-  page-break-after:auto;
-  font-size:13px;
 }
-.preview-mode .ps-titlebar{ padding-bottom:8px; margin-bottom:10px; }
-.preview-mode .ps-logo{ font-size:19px; }
-.preview-mode .ps-logo small{ font-size:9px; }
-.preview-mode .ps-namefield .lab{ font-size:9px; }
-.preview-mode .ps-namefield .val{ font-size:17px; min-width:0; }
-.preview-mode .ps-cols{ flex-direction:column; gap:12px; }
-.preview-mode .ps-colA, .preview-mode .ps-colB{ flex:1 1 auto; width:100%; }
-.preview-mode .ps-statstrip{ flex-wrap:wrap; }
-.preview-mode .ps-statstrip .ps-sidebox{ flex:1 1 28%; }
-.preview-mode .ps-microhint{ font-size:9px; }
-.preview-mode table.ps-carac-h td{ font-size:13px; padding:6px; }
-.preview-mode table.ps-carac-h th{ font-size:9.5px; }
-.preview-mode .ps-boxlabel{ font-size:11px; padding:5px 8px; }
-.preview-mode .ps-line{ padding:5px 2px; }
-.preview-mode .ps-line label{ font-size:9px; }
-.preview-mode .ps-line .v{ font-size:12px; }
-.preview-mode table.ps-carac td, .preview-mode table.ps-atk td, .preview-mode table.ps-armes td{ font-size:12.5px; padding:6px 7px; }
-.preview-mode table.ps-carac th, .preview-mode table.ps-atk th, .preview-mode table.ps-armes th{ font-size:9.5px; padding:5px; }
-.preview-mode .ps-idfields label{ font-size:9px; }
-.preview-mode .ps-idfields .v{ font-size:12.5px; }
-.preview-mode .ps-voiehead{ font-size:12px; padding:5px 8px; }
-.preview-mode .ps-rank{ padding:5px 8px; }
-.preview-mode .ps-rank .rk-head{ font-size:11.5px; }
-.preview-mode .ps-rank .rk-text{ font-size:11px; }
-.preview-mode .ps-sidebox{ padding:8px 5px; }
-.preview-mode .ps-sidebox .lab{ font-size:9px; }
-.preview-mode .ps-sidebox .big{ font-size:23px; }
-.preview-mode .ps-sidebox .note{ font-size:9px; }
-.preview-mode .ps-equipbox .lab{ font-size:11px; padding:5px 8px; }
-.preview-mode .ps-equipbox p{ font-size:12px; padding:8px; }
-.preview-mode .ps-voiegrid{ grid-template-columns:1fr; gap:12px; }
-.preview-mode .ps-foot{ font-size:9px; margin-top:12px; }
-.preview-mode .ps-histoire{ font-size:13px; line-height:1.6; }
-.preview-mode .ps-hline{ height:26px; }
-.preview-mode .ps-hline.sm{ height:16px; }
-.preview-mode .ps-langbox p{ font-size:11px; }
-.preview-mode .ps-langbox .lab{ font-size:10px; }
 /* ===== Lock screen ===== */
 .lock-screen{
   position:fixed; inset:0; z-index:200;
@@ -818,6 +784,30 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
 }
 .lock-error{
   min-height:18px; margin:10px 0 0; font-size:13px; color:var(--wax-bright);
+}
+
+/* ===== Portrait crop overlay ===== */
+.crop-overlay{ display:none; flex-direction:column; }
+.crop-overlay.open{ display:flex; }
+.crop-stage{
+  flex:1 1 auto; display:flex; align-items:center; justify-content:center;
+  overflow:hidden; padding:16px;
+}
+#cropCanvas{
+  touch-action:none; cursor:grab;
+  border:2px solid var(--gold);
+  border-radius:6px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.5);
+  max-width:100%; max-height:100%;
+}
+#cropCanvas:active{ cursor:grabbing; }
+.crop-zoom-row{
+  display:flex; align-items:center; gap:10px;
+  padding:0 20px; flex:0 0 auto;
+}
+.crop-zoom-icon{ color:var(--steel-bright); font-size:16px; flex:0 0 auto; }
+.crop-zoom-row input[type=range]{
+  flex:1 1 auto; accent-color:var(--gold);
 }
 </style>
 </head>
@@ -853,6 +843,26 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
 
 <div id="settingsOverlay" class="preview-overlay settings-overlay">
   <div id="settingsScreen"></div>
+</div>
+
+<div id="cropOverlay" class="preview-overlay crop-overlay">
+  <div class="preview-topbar">
+    <span class="preview-title">✦ Recadrer le portrait</span>
+    <button class="preview-close" data-action="crop-cancel">✕</button>
+  </div>
+  <div class="crop-stage">
+    <canvas id="cropCanvas"></canvas>
+  </div>
+  <div class="crop-zoom-row">
+    <span class="crop-zoom-icon">－</span>
+    <input type="range" id="cropZoom" min="0" max="100" value="0">
+    <span class="crop-zoom-icon">＋</span>
+  </div>
+  <p class="preview-hint" style="padding-top:0;">Faites glisser l'image pour la repositionner, utilisez le curseur pour zoomer.</p>
+  <div class="preview-actions">
+    <button class="btn btn-prev" data-action="crop-cancel" style="flex:0 0 90px;">Annuler</button>
+    <button class="btn btn-next gold" data-action="crop-confirm">✓ Valider le cadrage</button>
+  </div>
 </div>
 
 <script id="cof2-data" type="application/json">{
@@ -5646,6 +5656,7 @@ const GEAR_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const DEFAULT_SETTINGS = {
   peuplesAlternatifs: false,
   methodeAchat: false,
+  ageVariable: false,
 };
 function ensureSettings() {
   if (!state.settings) state.settings = Object.assign({}, DEFAULT_SETTINGS);
@@ -5675,7 +5686,16 @@ function settingsScreenHtml() {
         </div>
         <button class="switch ${state.settings.methodeAchat?'on':''}" data-action="setting-toggle" data-key="methodeAchat" role="switch" aria-checked="${state.settings.methodeAchat}"><span class="knob"></span></button>
       </div>
-      <p class="hint" style="margin-top:6px;">Cette option n'a pas non plus de contenu pour l'instant : ce n'est pas une règle officielle de Chroniques Oubliées Fantasy (le livre ne propose que les trois séries fixes), et le barème de coûts reste à définir. On la complètera plus tard.</p>
+      <p class="hint" style="margin-top:6px;">Une fois activée, l'étape « Caractéristiques » de la création propose de choisir entre les séries fixes et cette méthode par achat de points. Ce n'est pas une règle officielle du livre de base — c'est une variante que vous m'avez fournie.</p>
+
+      <div class="setting-row" style="margin-top:12px;">
+        <div class="setting-info">
+          <div class="setting-name">Âge de départ variable</div>
+          <div class="setting-desc">Le profil technique du personnage varie selon son âge : très jeune, jeune, mûr ou vénérable, déterminé automatiquement par rapport à l'espérance de vie de son peuple.</div>
+        </div>
+        <button class="switch ${state.settings.ageVariable?'on':''}" data-action="setting-toggle" data-key="ageVariable" role="switch" aria-checked="${state.settings.ageVariable}"><span class="knob"></span></button>
+      </div>
+      <p class="hint" style="margin-top:6px;">Une fois activée, la catégorie d'âge et ses effets s'affichent à l'étape « Peuple », sous le champ Âge. Comme pour la méthode par achat, ce n'est pas une règle du livre de base — c'est une variante que vous m'avez fournie.</p>
     </div>
   `;
 }
@@ -5690,6 +5710,7 @@ let state = {
   langueSlotIsTalent: [], // parallel array: true if that slot is in "talent secondaire" mode
   ideal: '', travers: '', secret: '', // chosen (or randomly rolled) from the d20 tables
   age: '', taille: '', poids: '', // physical traits, chosen within the peuple's range at step "Peuple"
+  ageBonusChoice: null, // 'PC' | 'DR' — only relevant for the "très jeune" age category
   savedId: null, // id of the localStorage save slot this character is tied to, once saved
   niveau: 1,
   peupleRank: null, // lazily initialised by ensureProgression()
@@ -5714,6 +5735,8 @@ let state = {
   peupleIdx: null,
   serie: null, // 'Polyvalent' | 'Expert' | 'Spécialiste'
   assign: {}, // code -> base value
+  methodeCarac: null, // 'serie' | 'achat' — which characteristic method is active for this character
+  caracFaibles: [], // codes marked as "faible" (-1) under the point-buy method, max 2
   peupleChoice: {}, // for +1/-1 choices: {plus: 'PER', minus:'FOR'} etc, or humain: {plus:'INT'}
   demiElfeVoie: null, // 'Humain' | 'Elfe haut' | 'Elfe sylvain'
   voiesChoisies: [], // array of voie objects (2 of them) from profil
@@ -5777,6 +5800,9 @@ function loadSave(id) {
   if (state.age === undefined) state.age = '';
   if (state.taille === undefined) state.taille = '';
   if (state.poids === undefined) state.poids = '';
+  if (state.methodeCarac === undefined) state.methodeCarac = null;
+  if (!state.caracFaibles) state.caracFaibles = [];
+  if (state.ageBonusChoice === undefined) state.ageBonusChoice = null;
 }
 function formatSaveDate(iso) {
   try {
@@ -5790,12 +5816,82 @@ function famille() { return state.familleIdx!=null ? DATA.families[state.famille
 function profil() { return (state.familleIdx!=null && state.profilIdx!=null) ? DATA.families[state.familleIdx].profils[state.profilIdx] : null; }
 function peuple() { return state.peupleIdx!=null ? DATA.peoples[state.peupleIdx] : null; }
 
+// ===== Variable starting age (optional, non-official variant) =====
+// Catégorie déterminée par l'âge choisi vs. l'âge de départ et l'espérance
+// de vie du peuple : très jeune (< âge de départ), jeune (jusqu'à 1/3 de
+// l'espérance de vie), mûr (jusqu'à 2/3), vénérable (au-delà).
+function computeAgeCategory() {
+  if (!state.settings || !state.settings.ageVariable) return null;
+  const pe = peuple();
+  if (!pe) return null;
+  const ageR = peupleAgeRange(pe);
+  const esp = parseRange(pe.esperance_vie).min;
+  const age = Number(state.age);
+  if (!age || ageR.min == null || esp == null) return null;
+  if (age < ageR.min) return 'tresJeune';
+  if (age <= esp/3) return 'jeune';
+  if (age <= esp*2/3) return 'mur';
+  return 'venerable';
+}
+const AGE_CATEGORY_LABELS = {
+  tresJeune: 'Très jeune', jeune: 'Jeune', mur: 'Mûr', venerable: 'Vénérable',
+};
+function ageCaracDelta(code) {
+  const cat = computeAgeCategory();
+  if (cat === 'tresJeune' && code === 'INT') return -1;
+  if (cat === 'mur' && code === 'AGI') return -1;
+  if (cat === 'venerable' && (code === 'AGI' || code === 'CON')) return -1;
+  return 0;
+}
+function ageCapacityBonus() {
+  const cat = computeAgeCategory();
+  if (cat === 'mur') return 2;
+  if (cat === 'venerable') return 4;
+  return 0;
+}
+// The extra rank a Mûr/Vénérable character may reach right at creation
+// (niveau 1), bypassing the normal level-gate for that one rank only.
+function ageRankCapAtCreation() {
+  const cat = computeAgeCategory();
+  if (cat === 'venerable') return 3;
+  if (cat === 'mur') return 2;
+  return 1;
+}
+function ageBonusIsPC() { return computeAgeCategory()==='tresJeune' && state.ageBonusChoice==='PC'; }
+function ageBonusIsDR() { return computeAgeCategory()==='tresJeune' && state.ageBonusChoice==='DR'; }
+
+// A compact reminder of whatever the variable-starting-age variant is
+// currently granting/costing this character — reused wherever it's useful
+// to recall (modificateur de peuple, progression) without repeating the
+// full explanation shown at the Peuple step itself.
+function ageAdjustmentsReminderHtml() {
+  if (!state.settings || !state.settings.ageVariable) return '';
+  const cat = computeAgeCategory();
+  if (!cat || cat === 'jeune') return '';
+  const parts = [];
+  if (cat === 'tresJeune') {
+    parts.push('−1 INT');
+    parts.push(state.ageBonusChoice
+      ? `+1 ${state.ageBonusChoice === 'PC' ? 'Point de chance' : 'Dé de récupération'}`
+      : `choix +1 PC ou +1 DR à faire à l'étape Peuple`);
+  } else if (cat === 'mur') {
+    parts.push('−1 AGI', '+2 points de capacité à la création (rang 2 max)');
+  } else if (cat === 'venerable') {
+    parts.push('−1 AGI', '−1 CON', '+4 points de capacité à la création (rang 3 max)');
+  }
+  return `<div class="dcard" style="margin-bottom:14px;">
+    <div class="dcard-title">Ajustements liés à l'âge — ${AGE_CATEGORY_LABELS[cat]}</div>
+    <p class="hint" style="margin:0;">${parts.join(' · ')}</p>
+  </div>`;
+}
+
 function finalCaracValue(code) {
   let v = state.assign[code];
   if (v === undefined) return null;
   const pc = state.peupleChoice;
   if (pc.plus === code) v += 1;
   if (pc.minus === code) v -= 1;
+  v += ageCaracDelta(code);
   return v;
 }
 
@@ -5964,6 +6060,7 @@ function step3_peuple() {
   if (state.peupleIdx !== null) {
     const pe = peuple();
     const ageR = peupleAgeRange(pe), tR = peupleTailleRange(pe), pR = peuplePoidsRange(pe);
+    const ageVar = state.settings && state.settings.ageVariable;
     physique = `
       <div class="section-div">Apparence physique</div>
       <p class="hint">Fourchettes typiques pour un(e) ${pe.nom} — libre à vous de sortir un peu du cadre.</p>
@@ -5972,9 +6069,10 @@ function step3_peuple() {
           <div class="carac-id"><span class="carac-name">Âge (ans)</span></div>
           <input class="name-input" style="margin:0; width:110px; text-align:right;" type="number"
             data-action-input="age" value="${state.age}"
-            min="${ageR.min ?? ''}" step="1" placeholder="${ageR.min ?? ''}+">
+            ${ageVar ? '' : `min="${ageR.min ?? ''}"`} step="1" placeholder="${ageR.min ?? ''}+">
         </div>
         <div class="hint" style="margin-top:-6px;">À partir de ${pe.age_depart} · espérance de vie moyenne : ${pe.esperance_vie}</div>
+        ${ageVar ? ageCategoryBoxHtml() : ''}
         <div class="carac-row">
           <div class="carac-id"><span class="carac-name">Taille (m)</span></div>
           <input class="name-input" style="margin:0; width:110px; text-align:right;" type="number"
@@ -6000,6 +6098,31 @@ function step3_peuple() {
     ${physique}`;
 }
 
+function ageCategoryBoxHtml() {
+  const cat = computeAgeCategory();
+  if (!cat) {
+    return `<div class="warn" style="margin:4px 0 8px;">Renseignez un âge pour déterminer la catégorie d'âge.</div>`;
+  }
+  const effects = {
+    tresJeune: `−1 INT, et au choix +1 Point de Chance ou +1 Dé de Récupération.`,
+    jeune: `Aucune modification.`,
+    mur: `+2 points de capacité disponibles dès la création (rang 2 max), −1 AGI.`,
+    venerable: `+4 points de capacité disponibles dès la création (rang 3 max), −1 AGI et −1 CON.`,
+  };
+  let choiceHtml = '';
+  if (cat === 'tresJeune') {
+    choiceHtml = `<div class="choice-btns" style="margin-top:6px;">
+      <button class="chip ${state.ageBonusChoice==='PC'?'on':''}" data-action="age-bonus-choice" data-choice="PC">+1 Point de chance</button>
+      <button class="chip ${state.ageBonusChoice==='DR'?'on':''}" data-action="age-bonus-choice" data-choice="DR">+1 Dé de récupération</button>
+    </div>`;
+  }
+  return `<div class="dcard" style="margin:4px 0 8px;">
+    <div class="dcard-title">Catégorie d'âge : ${AGE_CATEGORY_LABELS[cat]}</div>
+    <p class="hint" style="margin:0;">${effects[cat]}</p>
+    ${choiceHtml}
+  </div>`;
+}
+
 function shuffle(arr) {
   const a = arr.slice();
   for (let i = a.length - 1; i > 0; i--) {
@@ -6022,8 +6145,44 @@ function randomizeAssign() {
   state.assign = assign;
 }
 
+// ===== Point-buy characteristic method (optional, non-official variant —
+// only offered when enabled in Réglages) =====
+const ACHAT_COST = {0:0, 1:1, 2:2, 3:4, 4:6};
+const ACHAT_BUDGET_BASE = 7;
+function achatBudget() { return ACHAT_BUDGET_BASE + state.caracFaibles.length; }
+function achatSpent() {
+  let spent = 0;
+  CARAC_ORDER.forEach(c => {
+    if (state.caracFaibles.includes(c)) return; // faibles are fixed at -1, free
+    const v = state.assign[c] || 0;
+    spent += ACHAT_COST[v] || 0;
+  });
+  return spent;
+}
+function achatAvailableValues(code) {
+  const current = state.assign[code] || 0;
+  const budget = achatBudget();
+  const spentOthers = achatSpent() - (ACHAT_COST[current] || 0);
+  return [0,1,2,3,4].filter(v => spentOthers + ACHAT_COST[v] <= budget);
+}
+
 function step4_caracteristiques() {
   const p = profil();
+  const achatEnabled = state.settings && state.settings.methodeAchat;
+
+  const methodSwitcher = achatEnabled ? `
+    <div class="choice-btns" style="margin-bottom:10px;">
+      <button class="chip ${state.methodeCarac!=='achat'?'on':''}" data-action="methode-carac" data-methode="serie">Séries fixes</button>
+      <button class="chip ${state.methodeCarac==='achat'?'on':''}" data-action="methode-carac" data-methode="achat">Achat de points</button>
+    </div>` : '';
+
+  if (achatEnabled && state.methodeCarac === 'achat') {
+    return step4_achat(p, methodSwitcher);
+  }
+  return step4_serie(p, methodSwitcher);
+}
+
+function step4_serie(p, methodSwitcher) {
   const series = DATA.caracteristiques.series;
   const serieBtns = Object.keys(series).map(s => {
     return `<button class="chip ${state.serie===s?'on':''}" data-action="serie" data-serie="${s}">${s} (${series[s].join(', ')})</button>`;
@@ -6049,18 +6208,79 @@ function step4_caracteristiques() {
     }).join('');
   }
 
-  const usedCounts = countUsed();
-  const totalVals = state.serie ? series[state.serie] : [];
-  const remaining = state.serie ? remainingValues() : [];
-
   return `<div class="eyebrow">${p.nom}</div>
     <h1 class="scene-title">Répartir les caractéristiques</h1>
     <p class="lede">Choisissez une série de valeurs, puis répartissez-la entre les sept caractéristiques. ★ = caractéristiques associées au profil.</p>
+    ${methodSwitcher}
     <div class="choice-btns">${serieBtns}</div>
     ${state.serie ? `<div class="choice-btns" style="margin-top:8px;">
       <button class="chip" data-action="randomize">🎲 Répartition aléatoire (priorise ${p.carac_cles.join(', ')})</button>
     </div>` : ''}
     ${state.serie ? `<div class="hint" id="remainingHint">${remainingHintText()}</div><div class="carac-grid">${rows}</div>` : ''}
+  `;
+}
+
+function step4_achat(p, methodSwitcher) {
+  // Every non-faible characteristic defaults to 0 (the point-buy baseline)
+  // and every faible one is fixed at -1 — set these explicitly so
+  // finalCaracValue() always has a real number to read, even for rows the
+  // player never touches.
+  CARAC_ORDER.forEach(c => {
+    if (state.caracFaibles.includes(c)) state.assign[c] = -1;
+    else if (state.assign[c] === undefined) state.assign[c] = 0;
+  });
+
+  const budget = achatBudget();
+  const spent = achatSpent();
+  const remaining = budget - spent;
+
+  const faibleBtns = CARAC_ORDER.map(code => {
+    const on = state.caracFaibles.includes(code);
+    const disabled = !on && state.caracFaibles.length >= 2;
+    return `<button class="chip ${on?'on':''}" ${disabled?'disabled':''} data-action="carac-faible-toggle" data-code="${code}">${code} −1</button>`;
+  }).join('');
+
+  const rows = CARAC_ORDER.map(code => {
+    const isKey = p.carac_cles.includes(code);
+    const isFaible = state.caracFaibles.includes(code);
+    if (isFaible) {
+      return `<div class="carac-row ${isKey?'key':''}" style="opacity:0.75;">
+        <div class="carac-id">
+          <span class="carac-code">${code}${isKey?' ★':''}</span>
+          <span class="carac-name">${CARAC_NOMS[code]} — caractéristique faible</span>
+        </div>
+        <span class="final-val">−1</span>
+      </div>`;
+    }
+    const current = state.assign[code] || 0;
+    const vals = achatAvailableValues(code);
+    const options = vals.map(v => `<option value="${v}" ${current===v?'selected':''}>${v>0?'+':''}${v} (${ACHAT_COST[v]} pt${ACHAT_COST[v]>1?'s':''})</option>`).join('');
+    return `<div class="carac-row ${isKey?'key':''}">
+      <div class="carac-id">
+        <span class="carac-code">${code}${isKey?' ★':''}</span>
+        <span class="carac-name">${CARAC_NOMS[code]}</span>
+      </div>
+      <select class="val-select" data-action="assign-achat" data-code="${code}">
+        ${options}
+      </select>
+    </div>`;
+  }).join('');
+
+  return `<div class="eyebrow">${p.nom}</div>
+    <h1 class="scene-title">Répartir les caractéristiques</h1>
+    <p class="lede">Toutes les caractéristiques démarrent à 0. Achetez des valeurs plus élevées selon le barème (+1 : 1 pt, +2 : 2 pts, +3 : 4 pts, +4 : 6 pts) pour un total de 7 points. ★ = caractéristiques associées au profil.</p>
+    ${methodSwitcher}
+
+    <div class="eyebrow">Caractéristiques marquées (optionnel)</div>
+    <p class="hint">Jusqu'à deux caractéristiques peuvent être rendues faibles (−1 chacune), en échange d'+1 point de budget par caractéristique faible.</p>
+    <div class="choice-btns">${faibleBtns}</div>
+
+    <div class="level-stepper" style="margin-top:14px;">
+      <div class="stepper-points" style="flex:1; align-items:center;"><span class="n">${remaining}</span><span class="lbl">Points restants (sur ${budget})</span></div>
+    </div>
+    ${remaining<0 ? `<div class="warn">Budget dépassé — réduisez une valeur.</div>` : ''}
+
+    <div class="carac-grid" style="margin-top:10px;">${rows}</div>
   `;
 }
 
@@ -6118,6 +6338,7 @@ function step5_modpeuple() {
   }
   return `<div class="eyebrow">${pe.nom}</div>
     <h1 class="scene-title">Modificateur de peuple</h1>
+    ${ageAdjustmentsReminderHtml()}
     ${body}
     <div class="section-div">Récapitulatif</div>
     <div class="carac-grid">${CARAC_ORDER.map(code=>{
@@ -6276,7 +6497,7 @@ const PRESTIGE_FAMILY_KEY = {
   'Famille des mystiques': 'Mystique',
 };
 function rankCost(rank) { return rank <= 2 ? 1 : 2; }
-function capacityPointsTotal(niveau) { return 2 * Math.max(0, niveau - 1); }
+function capacityPointsTotal(niveau) { return 2 * Math.max(0, niveau - 1) + (niveau === 1 ? ageCapacityBonus() : 0); }
 
 // Lazily initialise the progression-tracking part of state from the
 // creation-time choices, the first time it's needed (e.g. on reaching the
@@ -6353,11 +6574,16 @@ function remainingPoints() { return capacityPointsTotal(state.niveau) - pointsSp
 function canAcquire(nextRank, isOpeningNewVoie, isPrestige) {
   const maxRank = isPrestige ? 8 : 5;
   if (nextRank > maxRank) return {ok:false, reason:'Rang maximum atteint pour cette voie.'};
-  if (isOpeningNewVoie && state.niveau < (isPrestige ? 5 : 2)) {
+  // A Mûr/Vénérable character (variable starting age variant) can reach a
+  // higher rank right at creation, bypassing the normal level-gate for
+  // that rank only — everything past that still follows the usual rules.
+  const ageCap = (state.niveau === 1 && !isPrestige) ? ageRankCapAtCreation() : 0;
+  const withinAgeCap = nextRank <= ageCap;
+  if (isOpeningNewVoie && state.niveau < (isPrestige ? 5 : 2) && !withinAgeCap) {
     return {ok:false, reason: isPrestige ? 'Voie de prestige possible dès le niveau 5.' : 'Ouverture de nouvelle voie possible dès le niveau 2.'};
   }
   const reqLevel = isPrestige ? PRESTIGE_RANK_LEVEL_REQ[nextRank] : RANK_LEVEL_REQ[nextRank];
-  if (state.niveau < reqLevel) return {ok:false, reason:`Niveau ${reqLevel} requis.`};
+  if (state.niveau < reqLevel && !withinAgeCap) return {ok:false, reason:`Niveau ${reqLevel} requis.`};
   const cost = rankCost(nextRank);
   const remaining = remainingPoints();
   if (cost > remaining) return {ok:false, reason:`${cost} point(s) de capacité requis (${remaining} disponible${remaining>1?'s':''}).`};
@@ -6380,8 +6606,8 @@ function computeSheet() {
   // Level 1 baseline is 2× the family base + CON; each level beyond that
   // adds (family base + CON), per "Progression & niveau".
   const pv = (2*pvBase + CON) + (niveau - 1) * (pvBase + CON);
-  const drCount = (fam.stats.dr_bonus ? 3 : 2) + CON;
-  const pc = 2 + CHA + (fam.stats.pc_bonus || 0);
+  const drCount = (fam.stats.dr_bonus ? 3 : 2) + CON + (ageBonusIsDR() ? 1 : 0);
+  const pc = 2 + CHA + (fam.stats.pc_bonus || 0) + (ageBonusIsPC() ? 1 : 0);
   const initiative = 10 + PER;
   const def = 10 + AGI;
   // Attack values start at +1 and gain +1 per level, capping at level 10.
@@ -6607,6 +6833,7 @@ function progressionSectionHtml(s) {
       <div class="stepper-points"><span class="n">${remaining}</span><span class="lbl">Pts de capacité restants (sur ${total})</span></div>
     </div>
     ${remaining<0 ? `<div class="warn">Vous avez dépensé plus de points que ce niveau n'en accorde — retirez un rang ou remontez de niveau.</div>` : ''}
+    ${ageAdjustmentsReminderHtml()}
   `;
 
   // Voie de peuple (or Voie du Mage, or both if the mage bonus replaced it)
@@ -6849,17 +7076,118 @@ function renderSettingsScreen() {
   });
 }
 
+// ===== Portrait crop =====
+const CROP_W = 400, CROP_H = 300; // on-screen crop canvas — matches the 4:3 portrait box used everywhere (app + fiche)
+let cropState = null; // {img, zoom, minZoom, maxZoom, offsetX, offsetY} — transient, not saved
+
+function startCrop(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const minZoom = Math.max(CROP_W / img.width, CROP_H / img.height);
+      cropState = {
+        img, zoom: minZoom, minZoom, maxZoom: minZoom * 4,
+        offsetX: (CROP_W - img.width * minZoom) / 2,
+        offsetY: (CROP_H - img.height * minZoom) / 2,
+      };
+      const zoomInput = document.getElementById('cropZoom');
+      if (zoomInput) zoomInput.value = 0;
+      drawCrop();
+      const overlay = document.getElementById('cropOverlay');
+      if (overlay) overlay.classList.add('open');
+    };
+    img.src = reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function clampCropOffset() {
+  if (!cropState) return;
+  const { img, zoom } = cropState;
+  const w = img.width * zoom, h = img.height * zoom;
+  cropState.offsetX = Math.min(0, Math.max(CROP_W - w, cropState.offsetX));
+  cropState.offsetY = Math.min(0, Math.max(CROP_H - h, cropState.offsetY));
+}
+
+function drawCrop() {
+  const canvas = document.getElementById('cropCanvas');
+  if (!canvas || !cropState) return;
+  canvas.width = CROP_W;
+  canvas.height = CROP_H;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, CROP_W, CROP_H);
+  const { img, zoom, offsetX, offsetY } = cropState;
+  ctx.drawImage(img, offsetX, offsetY, img.width * zoom, img.height * zoom);
+}
+
+function closeCropModal() {
+  const overlay = document.getElementById('cropOverlay');
+  if (overlay) overlay.classList.remove('open');
+  cropState = null;
+}
+
+function confirmCrop() {
+  if (!cropState) { closeCropModal(); return; }
+  // Render the final crop at a higher resolution than the on-screen canvas
+  // for print quality, at the same 3:4 aspect ratio.
+  const OUT_W = 640, OUT_H = 480;
+  const scaleFactor = OUT_W / CROP_W;
+  const out = document.createElement('canvas');
+  out.width = OUT_W; out.height = OUT_H;
+  const octx = out.getContext('2d');
+  const { img, zoom, offsetX, offsetY } = cropState;
+  octx.drawImage(img, offsetX * scaleFactor, offsetY * scaleFactor, img.width * zoom * scaleFactor, img.height * zoom * scaleFactor);
+  state.portrait = out.toDataURL('image/jpeg', 0.9);
+  closeCropModal();
+  render();
+}
+
 function openPreview() {
   renderPrintSheet();
   const src = document.getElementById('printSheet');
   const dst = document.getElementById('previewScroll');
-  if (src && dst) dst.innerHTML = src.innerHTML;
   const overlay = document.getElementById('previewOverlay');
-  if (overlay) overlay.classList.add('open');
+  if (overlay) overlay.classList.add('open'); // must be visible before measuring below
+  // The sheet is shown at true scale (matching print exactly), which reads
+  // small on a phone — temporarily allow pinch-zoom (normally locked) so
+  // the person can zoom in on any part of it.
+  const vp = document.querySelector('meta[name="viewport"]');
+  if (vp) { vp.dataset.prevContent = vp.getAttribute('content'); vp.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=4.0'); }
+  if (src && dst) {
+    dst.innerHTML = src.innerHTML;
+    // Show the exact same document that will print — just scaled to fit
+    // the screen — instead of a separate mobile layout, so the preview is
+    // always trustworthy. .ps-sheet has a fixed 190mm design width in both
+    // contexts; here we scale that down (or up) to the available space
+    // using transform (not the legacy `zoom` property, which doesn't
+    // reliably reserve/clip space for its scaled content in a scroll
+    // container) and wrap it in a box sized to match the scaled result so
+    // the scroll area sizes correctly.
+    const sheet = dst.querySelector('.ps-sheet');
+    if (sheet) {
+      const DESIGN_WIDTH_PX = 718; // 190mm at the CSS-standard 96dpi reference
+      const available = dst.clientWidth - 16; // minus the overlay's own padding
+      const scale = Math.max(0.35, Math.min(1.4, available / DESIGN_WIDTH_PX));
+      sheet.style.width = DESIGN_WIDTH_PX + 'px';
+      const naturalHeight = sheet.scrollHeight;
+      sheet.style.transformOrigin = 'top left';
+      sheet.style.transform = `scale(${scale})`;
+      const wrapper = document.createElement('div');
+      wrapper.style.width = Math.round(DESIGN_WIDTH_PX * scale) + 'px';
+      wrapper.style.height = Math.round(naturalHeight * scale) + 'px';
+      wrapper.style.margin = '0 auto';
+      dst.innerHTML = '';
+      wrapper.appendChild(sheet);
+      dst.appendChild(wrapper);
+    }
+  }
 }
 function closePreview() {
   const overlay = document.getElementById('previewOverlay');
   if (overlay) overlay.classList.remove('open');
+  const vp = document.querySelector('meta[name="viewport"]');
+  if (vp && vp.dataset.prevContent) vp.setAttribute('content', vp.dataset.prevContent);
 }
 
 function renderPrintSheet() {
@@ -6919,7 +7247,7 @@ function renderPrintSheet() {
   const langueList = DATA.langues.liste.slice(0, 6).join(' · ');
 
   container.innerHTML = `
-    <div class="ps-page">
+    <div class="ps-sheet">
       <div class="ps-titlebar">
         <div class="ps-logo">Chroniques Oubliées<small>FANTASY</small></div>
         <div class="ps-namefield"><span class="lab">Nom du personnage</span><span class="val">${state.nom ? escapeHtml(state.nom) : ''}</span></div>
@@ -6980,25 +7308,17 @@ function renderPrintSheet() {
         <div class="lab">Équipement</div>
         <p>${equipText}</p>
       </div>
-      <div class="ps-foot">Fiche générée automatiquement — inspirée du gabarit officiel Chroniques Oubliées Fantasy, Black Book Éditions.</div>
-    </div>
-    <div class="ps-page">
-      <div class="ps-titlebar">
-        <div class="ps-logo">Chroniques Oubliées<small>FANTASY — VOIES</small></div>
-        <div class="ps-namefield"><span class="lab">Personnage</span><span class="val">${state.nom ? escapeHtml(state.nom) : ''}</span></div>
-      </div>
-      <div class="ps-voiegrid">${voieSlots.join('')}</div>
-      <div class="ps-foot">Impression personnelle — cf. Chroniques Oubliées Fantasy, Black Book Éditions.</div>
-    </div>
-    <div class="ps-page">
-      <div class="ps-titlebar">
-        <div class="ps-logo">Chroniques Oubliées<small>FANTASY — HISTORIQUE</small></div>
-        <div class="ps-namefield"><span class="lab">Personnage</span><span class="val">${state.nom ? escapeHtml(state.nom) : ''}</span></div>
-      </div>
-      <div class="ps-boxlabel">Description &amp; historique</div>
+
+      <div class="ps-boxlabel" style="margin-top:12px;">Description &amp; historique</div>
       <div class="ps-histoire">${histoireHtml(state.histoire)}</div>
       ${state.secret ? `<div class="ps-langbox" style="margin-top:10px;"><div class="lab">Secret intime</div><p>${escapeHtml(state.secret)}</p></div>` : ''}
-      <div class="ps-foot">Impression personnelle — cf. Chroniques Oubliées Fantasy, Black Book Éditions.</div>
+
+      <div class="ps-voies-section">
+        <div class="ps-boxlabel">Voies</div>
+        <div class="ps-voiegrid">${voieSlots.join('')}</div>
+      </div>
+
+      <div class="ps-foot">Fiche générée automatiquement — inspirée du gabarit officiel Chroniques Oubliées Fantasy, Black Book Éditions.</div>
     </div>
   `;
 }
@@ -7006,9 +7326,12 @@ function renderPrintSheet() {
 function histoireHtml(text) {
   const t = (text || '').trim();
   if (!t) {
-    // Nothing written yet: print ruled lines so the sheet stays usable by hand.
+    // Nothing written yet: print a modest number of ruled lines so the
+    // sheet stays usable by hand, without padding the document out with
+    // lines nobody asked for (the flowing layout will already carry
+    // whatever's left of the last page down to here).
     let lines = '';
-    for (let i=0;i<24;i++) lines += `<div class="ps-hline"></div>`;
+    for (let i=0;i<10;i++) lines += `<div class="ps-hline"></div>`;
     return `<div class="ps-histoire-blank">${lines}</div>`;
   }
   return t.split(/\n+/).map(para => `<p>${escapeHtml(para)}</p>`).join('');
@@ -7044,6 +7367,9 @@ function validateStep(step) {
     case 2: return state.profilIdx !== null;
     case 3: return state.peupleIdx !== null;
     case 4: {
+      if (state.settings && state.settings.methodeAchat && state.methodeCarac === 'achat') {
+        return achatSpent() <= achatBudget();
+      }
       if (!state.serie) return false;
       return CARAC_ORDER.every(c => state.assign[c] !== undefined);
     }
@@ -7112,6 +7438,12 @@ function bindEvents() {
     const el = document.querySelector(`[data-action-input="${key}"]`);
     if (el) el.addEventListener('input', e => { state[key] = e.target.value; });
   });
+  // The age category box (variable starting age variant) depends on the
+  // typed age, so re-render once the person finishes editing it (blur / the
+  // number input's up-down arrows) rather than on every keystroke, which
+  // would steal focus mid-typing like the other text fields.
+  const ageEl = document.querySelector('[data-action-input="age"]');
+  if (ageEl) ageEl.addEventListener('change', () => render());
 
   // Generic click handling for every actionable element EXCEPT <select> — a
   // <select> must only react to 'change', otherwise the click that opens its
@@ -7133,6 +7465,12 @@ function bindEvents() {
       // what's actually still available (see availableValuesForRow), so a
       // simple assignment is always valid.
       if (val === undefined) delete state.assign[code]; else state.assign[code] = val;
+      render();
+    });
+  });
+  document.querySelectorAll('select[data-action="assign-achat"]').forEach(el => {
+    el.addEventListener('change', e => {
+      state.assign[e.target.dataset.code] = Number(e.target.value);
       render();
     });
   });
@@ -7173,6 +7511,7 @@ function onAction(e) {
       state.age = ageR.min != null ? ageR.min : '';
       state.taille = (tR.min != null && tR.max != null) ? Math.round((tR.min + tR.max) / 2 * 100) / 100 : '';
       state.poids = (pR.min != null && pR.max != null) ? Math.round((pR.min + pR.max) / 2) : '';
+      state.ageBonusChoice = null;
       break;
     }
     case 'serie':
@@ -7181,6 +7520,26 @@ function onAction(e) {
       break;
     case 'randomize':
       randomizeAssign();
+      break;
+    case 'methode-carac':
+      state.methodeCarac = el.dataset.methode;
+      state.assign = {};
+      state.caracFaibles = [];
+      state.serie = null;
+      break;
+    case 'carac-faible-toggle': {
+      const code = el.dataset.code;
+      const idx = state.caracFaibles.indexOf(code);
+      if (idx > -1) {
+        state.caracFaibles.splice(idx, 1);
+        delete state.assign[code]; // back to the point-buy default (0) on next render
+      } else if (state.caracFaibles.length < 2) {
+        state.caracFaibles.push(code);
+      }
+      break;
+    }
+    case 'age-bonus-choice':
+      state.ageBonusChoice = el.dataset.choice;
       break;
     case 'pmplus':
       state.peupleChoice.plus = el.dataset.code;
@@ -7225,7 +7584,7 @@ function onAction(e) {
       break;
     case 'restart': {
       const keepSettings = state.settings; // app-wide preference, survives creating a new hero
-      state = {step:0, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
+      state = {step:0, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', ageBonusChoice:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
       window.scrollTo(0,0);
       break;
     }
@@ -7422,6 +7781,12 @@ function onAction(e) {
       renderSettingsScreen();
       return;
     }
+    case 'crop-cancel':
+      closeCropModal();
+      return;
+    case 'crop-confirm':
+      confirmCrop();
+      return;
   }
   render();
 }
@@ -7500,16 +7865,53 @@ function initApp() {
     input.addEventListener('change', e => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        state.portrait = reader.result;
-        render();
-      };
-      reader.readAsDataURL(file);
+      startCrop(file);
       input.value = ''; // allow re-selecting the same file later
     });
   }
   bindPortraitInput();
+
+  function bindCropOverlay() {
+    document.querySelectorAll('#cropOverlay [data-action]').forEach(el => {
+      el.addEventListener('click', onAction);
+    });
+    const canvas = document.getElementById('cropCanvas');
+    const zoomInput = document.getElementById('cropZoom');
+    if (canvas) {
+      let dragging = false, lastX = 0, lastY = 0;
+      const start = (x,y) => { dragging = true; lastX = x; lastY = y; };
+      const move = (x,y) => {
+        if (!dragging || !cropState) return;
+        cropState.offsetX += (x - lastX);
+        cropState.offsetY += (y - lastY);
+        lastX = x; lastY = y;
+        clampCropOffset();
+        drawCrop();
+      };
+      const end = () => { dragging = false; };
+      canvas.addEventListener('pointerdown', e => { start(e.clientX, e.clientY); canvas.setPointerCapture(e.pointerId); });
+      canvas.addEventListener('pointermove', e => move(e.clientX, e.clientY));
+      canvas.addEventListener('pointerup', end);
+      canvas.addEventListener('pointercancel', end);
+    }
+    if (zoomInput) {
+      zoomInput.addEventListener('input', e => {
+        if (!cropState) return;
+        const t = Number(e.target.value) / 100;
+        const newZoom = cropState.minZoom + t * (cropState.maxZoom - cropState.minZoom);
+        // keep the crop frame's centre point stable while the slider changes the zoom
+        const cx = CROP_W/2, cy = CROP_H/2;
+        const imgX = (cx - cropState.offsetX) / cropState.zoom;
+        const imgY = (cy - cropState.offsetY) / cropState.zoom;
+        cropState.zoom = newZoom;
+        cropState.offsetX = cx - imgX*newZoom;
+        cropState.offsetY = cy - imgY*newZoom;
+        clampCropOffset();
+        drawCrop();
+      });
+    }
+  }
+  bindCropOverlay();
 }
 
 bootLock();

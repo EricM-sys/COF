@@ -286,6 +286,42 @@ select.val-select{
   font-weight:700;
 }
 
+/* Deity picker (prêtre spécialiste) — a scannable list showing the domain
+   under each name, rather than compact chips, since the domain is what
+   actually helps the player choose. */
+.deity-list{ display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-top:8px; }
+
+/* Marker shown wherever an activated Réglages option is shaping the
+   current screen (alternative peuple, point-buy method, variable age…). */
+.setting-badge{
+  display:inline-block;
+  font-family:'Cinzel', serif; font-size:9px; letter-spacing:0.5px; text-transform:uppercase;
+  padding:2px 8px; border-radius:10px;
+  background:rgba(112,137,163,0.18); border:1px solid rgba(112,137,163,0.55);
+  color:var(--steel-bright);
+  vertical-align:middle;
+}
+.deity-row{
+  display:flex; flex-direction:column; align-items:flex-start; gap:1px;
+  text-align:left; width:100%;
+  padding:9px 14px;
+  border-radius:8px;
+  border:1.5px solid var(--steel-bright);
+  background:transparent;
+  cursor:pointer;
+}
+.deity-row .deity-nom{
+  font-family:'Cinzel', serif; font-size:13px; color:var(--parchment);
+}
+.deity-row .deity-domaine{
+  font-family:'EB Garamond', serif; font-size:12px; color:var(--steel-bright);
+}
+.deity-row.on{
+  background:var(--gold); border-color:var(--gold);
+}
+.deity-row.on .deity-nom{ color:#241a10; font-weight:700; }
+.deity-row.on .deity-domaine{ color:#4a3826; }
+
 /* Voie / rank display */
 .voie-block{margin-top:6px;}
 .rank-item{
@@ -683,6 +719,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
 /* ===== Preview overlay (on-screen mockup before printing) ===== */
 .preview-overlay{
   position:fixed; inset:0; z-index:100;
+  max-width:520px; margin:0 auto;
   background:rgba(8,6,4,0.94);
   display:none;
   flex-direction:column;
@@ -1070,7 +1107,8 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "AGI",
       "INT",
       "CON"
-     ]
+     ],
+     "equipement_choix": []
     },
     {
      "nom": "Barde",
@@ -1239,13 +1277,14 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "CHA",
       "AGI",
       "VOL"
-     ]
+     ],
+     "equipement_choix": []
     },
     {
      "nom": "Rôdeur",
      "description": "Le rôdeur est à l’aise dans les forêts ténébreuses, où il traque les animaux dangereux et les créatures monstrueuses ou, au contraire, se fait l’ami des bêtes et le protecteur des lieux sauvages",
      "armes_armures": "Le rôdeur sait manier les armes de contact à une main et toutes les armes à distance.Les voies de rôdeur limitent l’armure au cuir renforcé et interdisent le port du bouclier.",
-     "equipement_depart": "Épée longue (DM 1d8), arc court et carquois (DM 1d6, portée 30 m) ou une autre arme de contact (épée courte, hachette, lance), dague (DM 1d4), armure de cuir renforcé (DEF +3).",
+     "equipement_depart": "Épée longue (DM 1d8), dague (DM 1d4), armure de cuir renforcé (DEF +3).",
      "voies": [
       {
        "nom": "VOIE DE L’ARCHER",
@@ -1408,6 +1447,17 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "AGI",
       "PER",
       "CON"
+     ],
+     "equipement_choix": [
+      {
+       "label": "Arme secondaire",
+       "options": [
+        "Arc court et carquois (DM 1d6, portée 30 m)",
+        "Une autre arme de contact : épée courte",
+        "Une autre arme de contact : hachette",
+        "Une autre arme de contact : lance"
+       ]
+      }
      ]
     },
     {
@@ -1577,7 +1627,200 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "AGI",
       "INT",
       "CHA"
-     ]
+     ],
+     "equipement_choix": []
+    },
+    {
+     "nom": "Caravanier",
+     "description": "Le caravanier peut être un marchand, un explorateur, un truand, un messager, un diplomate ou tout cela à la fois. C'est un baroudeur au long court qui sait organiser et mener une expédition, se tirer de tous les mauvais pas, le tout sans oublier de se faire de l'argent. Parfois, il est à son propre compte, mais il peut aussi être au service d'une puissante guilde ou même être l'agent sous couverture d'un royaume.",
+     "armes_armures": "Le caravanier sait manier toutes les armes de contact à une main et toutes les armes à distance, ainsi que le bâton ou la lance à deux mains. Les voies de caravanier limitent l'armure à la chemise de mailles et autorisent le port du petit bouclier.",
+     "equipement_depart": "Dague (DM 1d4), une armure de cuir renforcé (DEF +3), un petit bouclier (DEF +1).",
+     "equipement_choix": [
+      {
+       "label": "Arme de contact",
+       "options": [
+        "Épée courte (DM 1d6)",
+        "Marteau (DM 1d6)",
+        "Masse (DM 1d6)"
+       ]
+      },
+      {
+       "label": "Arme à distance",
+       "options": [
+        "Arc court (DM 1d6)",
+        "Arbalète légère (DM 2d4)"
+       ]
+      }
+     ],
+     "accroche": "Un baroudeur qui sait mener une expédition, marchander et se tirer de tous les mauvais pas.",
+     "carac_cles": [
+      "CHA",
+      "AGI",
+      "CON"
+     ],
+     "voies": [
+      {
+       "nom": "VOIE DU BAROUDEUR",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Infatigable",
+         "texte": "Le caravanier ajoute son rang + 2 aux tests de survie et pour résister aux conditions extrêmes (fatigue, chaleur, froid, soif, etc.) rencontrées en voyage. De plus, il gagne 1 PV par rang atteint dans cette voie."
+        },
+        {
+         "rang": 2,
+         "titre": "Réflexes du héros",
+         "texte": "Le caravanier ajoute son rang + 2 aux tests de vigilance et pour détecter une embuscade. De plus, il ajoute son CHA en Init (en plus de sa PER)."
+        },
+        {
+         "rang": 3,
+         "titre": "Techniques exotiques",
+         "texte": "Le caravanier a rencontré des tribus ou des civilisations lointaines et leur a emprunté des techniques de combat exotiques. Il obtient un bonus total égal au rang atteint dans cette voie. Il augmente ce capital d'un point supplémentaire chaque fois qu'il atteint le rang 3 dans une autre voie de caravanier. Ce bonus peut être utilisé librement tout au long d'un combat, en étant réparti indifféremment sur un nombre d'actions du choix du joueur, aussi bien en attaque, en DEF qu'aux DM, avant de lancer les dés."
+        },
+        {
+         "rang": 4,
+         "titre": "L'art de la survie",
+         "texte": "Le caravanier reçoit 1 PC et 1 DR supplémentaires. Désormais, une seule fois par combat, il est possible de dépenser 1 PC pour obtenir +10 en DEF contre une attaque (la décision peut être prise après avoir pris de connaissance du résultat du test d'attaque)."
+        },
+        {
+         "rang": 5,
+         "titre": "Talent personnel",
+         "texte": "Choisissez une capacité de rang 4 (ou moins) de n'importe quel profil de combattant ou d'aventurier, ou choisissez une capacité de rang 3 (ou moins) d'un profil de mage ou de mystique. Si le choix se porte sur une capacité de rang 1 ou 2, le caravanier augmente aussi ses PV maximaux de sa valeur de CHA. Si la capacité retenue est un sort, elle est soumise aux limitations d'armure et nécessite l'utilisation de PM (le sort en fait gagner un suivant les règles habituelles)."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DE L'EXPLORATEUR",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Sur terre",
+         "texte": "Le caravanier ajoute son rang + 2 aux tests d'équitation (il peut utiliser son CHA pour ces tests au lieu de son AGI) et de dressage de toutes les montures, y compris les plus exotiques. De plus, pour chaque période de déplacement sous sa tutelle, une monture terrestre se déplace de 1 km de plus par rang atteint."
+        },
+        {
+         "rang": 2,
+         "titre": "En mer",
+         "texte": "Le caravanier ajoute son rang + 2 aux tests de natation, de navigation et de prévision météo, que ce soit en mer ou sur terre. Lorsqu'il combat sur un navire, il gagne +1 en attaque et en DEF."
+        },
+        {
+         "rang": 3,
+         "titre": "Par monts et par vaux",
+         "texte": "Le caravanier réduit la dangerosité (voir Livre des règles, p. 233) de chaque région traversée d'un cran pour lui et sa caravane (maximum 10 personnes ou montures par rang). De plus, s'il dépense 1 PC, il ne subit pas les DM dus à la progression pour cette journée (table des DM subis, p. 233 du Livre des règles ; ne s'applique pas au reste de la caravane)."
+        },
+        {
+         "rang": 4,
+         "titre": "Maître de la survie",
+         "texte": "Le caravanier augmente soit sa PER, soit sa CON de +1 et obtient un dé bonus à tous ses tests avec cette caractéristique."
+        },
+        {
+         "rang": 5,
+         "titre": "Dans le ciel",
+         "texte": "D'une façon ou d'une autre, le caravanier fait l'acquisition d'un moyen de locomotion aérien. Selon le cadre de jeu, le souhait du joueur et les limites posées par le MJ, cela peut être une monture volante, mais cela peut aussi être un navire volant ou un ballon dirigeable capable d'emporter 10 ballots de 100 kg ou 10 personnes par capacité de rang 5 possédée dans les voies de caravanier. Sur son navire ou sa monture volante, il bénéficie de +1 en attaque et en DEF. Si le vaisseau ou la monture vient à disparaître, il en récupérera une nouvelle au prochain passage de niveau. La monture ou le navire parcourt jusqu'à 50 km par période de déplacement sans pénalité de terrain (voir Livre des règles, p. 232)."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DU GARDE PERSONNEL",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Garde",
+         "texte": "Le caravanier engage un garde incorruptible et fidèle jusqu'à la mort, qui lui coûte 10 % de toutes les richesses qu'il gagne (trésors trouvés et récompenses). Le garde suit les ordres du PJ, mais rechigne à s'éloigner de lui. Le joueur ne peut pas équiper le garde d'objets magiques qui lui confèrent des bonus ; l'évolution du profil de ce PNJ remplace les règles qui permettent de gérer l'équipement. Le garde récupère un quart de ses PV (soit le niveau du PJ) après chaque récupération rapide ou la totalité après une récupération complète. S'il est tué, le PJ peut embaucher un nouveau garde au niveau suivant."
+        },
+        {
+         "rang": 2,
+         "titre": "Garde rapprochée",
+         "texte": "Tant que le garde est à moins de 3 m du caravanier, il lui octroie +1 en DEF. Ce bonus passe à +2 au rang 5."
+        },
+        {
+         "rang": 3,
+         "titre": "Capacité de garde",
+         "texte": "Le joueur choisit pour son garde, une capacité parmi les suivantes. Le joueur peut choisir une option supplémentaire chaque fois que le PJ atteint le rang 5 dans une voie de caravanier. • Armure lourde : +3 en DEF, -1 en AGI (peut être choisi 2 fois) • Arme à distance : permet d'attaquer à une portée de 30 m (dé malus jusqu'à 60 m) • Arme lourde : +1d4° DM au contact • Puissant : +2* en FOR et aux DM • Rapide : +2* en AGI et 15 m par action de mouvement • Résistant : +2* en CON, + [niveau] PV • Vigilant : +2* en PER, capable de monter la garde une nuit entière • Volonté d'acier : +2* en VOL, immunisé à toute forme d'influence ou de contrôle • Le garde obtient aussi un dé bonus aux tests sur la caractéristique indiquée."
+        },
+        {
+         "rang": 4,
+         "titre": "Dernier recours",
+         "texte": "Le garde récupère ses PV deux fois plus vite (soit 50 % par récupération rapide). De plus, une fois par combat, si le caravanier voit ses PV réduits à 0, le garde peut lui faire boire une potion, qui lui rend [3d4° + CHA du caravanier] PV. Il ne peut effectuer cette action pour un autre personnage (il refuse obstinément de gaspiller ses précieuses potions au cas où son maître serait en danger !)."
+        },
+        {
+         "rang": 5,
+         "titre": "Lien magique",
+         "texte": "À la suite d'un rituel, un puissant lien magique lie le caravanier et son garde. Grâce à ce lien, le garde peut se téléporter auprès de lui par une action de mouvement jusqu'à une portée de [niveau + CHA] km. Le caravanier peut aussi communiquer par télépathie avec son garde jusqu'à la même portée. De plus, il sait intuitivement lorsque son maître est en danger (au moment où l'attaque ou le problème se produit). Enfin, le garde est désormais immunisé à tous les sorts ou capacités de paralysie ou d'immobilisation des créatures."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DU MARCHAND",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Deux pour le prix d'un",
+         "texte": "Le caravanier ajoute son rang + 2 à tous les tests de négoce, de marchandage ou d'évaluation. S'il dépense 1 PC, il divise par 2 le prix d'un bien à l'achat."
+        },
+        {
+         "rang": 2,
+         "titre": "En réserve",
+         "texte": "Le caravanier a probablement ce qu'il lui faut en réserve, ou pas loin. En ville, une fois par jour, il peut prétendre avoir (ou trouver rapidement) un objet qui lui manque. Lancez [1d4° + CHA] : si le bien recherché a une valeur en pa inférieure à cette somme, il l'a sur lui ou le trouve en 5 min. Si le bien vaut jusqu'à 10 fois cette somme, il lui faut 1 h. Cet argent n'est pas retranché à ses dépenses."
+        },
+        {
+         "rang": 3,
+         "titre": "Outils de qualité",
+         "texte": "Le caravanier choisit un objet, puis un autre à chaque rang suivant, et lui applique le bonus indiqué selon sa nature : Arme : augmente la plage de critique d'une arme de 1 point et +1d4° DM en cas de critique. Armure : +1 en DEF et réduit de 1 la pénalité d'armure. Vêtements : +3 aux choix en discrétion (tenue camouflage), aux tests de récupération (tenue confortable) ou aux tests de séduction/baratin (tenue de luxe). Ces bonus peuvent se cumuler à ceux apportés par un objet magique si c'est le cas de l'équipement du PJ. S'il se sépare d'un outil de qualité (perdu ou vendu), il devra attendre de progresser de 2 niveaux avant de pouvoir s'en procurer un nouveau."
+        },
+        {
+         "rang": 4,
+         "titre": "Signe extérieur de richesse",
+         "texte": "Le caravanier fait l'acquisition d'un objet magique (au choix). Déterminez son niveau de magie maximal à l'aide du tableau p.244 du Livre des règles de Chroniques Oubliées Fantasy, en considérant le niv. du PJ - 2 (prendre en compte le cadre de jeu fixé par le MJ). Au joueur de choisir cet objet. Mieux, l'objet peut changer à chaque passage de niveau !"
+        },
+        {
+         "rang": 5,
+         "titre": "Caravane sur pattes",
+         "texte": "Le caravanier obtient une monture géante destinée à transporter des quantités considérables de denrées ou de voyageurs. La monture est caractérisée par sa valeur de masse (abrégée M dans son profil) qui débute à 1 et augmente de 1 chaque fois que le personnage atteint le rang 5 dans une autre voie de caravanier. Cette monture peut accueillir sur son dos jusqu'à [10 × M] ballots de marchandise d'environ 100 kg, chaque ballot pouvant être remplacé par un humanoïde de taille moyenne. Initialement de taille énorme (M = 1), la monture devient colossale lorsque sa masse atteint 2. À partir d'une masse de 3, elle est capable d'accueillir sur son dos une maisonnette (et une de plus par point). Elle se déplace lentement, mais sûrement, à la vitesse d'un poney (15 km par période de déplacement). La description de la créature doit être négociée avec le MJ : une tortue géante (au choix terrestre ou maritime), un animal préhistorique exceptionnel, une créature mécanique ou un puissant navire sont toutes des propositions valables."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DU DIPLOMATE",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Us et coutumes",
+         "texte": "Le caravanier ajoute son rang + 2 à tous les tests pour convaincre, mais aussi à tous les tests d'étiquette, de connaissance des coutumes locales ou de bon comportement en société, qu'il s'agisse de la cour d'un roi elfique ou de la table d'un fermier. De plus, il est passé maître dans l'art de dissimuler une dague sur lui (DM 1d4). Seul un individu d'un NC supérieur à son niveau pourrait la détecter par une fouille poussée."
+        },
+        {
+         "rang": 2,
+         "titre": "Polyglotte",
+         "texte": "Le personnage apprend à parler, lire et écrire une langue vivante supplémentaire de son choix, plus une langue supplémentaire par rang acquis dans cette voie par la suite. De plus, s'il se bat avec l'arme qu'il a cachée sur lui (voir rang 1), au premier round, il bénéficie de la surprise et la dague inflige [1d4° + CHA] DM (au lieu du simple 1d4 et du bonus de FOR)."
+        },
+        {
+         "rang": 3,
+         "titre": "Fêlure",
+         "texte": "Le personnage est passé maître dans l'art de détecter le point faible d'une personne afin de pouvoir la corrompre ou la mener là où il veut. Après une minute de discussion, s'il réussit un test opposé de PER contre la VOL de son interlocuteur, il peut deviner son moteur secret, la chose qui pourrait le faire basculer ou sur laquelle il pourrait appuyer pour obtenir un avantage : par exemple, l'argent, le pouvoir, le sexe, mais ce peut être une qualité comme un amour sincère, la peur de perdre un être cher, etc."
+        },
+        {
+         "rang": 4,
+         "titre": "Charisme héroïque",
+         "texte": "Le personnage augmente sa valeur de CHA de +1. Désormais, il obtient un dé bonus aux tests de CHA."
+        },
+        {
+         "rang": 5,
+         "titre": "Rien d'impossible",
+         "texte": "Le personnage peut dépenser 1 PC pour qu'une rencontre se termine de la façon qu'il souhaite : empêcher une bagarre ou au contraire en provoquer une, mettre fin à un conflit qui a déjà débuté en ramenant tout le monde à la raison, obtenir de l'aide ou un droit de passage, etc. Avec son talent, tout paraît simple. Toutefois, si son interlocuteur principal est d'un NC supérieur ou égal à son niveau, il doit réussir un test de CHA opposé à la VOL de sa cible."
+        }
+       ]
+      }
+     ],
+     "supplementaire": true
     }
    ],
    "stats": {
@@ -1595,7 +1838,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
      "nom": "Barbare",
      "description": "Le barbare est un combattant sauvage issu d’une culture primitive. Il affronte ses ennemis avec rage sans se cacher derrière une lourde armure.",
      "armes_armures": "Le barbare sait manier toutes les armes au contact, toutes les armes à distance (sauf les arbalètes et les armes d’une technologie trop complexe). Les voies de barbare limitent l’armure au cuir renforcé. Le barbare peut en revanche utiliser tous les boucliers.",
-     "equipement_depart": "Hache à deux mains (DM 2d6) ou Arme à une main (d8) et bouclier (+2 en DEF), 2 javelots (DM 1d6, portée 20 m), dague (DM 1d4), armure de cuir (DEF +2).",
+     "equipement_depart": "2 javelots (DM 1d6, portée 20 m), dague (DM 1d4), armure de cuir (DEF +2).",
      "voies": [
       {
        "nom": "VOIE DE LA BRUTE",
@@ -1758,6 +2001,15 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "FOR",
       "CON",
       "AGI"
+     ],
+     "equipement_choix": [
+      {
+       "label": "Arme principale",
+       "options": [
+        "Hache à deux mains (DM 2d6)",
+        "Arme à une main (DM 1d8) et bouclier (DEF +2)"
+       ]
+      }
      ]
     },
     {
@@ -1927,13 +2179,14 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "FOR",
       "CHA",
       "CON"
-     ]
+     ],
+     "equipement_choix": []
     },
     {
      "nom": "Guerrier",
      "description": "Le guerrier est un combattant émérite qui ne craint pas le danger et qui affronte ses ennemis l’arme à la main. De tous les profils de combattant, il est le plus spécialisé et le plus complet dans l’art du combat au corps à corps.",
      "armes_armures": "Le guerrier sait manier toutes les armes de contact et toutes les armes à distance. Les voies de guerrier limitent l’armure à la cotte de mailles. Il peut utiliser tous les boucliers.",
-     "equipement_depart": "Épée longue (DM 1d8), épée ou hache à deux mains (DM 2d6), une dague ou une hachette de lancer, un grand bouclier (DEF +2) et chemise de mailles (DEF +4).",
+     "equipement_depart": "Épée longue (DM 1d8), un grand bouclier (DEF +2) et chemise de mailles (DEF +4).",
      "voies": [
       {
        "nom": "VOIE DU BOUCLIER",
@@ -2096,7 +2349,199 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "FOR",
       "CON",
       "AGI"
+     ],
+     "equipement_choix": [
+      {
+       "label": "Arme à deux mains",
+       "options": [
+        "Épée à deux mains (DM 2d6)",
+        "Hache à deux mains (DM 2d6)"
+       ]
+      },
+      {
+       "label": "Arme légère",
+       "options": [
+        "Dague (DM 1d4)",
+        "Hachette de lancer"
+       ]
+      }
      ]
+    },
+    {
+     "nom": "Parangon",
+     "description": "Le parangon, parfois aussi appelé champion, est l'essence même du combattant vif et rapide, une véritable machine de guerre qui a voué sa vie au sabre et à l'arc. Il se prépare comme un athlète de haut niveau qui s'entraîne sans cesse. En ce sens, il est assez proche du chevalier, mais avec un mode de combat basé sur la vitesse plutôt que la force (l'utilisation de l'arc en étant le symbole). Il peut être le bras armé d'une organisation, le commandant d'une force d'élite, un jeune seigneur, un mystique passionné par le métier des armes ou encore le champion personnel d'un seigneur vieillissant.",
+     "armes_armures": "Le parangon sait manier toutes les armes de contact et toutes les armes à distance. Il préfère généralement utiliser la vivelame ou les sabres (courts et droits, voir page 66). Il dédaigne les armes qui sont aussi des outils associés au travail du peuple, comme les haches, bâtons, marteaux, fléaux, etc. De telles armes ne permettent pas l'utilisation des capacités de parangon (on ne provoque pas quelqu'un en duel avec un marteau, ce serait un comportement de malfrat). Les voies de parangon limitent l'armure à la chemise de mailles et n'autorisent pas le port du bouclier.",
+     "equipement_depart": "Sabre droit (DM 1d6/1d8 explosif, crit. 19-20), sabre d'entraînement en bois (DM 1d4 temporaires, crit. 19-20), dague (DM 1d4), arc court (DM 1d6, portée 30 m), chemise de mailles (DEF +4).",
+     "equipement_choix": [],
+     "accroche": "Un combattant vif et rapide, machine de guerre vouée au sabre et à l'arc, entraînée comme un athlète de haut niveau.",
+     "carac_cles": [
+      "AGI",
+      "VOL",
+      "PER"
+     ],
+     "voies": [
+      {
+       "nom": "VOIE DE L'ARC ET DU CHEVAL",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Équitation martiale",
+         "texte": "Lorsqu'il combat à cheval, le parangon bénéficie de +1 en attaque (au contact et à distance). À partir du rang 3, il bénéficie aussi de +1 en DEF lorsqu'il combat en selle. Il est capable de guider sa monture des genoux afin d'utiliser n'importe quelle arme ou combinaison d'armes qui occupent ses deux mains. Enfin, il obtient un bonus égal au rang + 2 à tous ses tests d'équitation."
+        },
+        {
+         "rang": 2,
+         "titre": "Tir en mouvement (A)",
+         "texte": "Lorsqu'il est à cheval, le parangon peut utiliser une action d'attaque pour effectuer une attaque à distance tout en se déplaçant au maximum de 10 m."
+        },
+        {
+         "rang": 3,
+         "titre": "Tir expert",
+         "texte": "Le parangon travaille la perfection du geste. Il peut choisir de remplacer son AGI par sa PER pour calculer sa valeur d'attaque à distance avec une arme à projectiles. De plus, il augmente de 1 point la plage de réussite critique sur les attaques effectuées avec un arc."
+        },
+        {
+         "rang": 4,
+         "titre": "Perception héroïque",
+         "texte": "Le parangon augmente sa valeur de PER de +1. Désormais, il obtient un dé bonus aux tests de PER."
+        },
+        {
+         "rang": 5,
+         "titre": "Tirs successifs (L)",
+         "texte": "Le personnage se déplace à cheval sur une distance de 20 m en ligne droite. Il peut effectuer jusqu'à 2 attaques à distance à l'arc sur des cibles différentes à moins de 20 m de sa trajectoire, à condition qu'elles se trouvent toutes du même côté de la ligne tracée par son déplacement (à droite ou à gauche). Le nombre d'attaques à distance que le PJ peut effectuer augmente d'un chaque fois qu'il atteint le rang 5 dans une autre voie de parangon."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DE L'HONNEUR",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Chef né",
+         "texte": "Le parangon est immunisé aux effets de peur (magie, pouvoir de dragon, etc.) De plus, il bénéficie d'un bonus égal à rang + 2 aux tests pour donner des ordres, intimider ou rendre la justice."
+        },
+        {
+         "rang": 2,
+         "titre": "Duel (A)",
+         "texte": "Le parangon défie un ennemi par une action d'attaque. Il obtient un bonus aux DM égal à sa VOL contre cet adversaire jusqu'à la fin du combat (ce bonus s'applique seulement aux attaques au contact). Le personnage peut défier un seul adversaire par combat."
+        },
+        {
+         "rang": 3,
+         "titre": "Honorable",
+         "texte": "L'honneur du parangon est son moteur et il lui permet de se surpasser. Le PJ peut remplacer le CHA par la VOL pour le calcul du nombre de PC dont il dispose. Si cela ne l'avantage pas, il gagne seulement 1 PC supplémentaire. Enfin, lorsque le personnage adopte un comportement honorable au détriment de son propre intérêt, le MJ peut lui accorder la récupération d'un PC ; à l'inverse, le MJ est en droit de faire perdre des PC à un parangon qui se comporte de façon déshonorante."
+        },
+        {
+         "rang": 4,
+         "titre": "Volonté héroïque",
+         "texte": "Le parangon augmente sa valeur de VOL de +1. Désormais, il obtient un dé bonus aux tests de VOL."
+        },
+        {
+         "rang": 5,
+         "titre": "Surmonter la douleur",
+         "texte": "Le parangon est immunisé aux états préjudiciables affaibli et étourdi."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DE LA MAÎTRISE INTÉRIEURE",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Esprit vide",
+         "texte": "Le parangon bénéficie de +2 en Init. Ce bonus augmente de +1 chaque fois qu'il atteint le rang 3 dans une voie de parangon."
+        },
+        {
+         "rang": 2,
+         "titre": "Main vide",
+         "texte": "Lorsqu'il combat à mains nues, le parangon peut, s'il le souhaite, utiliser son AGI en attaque au contact au lieu de la FOR (mais pas aux DM). Au rang 2 de cette voie, il inflige [1d4 + FOR] DM létaux. Ces DM passent à 1d6 au rang 4."
+        },
+        {
+         "rang": 3,
+         "titre": "Cri (G)",
+         "texte": "Une fois par combat, lorsqu'il a réussi une attaque (à distance ou au contact), le parangon peut libérer son énergie sous la forme d'un puissant cri issu du ventre (action gratuite) : il obtient les DM maximaux de l'attaque. Au rang 5 de la voie, il peut utiliser son cri une seconde fois, au minimum 1d6 rounds plus tard."
+        },
+        {
+         "rang": 4,
+         "titre": "Technique mortelle",
+         "texte": "Le parangon augmente sa plage de critique avec les sabres* de 1 point et bénéficie de +1d4° DM lorsqu'il obtient un critique. Il augmente sa plage de critique de 1 point supplémentaire chaque fois qu'il atteint le rang 4 dans une autre voie de parangon. S'il ne peut plus augmenter sa plage de critique parce qu'il a déjà atteint la limite inférieure de 16 (voir Livre des règles, p. 213), il augmente à la place les DM de ses coups critiques de +1d4° (cumulable). Exemple : un parangon possède une vivelame avec la propriété affûtée (critique sur 18-20) et 4 voies de parangon au rang 4 ou plus. La valeur inférieure de sa plage de critique devrait être de 18 – 4 = 14. Au lieu de cela, la plage de critique est fixée à 16-20, et chaque fois qu'il obtient un critique, il bénéficie de +2d4° DM (pour un total de 3d4° avec le bonus de base de la capacité). * Dans le cas d'un profil hybride, on pourrait imaginer que le PJ choisisse une autre catégorie d'armes comme les épées, les lances ou les haches."
+        },
+        {
+         "rang": 5,
+         "titre": "Puissance du cri",
+         "texte": "Si le parangon obtient une réussite critique en attaque alors qu'il utilise son cri (rang 3), alors la cible est étourdie pour 1 round. Les créatures non vivantes sont immunisées à cet effet."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DU SABRE",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Technique du sabre",
+         "texte": "Les techniques du sabre reposent sur la précision, la vitesse et la maîtrise acquise par des heures de répétition plutôt que sur la force. Lorsqu'il utilise un sabre (sabre court, sabre droit ou vivelame), le parangon peut remplacer sa FOR par son AGI pour déterminer la valeur d'attaque au contact, et par le rang atteint dans la voie du sabre pour déterminer les DM. Ce bonus aux DM n'est pas multiplié en cas de critique (contrairement à la FOR). Le joueur doit préciser si le PJ utilise cette technique par défaut (et applique systématiquement l'AGI aux DM au lieu de la FOR), et si ce n'est pas le cas, il doit le faire au début du combat s'il veut pouvoir en bénéficier."
+        },
+        {
+         "rang": 2,
+         "titre": "Frappe du vide (A)",
+         "texte": "Le parangon sait porter une attaque en dégainant son arme du fourreau ou à l'instant où il la saisit. Sur sa première attaque au contact lors d'un combat, si son sabre était au fourreau, il dégaine en action gratuite et bénéficie de +2 en attaque et +1d4° DM."
+        },
+        {
+         "rang": 3,
+         "titre": "Lames jumelles (L)",
+         "texte": "Si le parangon possède une valeur de FOR au moins égale à +2, il peut utiliser un sabre droit (DM 1d6, crit. 19-20) dans chaque main. Sinon il peut utiliser un sabre court dans chaque main (DM 1d4, crit. 19-20). Il fait un test d'attaque normal pour chaque arme, mais ne bénéficie pas de son bonus aux DM de Technique du sabre sur son attaque avec sa main secondaire."
+        },
+        {
+         "rang": 4,
+         "titre": "Agilité héroïque",
+         "texte": "Le parangon augmente sa valeur d'AGI de +1. Désormais, il obtient un dé bonus aux tests d'AGI."
+        },
+        {
+         "rang": 5,
+         "titre": "Déluge de lames (L)",
+         "texte": "Une fois par jour, le parangon libère toutes les forces vives qui l'habitent et inflige un véritable déluge de coups à ses adversaires. Durant ce round, le PJ effectue un nombre d'attaques au contact égal au nombre de rounds écoulés depuis le début du combat en cours (on ne compte que les rounds durant lesquels, il était engagé au contact d'un ennemi actif). Il peut répartir ces attaques à sa guise contre plusieurs adversaires, mais pas plus de 3 attaques par adversaire."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DES TRADITIONS",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Esprit éclairé",
+         "texte": "Le parangon sait lire et écrire : il bénéficie de +1 par rang dans la voie aux tests de CHA et d'INT qui concernent les arts et les lettres (poésie, calligraphie, arrangements floraux, etc.), ainsi qu'aux tests de séduction."
+        },
+        {
+         "rang": 2,
+         "titre": "Force de la répétition",
+         "texte": "Chaque matin, si le parangon peut s'entraîner une heure et répéter ses techniques martiales, il obtient un point de combat par rang atteint dans la voie, qu'il peut utiliser à sa guise durant la journée qui suit (jusqu'à la prochaine récupération complète), mais pas plus d'un point de combat par attaque. En dépensant 1 point de combat, il obtient soit un dé bonus sur n'importe quel test d'attaque au contact ou à distance, soit +1d4° en DEF contre une attaque adverse (à annoncer et lancer avant d'en connaître le résultat). Le PJ obtient un point de combat supplémentaire chaque fois qu'il atteint le rang 4 dans une autre voie de parangon."
+        },
+        {
+         "rang": 3,
+         "titre": "Lame de lignée",
+         "texte": "Le parangon possède, au choix, une vivelame, un sabre droit ou une paire de sabres courts (s'il possède la capacité lames jumelles) qui se transmet dans sa famille ou son ordre depuis des générations et qui symbolise l'honneur des siens. Entre ses mains, cette arme devient magique et lui confère +1 en attaque au contact (mais pas aux DM) tous les 3 niveaux (+1 au niveau 3, +2 au niveau 6, etc.). En accord avec le MJ, l'arme obtient un pouvoir supplémentaire lorsque le PJ atteint le rang 5 de la voie (+1 niveau de magie : affûtée, fléau ou DM élémentaires). S'il perd son arme, le parangon subit -1 à tous ses tests tant qu'il ne la retrouve pas. L'arme est réputée incassable, mais si elle venait à être détruite, ce malus s'estomperait au bout d'un an. Il faudrait alors une année entière pour forger une nouvelle arme de famille."
+        },
+        {
+         "rang": 4,
+         "titre": "Instant présent",
+         "texte": "Le parangon est capable d'atteindre la paix intérieure, même dans les moments les plus stressants. Désormais, il est plus efficace quand il prend son temps (voir Livre des règles, p. 204) : il lui faut seulement 2 fois plus de temps pour pouvoir bénéficier d'un résultat de 10 au d20 (au lieu de 5 fois). De plus, lorsqu'il prend son temps, il ajoute aussi sa VOL au résultat. Enfin, Instant présent permet au personnage de bénéficier automatiquement d'un résultat de 10 au d20 sur une action d'attaque en dépensant 1 point de combat (voir rang 2)."
+        },
+        {
+         "rang": 5,
+         "titre": "Tradition familiale",
+         "texte": "Le parangon effectue une sorte de retour aux sources et apprend une capacité issue de la tradition familiale. Il peut choisir une capacité de rang 1 à 3 de n'importe quelle voie sauf celles de la famille des combattants. Il doit respecter les limitations d'armure lorsqu'il veut utiliser cette capacité en plein combat (mais pas autrement). Il bénéficie aussi de +3 PV pour une capacité de rang 1 ou de +2 PV pour une capacité de rang 2 (pas de PV supplémentaires pour une capacité de rang 3). Si c'est un sort, il doit en payer le coût en points de mana (il gagne le PM associé à l'acquisition de ce sort, selon la règle habituelle)."
+        }
+       ]
+      }
+     ],
+     "supplementaire": true
     }
    ],
    "stats": {
@@ -2114,7 +2559,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
      "nom": "Ensorceleur",
      "description": "L’ensorceleur tire son pouvoir d’un talent inné pour la magie. Il pratique une magie subtile à base de tromperie et de contrôle, et possède peu de sorts de destruction massive.",
      "armes_armures": "L’ensorceleur sait manier la dague et le bâton ferré. De plus, chaque ensorceleur peut choisir une arme supplémentaire de son choix qu’il a appris à utiliser, sans dépasser 1d6 DM (malgré ses DM de 2d4, l’arbalète légère est aussi une arme éligible). Les voies d’ensorceleur interdisent de porter une armure ou d’utiliser un bouclier.",
-     "equipement_depart": "Bâton ferré (DM 1d6), dague (DM d4) ou autre arme maîtrisée au choix",
+     "equipement_depart": "Bâton ferré (DM 1d6).",
      "voies": [
       {
        "nom": "VOIE DE L’AIR",
@@ -2277,6 +2722,15 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "CHA",
       "VOL",
       "AGI"
+     ],
+     "equipement_choix": [
+      {
+       "label": "Arme secondaire",
+       "options": [
+        "Dague (DM 1d4)",
+        "Autre arme maîtrisée (à préciser)"
+       ]
+      }
      ]
     },
     {
@@ -2446,7 +2900,8 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "INT",
       "VOL",
       "CON"
-     ]
+     ],
+     "equipement_choix": []
     },
     {
      "nom": "Magicien",
@@ -2615,13 +3070,14 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "INT",
       "VOL",
       "AGI"
-     ]
+     ],
+     "equipement_choix": []
     },
     {
      "nom": "Sorcier",
      "description": "Le sorcier est un lanceur de sorts qui s’intéresse aux forces obscures et au pouvoir de la mort. Parfois nommés nécromanciens ou démonistes, les sorciers sont généralement considérés comme maléfiques et sont peu appréciés. Toutefois, cela dépend des cultures : après tout, est‑il plus maléfique de vider un ennemi de son sang que de le découper à coup de hache ou de le carboniser à coup d’explosion de feu ? C’est une des questions que soulève le sorcier ! Interprétez‑le de façon subtile afin d’en faire un personnage plutôt sombre ou désespéré, mais pas nécessairement «mauvais».",
      "armes_armures": "Le sorcier sait manier la dague et le bâton. Les voies de sorcier interdisent de porter une armure ou d’utiliser un bouclier.",
-     "equipement_depart": "Bâton ferré (DM 1d6), dague (DM 1d4), grimoire de sorts ou parchemins anciens.",
+     "equipement_depart": "Bâton ferré (DM 1d6), dague (DM 1d4).",
      "voies": [
       {
        "nom": "VOIE DU DÉMON",
@@ -2784,7 +3240,199 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "INT",
       "VOL",
       "CON"
+     ],
+     "equipement_choix": [
+      {
+       "label": "Support de sorts",
+       "options": [
+        "Grimoire de sorts",
+        "Parchemins anciens"
+       ]
+      }
      ]
+    },
+    {
+     "nom": "Primaliste",
+     "description": "Le primaliste est le mage du peuple. Ses sorts sont de nature élémentaire et primaire, leurs domaines d'action concernent les rivières, les nuages, le bois ou le sol, et son arme favorite est une torche, dont il sait attiser le feu. Ses pouvoirs sont innés, un peu à la façon de l'ensorceleur, bien qu'il existe une tradition orale qui lui permet d'apprendre à les maîtriser. Le primaliste n'a pas fait de grande école de magie, et ses pouvoirs sont généralement dénigrés par les véritables magiciens, qui considèrent ses sorts comme une sous-magie. Pire, une des conditions à la pratique de la magie primaliste consiste à être pieds nus, afin d'être ancré dans le monde et en contact avec les éléments. Il va donc sans dire que les archimages considèrent leurs confrères des campagnes comme des va-nu-pieds. Pour cette raison, le primaliste n'a pas accès à la voie du mage. À vrai dire, certains primalistes ne savent même pas lire. Les sorts du primaliste sont généralement en rapport avec la nature, mais il serait une erreur de croire que sa magie ressemble à celle des druides. Il se trouve simplement qu'en tant que mage du peuple, le primaliste a naturellement utilisé les objets et les lieux qui l'entourent au quotidien pour y expérimenter sa magie.\n\nParticularités de la magie primaliste : les sorts de primaliste nécessitent d'être en contact direct avec le sol, de préférence pieds nus. Un personnage qui porte des chaussures doit choisir l'une des pénalités suivantes lorsqu'il lance un sort de primaliste : soit il subit un dé malus à son test d'attaque, soit il doit dépenser 1 PM supplémentaire.",
+     "armes_armures": "Le primaliste sait manier le bâton, le gourdin, la hachette (au contact et à distance), le marteau, la dague et la fronde. Les voies de primaliste limitent l'armure au cuir simple et empêchent l'utilisation du bouclier.",
+     "equipement_depart": "Armure de cuir simple (DEF +2), fronde (DM 1d4).",
+     "equipement_choix": [
+      {
+       "label": "Arme de contact",
+       "options": [
+        "Hachette (DM 1d6)",
+        "Marteau (DM 1d6)"
+       ]
+      }
+     ],
+     "accroche": "Le mage du peuple, dont la magie innée et primaire puise dans le bois, les rivières, le sol et la brume plutôt que dans les grimoires.",
+     "carac_cles": [
+      "VOL",
+      "CON"
+     ],
+     "voies": [
+      {
+       "nom": "VOIE DU BOIS",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Pluie d'échardes (A)*",
+         "texte": "Le personnage doit tenir en main son bâton ou un simple morceau de bois. Il projette une volée d'échardes sur sa cible à une portée de 10 m. S'il réussit un test d'attaque magique contre la DEF de la cible, il lui inflige [1d4° + VOL] DM perforants. En plus de ce sort, le primaliste ajoute son rang + 2 à tous les tests de sculpture sur bois."
+        },
+        {
+         "rang": 2,
+         "titre": "Bois durci (M)*",
+         "texte": "Le primaliste enchante son arme de bois (bâton ou gourdin). L'arme inflige +1 DM pendant [VOL] heures. Ce bonus augmente de +1 chaque fois que le PJ atteint le rang 4 dans une voie de primaliste. S'il utilise une pluie d'échardes en tenant son bâton en main, le sort bénéficie du même bonus aux DM."
+        },
+        {
+         "rang": 3,
+         "titre": "Cheval de bois (A)*",
+         "texte": "Le primaliste sculpte la représentation grossière d'un cheval dans un morceau de bois qu'il vient de couper. Cela lui prend 10 min, et il peut le faire jusqu'à 24 h avant de lancer le sort. Ensuite, le bois devient inerte et inapproprié pour lancer le sort. Lors de l'incantation, la statuette se transforme en cheval de guerre (voir Livre des règles, p. 267) infatigable pour une durée de [niv. du primaliste] heures. À la fin du sort, il se transforme en statue brisée. Le cheval se comporte exactement comme le ferait une monture ordinaire. Au rang 5, si le PJ a atteint le niveau 9, la statuette se transforme en cheval d'ébène capable de voler comme s'il galopait sur terre (et à la même vitesse)."
+        },
+        {
+         "rang": 4,
+         "titre": "Explosion du bois (A)*",
+         "texte": "Le primaliste désigne un objet en bois (meuble, porte) ou un arbre. Le bois explose en projetant des échardes durcies par la magie dans un rayon de 2 à 6 m (au choix du lanceur de sorts), infligeant [3d4° + VOL] DM. Chaque créature dans la zone peut faire un test d'AGI difficulté [10 + VOL] pour ne subir que la moitié des DM. Si le PJ utilise ce sort contre un bouclier en bois [DM 2d4° + VOL] ou le manche en bois d'une arme [DM 1d4° + VOL], il doit réussir un test opposé d'attaque magique contre son porteur. Un objet magique n'est pas affecté par ce sort, tout autre objet est détruit."
+        },
+        {
+         "rang": 5,
+         "titre": "Figurine en bois (A)*",
+         "texte": "Le primaliste sculpte la représentation grossière d'un animal de son choix dans un morceau de bois qu'il vient de couper. Cela lui prend 10 min, et il peut le faire jusqu'à 24 h avant de lancer le sort. Ensuite, le bois devient inerte et inapproprié pour lancer le sort. Le primaliste peut sculpter n'importe quel animal qui lui est familier dans les pages 267 à 274 du Livre des règles (NC inférieur ou égal à 3). Le NC maximal de la créature augmente de 1 chaque fois que le personnage atteint le rang 5 dans une autre voie de primaliste. À la fin de l'incantation, la statuette se transforme en animal réel qui obéit aux ordres du primaliste pour une durée égale à [niv. du primaliste] rounds. L'animal comprend les ordres simples tels que garder, suivre, attaquer et rapporter, comme le ferait un chien dressé. À la fin du sort, l'animal redevient une statuette, mais elle est brisée."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DES BRUMES",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Températion (L)*",
+         "texte": "Le primaliste forme autour de lui une bulle de température clémente, il est protégé des DM naturels de froid ou de chaleur pendant 12 h. S'il subit des DM de feu ou de froid magique, il retranche 1 point par rang atteint dans la voie. En plus de ce sort, le PJ ajoute son rang + 2 aux tests de prédiction météorologiques."
+        },
+        {
+         "rang": 2,
+         "titre": "Manteau de brume (M)*",
+         "texte": "Le primaliste souffle une lourde brume sombre qui s'enroule en volutes autour de lui dans un rayon de 3 m pendant [VOL] minutes. Tous les adversaires qui attaquent le PJ à distance ou par magie subissent un dé malus à leurs tests d'attaque. Les autres créatures autour de lui ne bénéficient pas de cette couverture. S'il utilise ce sort dans le noir ou la pénombre, le PJ bénéficie d'un dé bonus à ses tests de discrétion."
+        },
+        {
+         "rang": 3,
+         "titre": "Armure de brume (A)*",
+         "texte": "Comme pour le sort précédent, le primaliste expire une lourde brume qui se contracte autour de lui et forme une sorte d'armure cotonneuse qui absorbe les impacts pendant [VOL] minutes. L'armure de brume offre une RD 1 contre les attaques perforantes, RD 2 contre les attaques tranchantes et RD 3 contre les attaques contondantes."
+        },
+        {
+         "rang": 4,
+         "titre": "Volonté héroïque",
+         "texte": "Le primaliste augmente sa valeur de VOL de +1. Désormais, il bénéficie d'un dé bonus aux tests de VOL."
+        },
+        {
+         "rang": 5,
+         "titre": "Nuage personnel (A)*",
+         "texte": "Le primaliste désigne un nuage dans le ciel (il est tributaire de sa présence), qui rétrécit, devient plus dense, puis vole jusqu'au primaliste. Le PJ et jusqu'à 5 créatures de taille moyenne de son choix peuvent monter dessus. Le nuage peut les transporter en vol pendant [VOL] heures à une vitesse de [niv. du primaliste] km/h (en situation de combat, le déplacement reste de 10 m par action de mouvement)."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DES RIVIÈRES",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Traversée (L)*",
+         "texte": "Le primaliste entre dans l'eau d'une rivière et réapparaît automatiquement et immédiatement en face, sur la rive opposée, pour une distance parcourue maximale de 50 m par rang. À partir du rang 3, le PJ peut aussi traverser un petit lac (en respectant la distance maximale). En plus de lui-même, il peut faire passer une créature par rang atteint au prix de 1 PM supplémentaire par créature. En plus de ce sort, le PJ ajoute son rang + 2 aux tests de natation."
+        },
+        {
+         "rang": 2,
+         "titre": "Source claire (L)*",
+         "texte": "Le primaliste invoque une source d'eau qui jaillit du sol ou d'un rocher qu'il touche. Ceux qui s'y abreuvent sont hydratés et récupèrent un DR. L'eau coule pendant [VOL] minutes ; chaque minute, deux personnes peuvent s'hydrater suffisamment pour en bénéficier. Il ne sert à rien de stocker l'eau, celle qui n'a pas été bue disparaît au moment où la source se tarit."
+        },
+        {
+         "rang": 3,
+         "titre": "Lance liquide (A)*",
+         "texte": "Le primaliste doit avoir accès à de l'eau pour lancer ce sort, mais le contenu d'une gourde suffit. Il façonne l'eau par magie pour lui donner la forme d'une lance solide et translucide pour une durée de [VOL] minutes. Avec cette arme, il peut combattre en attaquant au contact avec son score d'attaque magique, infligeant [1d4° + VOL] DM. De plus, il peut projeter la lance sur un adversaire jusqu'à une portée de 30 m (60 m avec un dé malus). S'il réussit un test d'attaque magique contre la DEF, il inflige [3d4° + VOL] DM et la lance explose en une gerbe d'eau, mettant fin au sort."
+        },
+        {
+         "rang": 4,
+         "titre": "Fluide",
+         "texte": "Le primaliste bénéficie de +2 en DEF et en Init. Désormais, le personnage ne subit plus de pénalité lorsqu'il combat dans l'eau et peut retenir sa respiration pendant [VOL] minutes. De plus, l'affinité du PJ pour l'eau lui permet de parler et de lancer des sorts normalement sous l'eau (sa voix porte comme en surface)."
+        },
+        {
+         "rang": 5,
+         "titre": "Crue dévastatrice (A)*",
+         "texte": "Le primaliste transforme une petite rivière en torrent dévastateur qui ravage tout sur son passage. Au round suivant le lancement du sort (à l'Init. du PJ), un terrible grondement provient de l'amont et la rivière multiplie sa largeur par 10 (une rivière de 10 m de large s'élargit donc à 100 m et déborde de 45 m de chaque côté de son lit). Toutes les créatures prises dans la vague subissent 3d4° DM et doivent réussir un test de FOR difficulté [15 + VOL du PJ] ou être emportées. Dans ce cas, une créature subit 3d4° DM supplémentaires et est rejetée en aval à 1d4° × 100 m. Si la configuration des lieux ne permet pas à la rivière de s'élargir (gorge étroite), tous les DM sont doublés !"
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DU SOL",
+       "intro": "On murmure que certains primalistes nains vivant sous terre ont développé une voie totalement similaire à la voie du sol, mais basée sur les champignons.",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Sens de la terre (L)*",
+         "texte": "Pendant [1d4° + PER] minutes, le primaliste parcourt 20 m par action de mouvement lorsqu'il se déplace au sol. De plus, il est capable de situer toutes les créatures en contact avec le sol dans un rayon de 20 m autour de lui, même si elles sont cachées ou invisibles. En plus de ce sort, le PJ ajoute son rang + 2 à tous les tests pour s'orienter sous terre."
+        },
+        {
+         "rang": 2,
+         "titre": "Pilier magique (M)*",
+         "texte": "Un pilier de pierre de 6 m de hauteur sort brusquement du sol sous le primaliste et lui permet de se mettre hors de portée des adversaires au contact jusqu'à la taille grande. Les adversaires de taille énorme l'attaquent avec un dé malus ; les adversaires de taille colossale ne subissent pas de pénalité. Ce sort nécessite une hauteur sous plafond d'au moins 6 m, sinon il ne fonctionne pas. Le pilier est immobile et reste en hauteur pendant [VOL] minutes ou jusqu'à ce que le primaliste mette fin au sort, moment auquel il redescend doucement au niveau du sol."
+        },
+        {
+         "rang": 3,
+         "titre": "Sables mouvants (A)*",
+         "texte": "Le primaliste désigne une zone de 10 m de diamètre à une portée de 30 m, qui devient molle pour une durée de [1d4° + VOL] rounds. Toutes les créatures présentes dans la zone doivent réussir un test d'AGI difficulté [10 + VOL] ou commencer à s'enfoncer dans le sol et être immobilisées. Celles qui ont réussi peuvent utiliser leur prochaine action pour s'éloigner de la zone, sinon elles doivent recommencer le test chaque round. Celles qui ont raté peuvent tenter un nouveau test d'AGI pour se libérer une fois par round au prix d'une action de mouvement, mais avec un dé malus."
+        },
+        {
+         "rang": 4,
+         "titre": "Passage par le sol (G)*",
+         "texte": "Le primaliste s'enfonce dans le sol et réapparaît à une distance maximale de 5 m par niveau. Le lieu d'arrivée doit être en vue. À partir du rang 4, le lieu n'est pas obligatoirement en vue, mais il doit être parfaitement connu."
+        },
+        {
+         "rang": 5,
+         "titre": "Champ mortel (A)*",
+         "texte": "Le primaliste enchante une zone en extérieur de 50 × 50 m ou d'une taille maximale de 10 × 10 m en intérieur, pour une durée de [VOL] heures. Toute créature qui se déplace au sol dans cette zone doit réussir un test de PER difficulté [15 + VOL] ou déclencher une explosion qui lui inflige [3d4° + VOL] DM contondants (la moitié dans un rayon de 5 m). Le test est réalisé une fois par action de mouvement ; si la créature décide de se déplacer prudemment (mouvement divisé par 2), la difficulté du test de PER est réduite de 5."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DE LA TORCHE",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "La torche (M)*",
+         "texte": "Le primaliste doit tenir en main une torche ou un gourdin et utiliser une action de mouvement pour lancer ce sort. L'objet s'enflamme pour [VOL] minutes. Il inflige [1d4° + FOR ou AGI, au choix] DM, et tous les animaux qui attaquent son porteur subissent un dé malus. Au rang 3, cela concerne aussi les animaux géants, et au rang 5, les animaux fantastiques (griffon, hippogriffe, etc.)."
+        },
+        {
+         "rang": 2,
+         "titre": "Feu de camp (L)*",
+         "texte": "Ce rituel de 10 min permet d'enchanter le feu de camp du primaliste. Il dure 8 h complètes, même si le PJ manque de combustible. Tous les PJ qui prennent une récupération complète dans un rayon de 5 m récupèrent 2d4° PV (en plus des effets normaux de ce repos). Le nombre de PV récupérés augmente de +1d4° chaque fois que le personnage atteint le rang 4 dans une voie de primaliste."
+        },
+        {
+         "rang": 3,
+         "titre": "Torche puissante (A)*",
+         "texte": "Les DM de la torche augmentent de 1d4° DM et son effet défensif s'étend aux morts-vivants. Enfin, lorsque le primaliste tient sa torche, il est désormais immunisé aux DM infligés par un feu naturel. Il divise par 2 tous les DM des feux ou froids magiques (sorts, souffle d'un dragon, etc.). Si le primaliste a également la capacité Températion, il commence par réduire les DM (Températion) avant de diviser par 2 le reste (Torche puissante)."
+        },
+        {
+         "rang": 4,
+         "titre": "Boutefeu",
+         "texte": "Lorsqu'une créature subit des DM de la torche, elle doit réussir un test d'AGI difficulté 10 ou prendre feu. Elle subit alors 1d4° DM de feu chaque round jusqu'à ce qu'elle passe un round complet à éteindre les flammes."
+        },
+        {
+         "rang": 5,
+         "titre": "Passage par le feu (L)*",
+         "texte": "Le primaliste entre dans un feu de camp ou de cheminée et ressort par n'importe quel feu de camp ou de cheminée dans un rayon de 5 km par niveau. Le passage par le feu régénère le personnage, qui récupère [3d4° + VOL] PV."
+        }
+       ]
+      }
+     ],
+     "supplementaire": true
     }
    ],
    "stats": {
@@ -2802,7 +3450,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
      "nom": "Druide",
      "description": "Le druide est un prêtre de la nature qui défend sa pureté originelle et tire ses pouvoirs de la vie, des animaux et des plantes.",
      "armes_armures": "Le druide sait manier la dague, le bâton noueux (équivalent au bâton ferré), l’épieu, le javelot et l’arc court. Les voies de druide limitent l’armure au cuir simple. Il peut utiliser le petit bouclier en bois (DEF +1).",
-     "equipement_depart": "Bâton noueux (DM 1d6) ou épieu (DM 1d6 ou 1d10), dague (DM 1d4), arc court (DM 1d6, portée 30 m), armure de cuir (DEF +2).",
+     "equipement_depart": "Dague (DM 1d4), arc court (DM 1d6, portée 30 m), armure de cuir (DEF +2).",
      "voies": [
       {
        "nom": "VOIE DES ANIMAUX",
@@ -2965,6 +3613,15 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "PER",
       "VOL",
       "CON"
+     ],
+     "equipement_choix": [
+      {
+       "label": "Arme de contact",
+       "options": [
+        "Bâton noueux (DM 1d6)",
+        "Épieu (DM 1d6 ou 1d10)"
+       ]
+      }
      ]
     },
     {
@@ -3134,13 +3791,14 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "VOL",
       "PER",
       "AGI"
-     ]
+     ],
+     "equipement_choix": []
     },
     {
      "nom": "Prêtre",
      "description": "Le prêtre perçoit la nature divine du monde et les desseins des dieux. Il utilise l’énergie transmise par sa divinité pour mener à bien ses missions avec la force de la foi, mais aussi celle des armes si nécessaire.",
      "armes_armures": "Le prêtre sait manier les armes contondantes à une main ainsi que le bâton ferré. Les prêtres ont l’interdiction morale de faire couler le sang (!) et n’utilisent donc pas les armes tranchantes ou perçantes pour des raisons religieuses. L’arme sacrée d’un prêtre spécialiste constitue une exception. Les voies de prêtre limitent l’armure à la chemise de mailles et permettent d’utiliser le petit bouclier (DEF +1).",
-     "equipement_depart": "Masse, marteau de guerre (DM 1d6) ou bâton ferré (DM 1d6, à deux mains), petit bouclier (DEF +1), chemise de mailles (DEF +4).",
+     "equipement_depart": "Petit bouclier (DEF +1), chemise de mailles (DEF +4).",
      "voies": [
       {
        "nom": "VOIE DE LA FOI",
@@ -3303,7 +3961,200 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "CHA",
       "VOL",
       "FOR"
+     ],
+     "equipement_choix": [
+      {
+       "label": "Arme de contact",
+       "options": [
+        "Masse ou marteau de guerre (DM 1d6)",
+        "Bâton ferré (DM 1d6, à deux mains)"
+       ]
+      }
      ]
+    },
+    {
+     "nom": "Chamane",
+     "description": "Le chamane est un lanceur de sorts proche de la nature. Il ne vénère pas de divinité et se distingue du druide, car il ne tire pas ses sorts des éléments naturels, mais des esprits, que lui seul sait percevoir et manipuler. Ces derniers constituent l'âme magique de chaque élément du monde, les créatures, mais aussi les choses inertes. Pour le chamane, les esprits sont partout, sauf dans les objets dont la matière même a été transformée par la main de l'homme (exemple : le métal, dont le minerai a été décomposé puis fondu). Pour cette raison, le chamane n'utilise pas ce type d'objets, car leur esprit a été au mieux détruit, au pire corrompu. Il peut toutefois utiliser des objets en fer froid, un alliage spécial forgé à froid.",
+     "armes_armures": "Le chamane sait manier le bâton, la lance ou l'épieu, la masse, le marteau, la dague, la fronde et l'arc court. Il n'utilise pas d'armes fabriquées en métal fondu, mais utilise des équivalents comme le silex ou le bois durci. Dans ses mains, de telles armes infligent des DM normaux (dans les mains de tout autre profil, elles infligent -1 DM). Les voies de chamane limitent l'armure au cuir simple. Il ne sait pas utiliser le bouclier.",
+     "equipement_depart": "Armure de cuir simple (DEF +2), dague en silex (DM 1d4).",
+     "equipement_choix": [
+      {
+       "label": "Arme de contact",
+       "options": [
+        "Masse en pierre (DM 1d6)",
+        "Lance à pointe d'os (DM 1d8)"
+       ]
+      }
+     ],
+     "accroche": "Un lanceur de sorts qui puise sa magie non dans les éléments, mais dans les esprits qui habitent toute chose.",
+     "carac_cles": [
+      "PER",
+      "VOL",
+      "CON"
+     ],
+     "voies": [
+      {
+       "nom": "VOIE DE L'ESPRIT ANIMAL",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Esprit du loup",
+         "texte": "Le chamane apprend à côtoyer l'esprit du loup. Il peut communiquer avec les loups et les chiens et obtient un dé bonus à tous ses tests d'endurance et de course."
+        },
+        {
+         "rang": 2,
+         "titre": "Esprit du serpent",
+         "texte": "Le chamane apprend à côtoyer l'esprit du serpent. Il peut communiquer avec les reptiles et obtient un dé bonus à tous ses tests pour résister à la faim ou à la soif. Il gagne aussi un DR supplémentaire."
+        },
+        {
+         "rang": 3,
+         "titre": "Esprit de l'ours",
+         "texte": "Le chamane apprend à côtoyer l'esprit de l'ours. Il peut communiquer avec les ours et obtient un dé bonus à tous ses tests de FOR. Il bénéficie de +1 DM sur ses attaques au contact. Ce bonus passe à +2 lorsqu'il atteint le rang 5."
+        },
+        {
+         "rang": 4,
+         "titre": "Esprit de l'aigle",
+         "texte": "Le chamane apprend à côtoyer l'esprit de l'aigle. Il peut communiquer avec les oiseaux et peut voir par les yeux de n'importe lequel dans un rayon de [PER] × 100 m autour de lui. Il bénéficie d'un DR supplémentaire et de +1 DM sur ses attaques à distance."
+        },
+        {
+         "rang": 5,
+         "titre": "Esprit du poisson",
+         "texte": "Le chamane apprend à côtoyer l'esprit du poisson. Il peut communiquer avec les poissons et peut retenir sa respiration pendant PER heures (prendre une récupération rapide avant de pouvoir recommencer). Il bénéficie de +1 DM sur ses attaques magiques."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DES ESPRITS DES CHOSES",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Dialogue avec les objets (L)*",
+         "texte": "S'il passe 1 min à écouter l'esprit d'un objet, le chamane peut déterminer son âge (à quelle époque il a été fabriqué) et à qui il a appartenu (un homme grand, un puissant guerrier… les noms n'ont pas de signification pour les esprits des choses inertes). De plus, il bénéficie de +1 à tous ses tests effectués avec cet objet ce jour-là."
+        },
+        {
+         "rang": 2,
+         "titre": "Pierre vivante (A)",
+         "texte": "Le chamane ramasse une pierre et la lance sur sa cible. Il doit faire un test d'attaque à distance avec un dé bonus contre la DEF de la cible. En cas de succès, il inflige [1d4° + PER] DM. À partir du rang 4, s'il utilise une action limitée pour lancer le sort (pour 1 PM), la pierre inflige [2d4° + PER] DM et il peut décider qu'elle explose en infligeant en plus la moitié des DM dans un rayon de 3 m autour de la cible principale."
+        },
+        {
+         "rang": 3,
+         "titre": "Arme vivante (L)*",
+         "texte": "Les armes vivantes sont les armes en bois, en pierre ou en os, toutes choses qui possèdent un esprit, par opposition au métal fondu par l'homme. Grâce à ce rituel, le chamane rend une arme de bois, de pierre ou d'os aussi dure ou tranchante que l'acier de façon permanente. Elle possède désormais les mêmes caractéristiques que son homologue en métal. Dans les mains du chamane uniquement, sa plage de critique est augmentée de 1 point (19-20) et, en cas de critique, l'esprit de l'arme se nourrit du sang de la victime (celle-ci doit être vivante) et restitue 2d4° PV au chamane (sans dépasser le nombre de DM infligés)."
+        },
+        {
+         "rang": 4,
+         "titre": "Syphon de magie (L)*",
+         "texte": "Le chamane peut siphonner l'énergie magique d'une arme morte, c'est-à-dire une arme de métal sans esprit, et la transférer dans l'une de ses armes vivantes. Il place les deux armes devant lui et psalmodie pendant 10 min. À la fin du rituel, l'arme magique a perdu sa magie et l'arme vivante en a acquis les bénéfices. Les deux armes doivent être de la même catégorie, il n'est pas possible de faire bénéficier une arme de contact des propriétés d'une arme à distance. Il n'est pas possible de cumuler plusieurs rituels sur la même arme vivante, seul le niveau de magie le plus élevé est conservé. Le niveau de magie de l'arme siphonnée ne peut pas dépasser le rang atteint dans la voie."
+        },
+        {
+         "rang": 5,
+         "titre": "Esprits du lieu (L)*",
+         "texte": "Par un rituel d'une minute, le chamane apprend la nature des événements dont un lieu a été le témoin (violence, paix, amour, etc.). À la discrétion du MJ, il peut même avoir une vision d'événements anciens en réussissant un test de PER difficulté 15 à 25 selon l'importance des informations. De plus, si le chamane sacrifie un peu de son énergie vitale (1d4° PV) aux esprits du lieu, ceux-ci répondent désormais positivement à ses actions. Tant qu'il reste dans la zone définie (un bosquet, une maison, un temple, un vallon, etc.), il réduit le coût en mana de tous les sorts lancés de 1 PM, et il obtient un dé bonus à tous ses tests d'attaque."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DES ESPRITS MALÉFIQUES",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Esprits prédateurs (A)*",
+         "texte": "Le chamane libère des esprits assoiffés d'énergie vitale sur sa cible. S'il réussit un test opposé d'attaque magique contre celle-ci (portée 20 m), les esprits infligent [1d4° + PER] DM à la victime, et si son NC est inférieur au niveau du chamane, elle doit réussir un test de VOL difficulté 10 ou être affaiblie pendant 1 round. Les morts-vivants et les créatures artificielles sont immunisés à ce sort."
+        },
+        {
+         "rang": 2,
+         "titre": "Esprits de cauchemars (L)*",
+         "texte": "Le chamane envoie des cauchemars à une cible dont il possède une relique (une mèche de cheveux, par exemple) ou un objet personnel. Il effectue un rituel de 10 min pendant que sa cible dort et doit faire un test opposé d'attaque magique. S'il possède seulement un objet ayant appartenu à la cible, il subit -5 à -10 (selon la personnalisation de l'objet) à son test. En cas de succès, la victime ne bénéficie d'aucun effet positif de la récupération et subit -2 à tous ses tests jusqu'à sa prochaine récupération complète."
+        },
+        {
+         "rang": 3,
+         "titre": "Métal corrompu (A)*",
+         "texte": "Le chamane réveille l'esprit corrompu et agonisant d'une arme de métal forgée. Il doit réussir un test d'attaque magique opposé contre la créature qui porte l'arme (portée 20 m). En cas de succès, le métal se tord dans les mains de son porteur et lui inflige un dé malus en attaque pendant [PER] rounds."
+        },
+        {
+         "rang": 4,
+         "titre": "Esprits hurlants (A)*",
+         "texte": "Le chamane invoque une foule d'esprits désespérés, furieux et hurlants qui tournoient dans une zone de 6 m de diamètre (portée 20 m) pendant [PER] rounds. Ils prennent l'apparence de fantômes translucides ravagés par le désespoir. Les esprits infligent 1d4° DM par round et un dé malus à toutes les actions de toutes les créatures dans la zone désignée, sauf celles qui n'ont pas d'esprit (golem, par exemple). À chaque round, le chamane peut déplacer la zone de 10 m par une action de mouvement ou de 20 m par une action limitée."
+        },
+        {
+         "rang": 5,
+         "titre": "Esprit insecte (A)*",
+         "texte": "Si le chamane réussit un test opposé d'attaque magique (portée à 20 m) contre un humanoïde vivant dont le NC est inférieur ou égal à la moitié de son niveau, un esprit insecte prend possession de la cible et corrompt son esprit et son corps. Elle subit une horrible transformation pendant un round complet : ses yeux se couvrent de facettes, des mandibules déforment sa mâchoire, des plaques de chitine recouvrent partiellement son corps, etc. Au round suivant, la créature se retourne contre ses alliés et les attaque jusqu'à sa mort. La possession lui octroie +2 en attaque, aux DM et en DEF. La créature meurt à la fin du sort, qui se termine au bout de [niveau du chamane] rounds, ou dès que tous ses anciens alliés sont détruits (elle poursuit les éventuels fuyards)."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DE L'ESPRIT VITAL",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Esprits des ancêtres (G)*",
+         "texte": "Le chamane peut communiquer avec chacun de ses ancêtres, sages et guerriers, et ceux-ci peuvent le conseiller ou guider sa main dans une action. Lorsqu'il utilise ce sort en action gratuite, il ajoute un bonus égal à [2 + rang atteint] au test de son choix (il ne peut pas ajouter au même test un bonus de compétence personnel). S'il s'agit d'un test d'attaque, il bénéficie de +2 en attaque et +1d4° DM. Le sort doit être lancé avant la résolution de l'action."
+        },
+        {
+         "rang": 2,
+         "titre": "Esprits du foyer (L)*",
+         "texte": "Le chamane chantonne pendant une trentaine de minutes et invoque les esprits du foyer dans une pièce ou autour d'un feu de camp. Il crée alors une bulle de sérénité sur le lieu (maximum 10 m de diamètre) dans laquelle chaque individu récupère un DR."
+        },
+        {
+         "rang": 3,
+         "titre": "Esprit protecteur (A)*",
+         "texte": "Le chamane invoque un esprit protecteur qui veille sur lui, le prévient des attaques et détourne parfois les coups qui le visent. Jusqu'à sa prochaine récupération (rapide ou complète), le chamane bénéficie d'un dé bonus à tous les tests pour éviter d'être surpris et de +1 en DEF. Le bonus de DEF augmente de +1 chaque fois que le chamane atteint le rang 5 dans une voie de chamane."
+        },
+        {
+         "rang": 4,
+         "titre": "Perception héroïque",
+         "texte": "Le personnage augmente sa valeur de PER de +1. Désormais, il bénéficie d'un dé bonus aux tests de PER."
+        },
+        {
+         "rang": 5,
+         "titre": "Esprit lié (A)*",
+         "texte": "Le chamane invoque et lie un puissant esprit à sa cible (portée = contact). C'est un sort puissant, mais dangereux. Tant que la cible est protégée par l'esprit, elle bénéficie d'une RD 5 dans la limite d'un total de DM égal à [niv. du chamane × 5]. Cette mécanique correspond à l'épuisement de la vitalité de l'esprit. Lorsque le cumul de DM atteint cette limite, l'esprit est détruit et disparaît dans un hurlement qui laisse le chamane affaibli jusqu'à ce qu'il prenne une récupération rapide (ou complète)."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DE LA FORME D'ESPRIT",
+       "intro": "",
+       "prerequis": "",
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Esprit de veille (A)*",
+         "texte": "Pendant que le corps du chamane se repose, son esprit continue à veiller. Lorsque le chamane prend une récupération complète et s'endort, son esprit prend la forme d'une image de lui-même, immatérielle et invisible, assise en lévitation au-dessus de son corps endormi (l'image peut être détectée par un sort de détection de l'invisible). Il peut observer, mais pas se déplacer, et il obtient un dé bonus à tous les tests de PER sous cette forme. Il peut se réveiller à tout moment, mais cela met fin au sort. En plus de ce sort, le chamane ajoute son rang + 2 à tous les tests destinés à communiquer avec des esprits. Il considère les fantômes et autres créatures désincarnées comme des esprits."
+        },
+        {
+         "rang": 2,
+         "titre": "Esprit de repos (A)*",
+         "texte": "Désormais, le chamane peut utiliser son esprit de veille sur une récupération rapide, et il lui suffit de s'asseoir sans besoin de s'endormir. S'il passe la demi-heure complète sous cette forme sans être dérangé et dépense un DR pour récupérer des PV, il n'a pas besoin de jeter le dé et obtient automatiquement le résultat maximal, comme lors d'une récupération complète."
+        },
+        {
+         "rang": 3,
+         "titre": "Arpenteur de rêves (L)*",
+         "texte": "Le chamane s'endort pendant [VOL] heures. Durant tout ce temps, il visite les rêves d'une cible dont il possède une relique (une mèche de cheveux, par exemple) ou un objet personnel. Il doit réussir un test opposé d'attaque magique contre sa cible. S'il possède seulement un objet ayant appartenu à la cible, il subit -5 à -10 (selon la personnalisation de l'objet) à son test. En cas de succès, il est le témoin invisible des événements du rêve qu'il visite. La description de ces événements est laissée à l'entière liberté du MJ et pourra ou non apporter des éléments importants à l'intrigue en cours. Si le PJ le souhaite, il peut apparaître dans le rêve et a le temps de transmettre un court message (une dizaine de mots) avant que cela ne réveille le rêveur et le chasse du rêve."
+        },
+        {
+         "rang": 4,
+         "titre": "Perception des esprits",
+         "texte": "Le chamane augmente sa valeur de PER de +1. De plus, le chamane ajoute désormais sa PER à son total de PM (en plus de sa VOL)."
+        },
+        {
+         "rang": 5,
+         "titre": "Esprit vagabond (L)*",
+         "texte": "Pendant que le corps du chamane dort, son esprit, invisible et immatériel, peut vagabonder et visiter des lieux pendant [PER] minutes. Sous cette forme, il se déplace de 10 m par action de mouvement et peut voler dans toutes les directions. Il peut franchir les barrières matérielles (roche, bois, etc.), mais pas les êtres vivants ni les barrières magiques. Il n'entend pas et ne peut pas communiquer, mais il voit les créatures invisibles ou intangibles. Les créatures qui voient l'invisible peuvent le détecter et remonter le fil invisible qui le relie à son corps. Les morts-vivants intangibles, comme les spectres ou les ombres, peuvent le combattre (règles normales) sous forme d'esprit. S'il le souhaite, quand le chamane met fin au sort (il peut le stopper à tout moment), il peut transférer son corps matériel à l'endroit où son esprit désincarné est parvenu (ce qui revient à une sorte de téléportation)."
+        }
+       ]
+      }
+     ],
+     "supplementaire": true
     }
    ],
    "stats": {
@@ -3698,6 +4549,165 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
      "AGI"
     ]
    }
+  },
+  {
+   "nom": "Âme forgée",
+   "alternatif": true,
+   "description": "Créées pour la guerre par une magie oubliée, les âmes forgées sont des créatures mécaniques de tailles et de métaux variés (acier, bronze, etc.) dotées d'yeux de cristal clair. Éveillées au milieu de ruines sans connaître leurs créateurs, elles façonnent leur personnalité au contact de leur premier mentor. Curieuses et incapables de rester en place, elles ne forment aucune communauté et préfèrent voyager parmi les autres peuples. Avec le temps, la rouille finit par les ronger irrémédiablement, un mal contre lequel elles cherchent encore un remède.\n\nCréature non vivante : une âme forgée n'a pas besoin de boire, ni de se nourrir, ni même de respirer. Elle a toutefois besoin de rêver quatre heures par jour (sans quoi elle subit -1 à ses tests ; ce malus est cumulatif). Elle est naturellement immunisée aux poisons et aux maladies. Les âmes forgées sont incapables de nager, mais elles peuvent marcher au fond de l'eau (considéré comme un terrain difficile). L'âme forgée possède une âme et une essence qui lui permettent de bénéficier de la magie des soins, mais son corps artificiel en réduit l'efficacité. Elle divise par deux tous les PV récupérés par des soins magiques (sorts, potions, etc.). En revanche, un forgesort capable de réparer un golem peut réparer une âme forgée, bien que deux fois plus lentement.",
+   "age_depart": "0 à 5 ans",
+   "esperance_vie": "150 ans",
+   "taille": "1,30 m à 2,10 m",
+   "poids": "100kg à 300kg.",
+   "traits": "métal et pierre, angles ou rondeurs, rouages et engrenages, or, cuivre, acier, cristaux oculaires (couleur selon le rang 4 de la voie de peuple).",
+   "caracteristiques_mod": "+1 en CON, ‑1 en CHA ou INT",
+   "modificateurs": {
+    "plus": [
+     "CON"
+    ],
+    "minus": [
+     "CHA",
+     "INT"
+    ]
+   },
+   "voies": [
+    {
+     "nom": "VOIE DE L'ÂME FORGÉE",
+     "intro": "",
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Métallique",
+       "texte": "Les parties métalliques d'une âme forgée lui offrent une protection naturelle (+1 en DEF) et lui permettent d'infliger des DM létaux à mains nues. De plus, l'âme forgée bénéficie d'une RD 5 à tous les DM de feu, de froid et aux drains de vie (pouvoir de vampire, par exemple) et est immunisée aux effets de saignement. Dans le noir, l'âme forgée voit comme dans la pénombre à une distance de 10 m."
+      },
+      {
+       "rang": 2,
+       "titre": "Choc électrique",
+       "texte": "Une fois par round, l'âme forgée inflige +1d4° DM d'électricité sur une attaque à mains nues réussie (en plus des DM à mains nues égaux à [1d3+FOR])."
+      },
+      {
+       "rang": 3,
+       "titre": "Infiltration (M)",
+       "texte": "L'âme forgée découvre une fonction d'infiltration programmée en elle. Une fois par jour, elle peut faire croire pendant 1 h par rang à ceux qui l'entourent qu'elle est un humain, un orc ou un elfe. Il s'agit d'une illusion visuelle qui ne résiste pas à une palpation poussée (par exemple, de son visage). Elle peut changer d'apparence à chaque utilisation de cette capacité, mais elle ne peut pas imiter une personne spécifique. Il lui faut une action de mouvement pour activer ou désactiver l'illusion."
+      },
+      {
+       "rang": 4,
+       "titre": "Rayon ardent (L)",
+       "texte": "L'âme forgée découvre une fonction de destruction programmée en elle. Une fois par combat, elle peut émettre un rayon destructeur projeté par ses yeux. La nature du rayon dépend de la couleur des cristaux qui forment ses yeux (transparent = foudre, rouge = rayon ardent, bleu = rayon glacial). Elle peut utiliser ce rayon au prix d'une action limitée à une portée de 30 m. Si elle réussit un test d'attaque magique contre la DEF de son adversaire, elle inflige [4d4° + CON] DM."
+      },
+      {
+       "rang": 5,
+       "titre": "Machine de guerre",
+       "texte": "L'âme forgée devient une force impossible à ignorer sur le champ de bataille. Elle augmente ses valeurs de CON et de FOR de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Satyre",
+   "alternatif": true,
+   "description": "Les satyres sont de paisibles créatures sylvestres à l'apparence caprine (sabots, cornes, barbichette), vivant très discrètement près des forêts. Végétariens, peu exigeants et rejetant le métal au profit d'outils et armures en bois ou en écorce, ils s'émerveillent de la nature et préfèrent la fuite au conflit. Hédonistes et épicuriens, ils sont passionnés de musique, de danse et de plaisirs de la chair. Grands amateurs de vin, c'est principalement cette recherche d'alcool qui les pousse à interagir avec les communautés humaines.",
+   "age_depart": "15+",
+   "esperance_vie": "120 ans",
+   "taille": "1,60 m à 1,75 m",
+   "poids": "50kg à 80kg.",
+   "traits": "pelage, jambes de bouc, barbichette (pour les mâles), petites cornes.",
+   "caracteristiques_mod": "+1 en CON, ‑1 en CHA ou INT",
+   "modificateurs": {
+    "plus": [
+     "CON"
+    ],
+    "minus": [
+     "CHA",
+     "INT"
+    ]
+   },
+   "voies": [
+    {
+     "nom": "VOIE DU SATYRE",
+     "intro": "",
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Bonne nature",
+       "texte": "Le satyre bénéficie de +3 à ses tests de survie et pour se cacher en forêt. En forêt, il n'a pas besoin de transporter de nourriture et trouve toujours à se nourrir. C'est aussi un artiste né : il bénéficie de +3 en chant, en danse et pour jouer d'un instrument de musique (la flûte de pan est un incontournable !). Enfin, pour un satyre, l'obscurité de la nuit sous la lumière des étoiles est considérée comme de la pénombre."
+      },
+      {
+       "rang": 2,
+       "titre": "Encorner et ruer",
+       "texte": "Lorsque le satyre attaque avec ses cornes ou ses sabots, il inflige [1d4° + FOR] DM létaux. Au prix d'une action limitée, il peut infliger deux attaques au contact avec ces armes naturelles (une attaque avec les cornes et une avec les sabots). À partir du rang 4, lorsqu'il effectue une attaque au contact avec une arme en main, il peut ajouter un coup de corne en action gratuite (une fois par round)."
+      },
+      {
+       "rang": 3,
+       "titre": "Compagnon de voyage",
+       "texte": "Voyager avec un satyre permet de profiter de journées joyeuses et pleines de chants, qui ont un effet très positif sur le moral et la santé. À la fin de chaque journée de voyage, tous les compagnons du satyre peuvent faire un test de PER de difficulté égale à la dangerosité de la zone traversée. En cas de succès, un personnage gagne 1 DR qu'il peut dépenser immédiatement ou durant la nuit à venir (il ne peut pas le conserver pour plus tard)."
+      },
+      {
+       "rang": 4,
+       "titre": "Magie sauvage",
+       "texte": "Le satyre peut choisir un sort de rang 3 ou 2 sorts de rang 1 à 2 issus des profils de barde, de druide ou d'ensorceleur. Il peut lancer chacun de ces sorts une fois par jour. Ils ne lui rapportent aucun point de mana (mais ne lui en coûtent pas non plus). Il peut les lancer quelle que soit l'armure portée."
+      },
+      {
+       "rang": 5,
+       "titre": "Ascendance naturelle",
+       "texte": "Le satyre est à la fois parfaitement vigilant et très démonstratif : il augmente ses valeurs de PER et de CHA de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Wolfer",
+   "alternatif": true,
+   "description": "Les wolfers sont des êtres robustes d'apparence quasi humaine, reconnaissables à leur forte pilosité (monosourcil, rouflaquettes). Chasseurs nomades organisés en clans, ils vivent dans les zones sauvages et entrent souvent en conflit avec l'expansion humaine. Rendus nerveux par la proximité des chevaux, ceux élevés parmi les hommes s'intègrent difficilement en raison de leur tempérament vif et combatif. Profondément loyaux et respectueux de la hiérarchie envers leur groupe ou des alliés de confiance, ils n'obéissent toutefois à aucun idéal supérieur en dehors de leur clan.",
+   "age_depart": "15+",
+   "esperance_vie": "60 ans",
+   "taille": "1,60 m à 1,85 m",
+   "poids": "50kg à 90kg.",
+   "traits": "pilosité développée, canines proéminentes, posture voûtée, monosourcil.",
+   "caracteristiques_mod": "+1 en PER ou VOL, ‑1 en INT",
+   "modificateurs": {
+    "plus": [
+     "PER",
+     "VOL"
+    ],
+    "minus": [
+     "INT"
+    ]
+   },
+   "voies": [
+    {
+     "nom": "VOIE DU WOLFER",
+     "intro": "",
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Chasseur né",
+       "texte": "Le wolfer est un chasseur né. Son odorat et sa vision sont très développés. Il bénéficie de +3 à ses tests de PER pour pister, chasser, détecter une créature ou un piège en pleine nature. Les wolfers bénéficient aussi de +3 à tous les tests de marche ou de course d'endurance, mais ils subissent -3 aux tests d'équitation. Enfin, dans le noir total, le wolfer voit comme dans la pénombre jusqu'à 30 m."
+      },
+      {
+       "rang": 2,
+       "titre": "Griffes et crocs",
+       "texte": "Le wolfer peut utiliser ses griffes et ses crocs pour attaquer et inflige alors [1d4° + FOR] DM. Il peut attaquer deux fois en une action limitée. À partir du rang 4, chaque round, il peut effectuer une attaque d'arme naturelle en action gratuite en plus de ses autres attaques du round (ce qui lui permet d'obtenir jusqu'à 3 attaques naturelles en action limitée)."
+      },
+      {
+       "rang": 3,
+       "titre": "Loi de la meute",
+       "texte": "Lorsqu'un wolfer combat le même ennemi que d'autres alliés, il bénéficie de +1 en attaque et en DEF. De plus, il remplace la chance par une vigilance et une anticipation hors norme : il peut utiliser sa PER pour calculer son nombre de points de chance au lieu du CHA (soit 2 + PER)."
+      },
+      {
+       "rang": 4,
+       "titre": "Forme de loup (L)",
+       "texte": "Le personnage peut prendre la forme d'un loup puissant pendant une durée maximale de 1 h par niveau du personnage. Chaque jour, la première transformation en loup est gratuite, et chaque transformation suivante avant de prendre une récupération complète coûte 1 DR. Sous cette forme, il augmente sa vitesse de voyage de 5 km par période (cf. détails sur la transformation dans le Compagnon)."
+      },
+      {
+       "rang": 5,
+       "titre": "Esprit du loup",
+       "texte": "Le wolfer augmente ses valeurs de PER et de VOL de +1."
+      }
+     ]
+    }
+   ]
   }
  ],
  "caracteristiques": {
@@ -5015,6 +6025,38 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "texte": "Au choix, le personnage peut lancer invisibi- lité (rang 3 de la voie de la magie universelle) sur lui‑même plus un nombre d’alliés égal à son INT (durée [1d4° + INT] minutes) ou il lance invisibilité supérieure seulement sur lui‑même. Dans ce cas, il reste invisible même s’il utilise des actions offensives, mais la durée est exprimée en rounds. Ses adversaires l’attaquent comme s’ils étaient aveuglés (‑5 en Att et en DEF, ‑10 aux attaques à distance, ne peut être ciblé par les sorts). PARTIE I  ====== VOIES DE MYSTIQUE Les sorts des voies de mystique sont tous indexés sur le CHA. Toutefois, si un druide (ou un moine) choisit une de ces voies, il utilisera sa PER. Vos remarquerez par ailleurs que certaines voies utilisent la VOL ou la PER : cela est voulu et, dans ce cas, un prêtre aura l’obligation d’utiliser la caractéristique indiquée."
      }
     ]
+   },
+   {
+    "nom": "VOIE DE L'ENTITÉ",
+    "intro": "",
+    "prerequis": "",
+    "ranks": [
+     {
+      "rang": 4,
+      "titre": "Invocation d'une entité (A)*",
+      "texte": "Le mage appelle une créature d'un autre plan qui entre alors à son service. Personne d'autre que son invocateur ne peut renvoyer l'entité sur son plan d'origine. Lorsque les PV de l'entité sont réduits à 0, elle disparaît immédiatement. Dans ce cas, ou si l'invocateur la renvoie (par une action de mouvement), ce dernier doit prendre une récupération complète avant de pouvoir la convoquer de nouveau en lançant le sort. L'entité revient en jeu avec ses PV au maximum et débarrassée de tout effet préjudiciable dont elle pouvait être victime au moment de sa disparition. En dehors de son plan, l'entité ne guérit pas naturellement, mais elle peut bénéficier de sorts de soins. L'entité est totalement dévouée à son invocateur, elle agit au mieux pour respecter les ordres qui lui sont donnés, en fonction de son INT. Elle parle la langue de l'invocateur. L'apparence physique de l'entité est déterminée lors de sa première invocation (un animal, une créature fantastique ou une créature humanoïde, quelque chose de totalement étrange, etc.), mais elle doit s'inspirer des valeurs de caractéristiques choisies par le joueur. Elle ne peut pas imiter précisément l'apparence d'un personnage ou d'une créature en particulier. Une fois que le joueur a déterminé son apparence, la créature la conserve, mais elle pourra légèrement varier en fonction des futures améliorations (un membre en plus, une cuirasse, etc. selon les options choisies aux rangs supérieurs). Enfin, l'entité arbore, quelque part sur son corps, une rune lumineuse qui la maintient sur le plan de l'invocateur."
+     },
+     {
+      "rang": 5,
+      "titre": "Lien magique",
+      "texte": "L'invocateur peut communiquer par télépathie avec son entité, quelle que soit la distance qui les sépare. Lorsque l'entité subit des DM, l'invocateur peut choisir de sacrifier ses propres PV pour protéger son entité. Inversement, si l'invocateur subit des DM, il peut les transférer à son entité, mais dans ce cas, les DM qu'elle subit sont doublés. Enfin, grâce au lien avec l'invocateur, la créature peut toucher et attaquer des cibles normalement protégées du contact des créatures invoquées."
+     },
+     {
+      "rang": 6,
+      "titre": "Amélioration",
+      "texte": "L'invocateur siphonne l'énergie des plans pour améliorer les capacités de son entité. Il choisit une option parmi les suivantes (cela peut affecter son apparence). • Armes puissantes (griffes, crocs, arme) : +1d4° DM au contact • Armure : +4 DEF • Grande taille : +10 PV et +2 FOR • Pouvoir d'attaque à distance : portée 20 m, [2d4° + PER] DM • Résistant : +2 CON, +10 PV et résistance à un élément parmi feu, froid, électricité ou acide (DM/2) • Supériorité : +2 INT, VOL et CHA ; l'entité possède 2 PM et peut lancer des sorts que son maître connaît (brûlure de mana interdite) • Vif : +2 AGI et PER ; +2 DEF et Init. • Vol : l'entité obtient un moyen de se déplacer dans les airs (généralement des ailes). Le joueur peut choisir une option de plus lorsqu'il obtient le rang 7 de la voie et une dernière lorsqu'il atteint le rang 8. Une même option peut être choisie plusieurs fois. En cas de cumul de la capacité vol, l'entité augmente chaque fois sa vitesse en vol de 10 m par action de mouvement."
+     },
+     {
+      "rang": 7,
+      "titre": "Protecteur",
+      "texte": "Quand un allié se trouve au contact de l'entité, il bénéficie de +2 en DEF. Si l'allié est l'invocateur, ce bonus passe à +4. De plus, une fois par tour, l'entité peut subir une attaque à la place d'un allié à son contact."
+     },
+     {
+      "rang": 8,
+      "titre": "Lien magique amélioré",
+      "texte": "Le lien entre l'invocateur et l'entité est tel qu'ils peuvent se téléporter ou échanger leurs places. Au prix d'une action de mouvement, l'invocateur peut utiliser une action de son choix : téléporter son entité à son contact, se téléporter au contact de son entité ou enfin, échanger sa place avec son entité."
+     }
+    ]
    }
   ],
   "Mystique": [
@@ -5563,6 +6605,38 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       "texte": "Le familier confère au personnage un second pouvoir magique indiqué dans sa description, ainsi qu’un bonus de +1 sur la valeur de caracté- ristique indiquée dans la description du familier. FANTASTIQUES R7 ‑ Pouvoir supérieur : Prescience (rang 5, voie de la divination, ensorceleur), une fois par jour. Caractéristique : CHA. ANIMAL MORT‑VIVANT Le personnage obtient la version morte‑vivante d’un familier ordinaire (rat, chat, corbeau, etc.). Ce peut être un nouveau familier ou son ancien familier passé de vie à trépas et fidèle par‑delà la mort. Le familier acquiert le type « non‑vivant » et tous les avantages qui en découlent (voir les créatures). Il obtient une attaque qui draine la force vitale des créatures vivantes (attaque = attaque magique du personnage), l’attaque inflige 1d4° DM et permet au magicien ou au familier de récupérer 1 PV par attaque réussie. R4 ‑ Pouvoir mineur : Le personnage obtient la capacité Siphon des âmes (rang 1, voie de la mort, sorcier). S’il possède déjà cette capacité, il double son effet. PARTIE I  ====== R5 ‑ Profil de magie associé : sorcier R7 ‑ Pouvoir supérieur : Le personnage obtient la capacité Exsangue (rang 3, voie du sang de sorcier). S’il possède déjà cette capacité, le personnage ne subit plus de pénalité à ses tests lorsqu’il est à 0 PV. Caractéristique : CON. ARAIGNÉE GÉANTE Une araignée de la taille d’un familier normal, c’est‑à‑dire un monstre d’environ 30 cm de diamètre pattes comprises ! L’araignée possède une attaque (attaque = attaque magique du personnage) qui inflige 1 DM et oblige la victime à faire un test de CON difficulté [10 + rang atteint dans la voie]. En cas d’échec, la cible subit 1d4° DM de poison. Elle est capable de grimper aux murs. R4 ‑ Pouvoir mineur : Toile (L). Une fois par combat, le personnage peut projeter des toiles gluantes du bout de ses doigts sur une cible à une distance maximale de 5 m. Cette action lui demande la réussite d’un test d’attaque magique contre la DEF de la cible. La victime de cette attaque est immobilisée par la toile pour 1d6 rounds. À son tour, la victime peut tenter un test de FOR difficulté 12 pour se libérer par une action de mouvement (M). Une réussite lui restitue sa complète liberté d’action. R5 ‑ Profil de magie associé : sorcier R7 ‑ Pouvoir supérieur : Poison. Une fois par round, une attaque que le personnage effectue avec une arme tranchante ou perforante inflige +1d4° DM supplémentaires de poison. Caractéristique : AGI. DIABLOTIN Cette créature a tout du démon miniature : ailes de chauve‑souris, queue fourchue et surtout caractère pervers et cruel. Heureusement, le diablotin est aussi un couard et obéit à son maître dès lors que celui‑ci se montre suffisamment persuasif… Ce qui ne l’empêche pas de passer son temps à lui suggérer les actions les plus dépravées possibles. Le diablotin vole à  PARTIE I une vitesse de 10 m par action de mouvement et est doué de parole. R4 ‑ Pouvoir mineur : Le diablotin devient capable de se transformer en animal (de taille très petite) de son choix (corbeau, chouette, serpent, chat, chien, singe ou même saumon). Cela lui demande une action de mouvement pour changer de forme. Une fois transformé, il acquiert tous les modes de locomotion de l’animal imité. R5 ‑ Profil de magie associé : sorcier R7 ‑ Pouvoir supérieur : Le personnage obtient la capacité Pacte démoniaque (rang 3, voie du démon, sorcier). Si le personnage possède déjà cette capacité, il divise par 2 les DM subis (arrondi au supérieur). Caractéristique : INT. DRAGON FÉÉRIQUE Le dragon féérique est un cousin du pseudo‑dragon que l’on reconnaît facilement à ses grandes ailes colorées de papillon. Les dragons féériques sont d’un naturel farceur et prisent les sorts d’illusion. Le dragon féérique vole à une vitesse de 10 m par action de mouvement. Il est capable de communiquer par télépathie avec toutes les créatures comprenant le langage commun ou le sylvestre (le langage de la forêt) jusqu’à une portée de 20 m. R4 ‑ Pouvoir mineur : Le personnage obtient le sort Image décalée (rang 2, voie des illusions, ensorceleur), 2 fois par jour. R5 ‑ Profil de magie associé : ensorceleur R7 ‑ Pouvoir supérieur : Le personnage obtient le sort Mirage (rang 1, voie des Illusions, ensorceleur), 1 fois par combat. Caractéristique : CHA. FÉE OU LUTIN Le personnage adopte un lutin (30 cm) ou une fée (15 cm). Ce sont des créatures espiègles et farceuses (CHA +2) dont le MJ pourra parfois prendre le contrôle pour jouer des tours pendables aux alliés du personnage, et pourquoi pas au personnage lui‑même. Fée et lutin possèdent la capacité de se rendre invisible à ====== volonté. La fée peut voler (10m par action de mouvement) et le lutin est capable de se téléporter sur une distance de 10 m par action de mouvement. R4 ‑ Pouvoir mineur : 2 fois par jour, le personnage peut se rendre invisible comme avec la capacité de magicien (rang 3, voie de la magie universelle). R5 ‑ Profil de magie associé : ensorceleur R7 ‑ Pouvoir supérieur. Une fois par jour, le personnage peut basculer dans le monde invisible et s’y déplacer pour en ressortir là où il le souhaite. Ce pouvoir fonctionne exactement comme la capacité Marche des plans de la voie de la spiritualité du profil de prêtre. Caractéristique : AGI. GRIG Le buste humanoïde de cet esprit follet de 45 cm de haut surmonte un bas‑ventre et des pattes inférieures semblables au corps d’une sauterelle. Tête brûlée veillant à la protection des zones naturelles, le Grig n’a peur de rien et prend souvent des risques inconsidérés. Le Grig aime jouer du violon et, une fois par jour, il peut reproduire avec cet instrument les effets d’un sort de Danse irrésistible (rang 5 de la voie du musicien, barde). R4 ‑ Pouvoir mineur : Prison végétale comme la capacité de rang 2 de la voie des végétaux du druide, 2 fois par jour. R5 ‑ Profil de magie associé : druide R7 ‑ Pouvoir supérieur : Nuée d’insectes (rang 3 de la voie des animaux, druide), 3 fois par jour. Caractéristique : AGI. LÉZARD VOLTAÏQUE Plus grand que les autres créatures proposées (FOR ‑2), ce familier pèse une dizaine de kilogrammes et fait la taille d’un petit chien, un animal dont il partage le tempérament joueur et affectueux. Ce gros lézard de couleur bleue ou verte possède deux cornes qui produisent des arcs électriques. Le lézard voltaïque est immunisé aux DM d’électricité et il peut délivrer une décharge étourdissante à ses ennemis. Cette attaque de contact (attaque magique du personnage] inflige 1d4° DM et contraint à réussir un test de CON difficulté 10 pour ne pas être affaibli durant 1 tour. R4 ‑ Pouvoir mineur. Le personnage obtient la capacité Sous tension (rang 1, voie de l’air, ensorceleur), 2 fois par jour. R5 ‑ Profil de magie associé : magicien R7 ‑ Pouvoir supérieur : Le personnage obtient la capacité Foudre (rang 4, voie de l’air, ensorceleur), 2 fois par jour. Caractéristique : INT. MINIMOI À partir d’un petit morceau de sa chair, le personnage se dote d’une réplique miniature de sa personne. Cette réplique peut être créée à la suite d’une péripétie jouée ou subie par le personnage. Le familier est l’exacte copie de son maître, mais il mesure environ 30 cm. Son caractère et son attitude tendent à caricaturer les défauts et les qualités du personnage (en les accentuant ou au contraire en prenant le contrepied). Lorsqu’ils sont au contact l’un de l’autre, le personnage peut guérir le minimoi en lui transférant ses propres PV. Caractéristiques : le minimoi a FOR ‑3 et AGI [AGI du personnage + 2] ; toutes ses autres caractéristiques sont égales à celles du personnage ‑ 2. R4 ‑ Pouvoir mineur : Imitation. Le personnage obtient la capacité Imitation (rang 4, voie des illusions, ensorceleur) qu’il peut utiliser une fois par jour. R5 ‑ Profil de magie associé : Le profil principal du personnage. Même si le personnage n’est pas un lanceur de sort, le personnage choisit tout de même une capacité de son propre profil principal. R7 ‑ Pouvoir supérieur : Clone. Une fois par jour, par une action limitée, le minimoi peut grandir jusqu’à prendre une taille normale et devenir le double exact du personnage PARTIE I  ====== pendant INT rounds. Les deux personnages ont exactement les mêmes caractéristiques, le joueur les fait agir une fois par round de façon indépendante. Toutefois, ils partagent une unique réserve de PM (celle du PJ) et tous les sorts lancés par le familier sont déduits des PM du personnage. Durant sa transformation, le familier perd sa RD (il conserve ses PV habituels). Caractéristique : CHA. PSEUDO‑DRAGON Le pseudo‑dragon est un petit lézard ailé de 30 cm environ pourvu d’une longue queue de 60 cm qui se termine par un dard empoisonné. Le pseudo‑dragon vole à une vitesse de 10 m par action de mouvement. Il est capable de communiquer par télépathie avec toutes les créatures comprenant le langage commun ou celui de la forêt (le sylvestre) à une portée de 20 m. Il attaque avec la valeur d’attaque magique du personnage et, en cas de réussite, son poison oblige la victime à réussir un test de CON difficulté 10 ou à s’endormir pendant 2d6 min. Les créatures de NC supérieur à 1 sont immunisées à ce poison. R4 ‑ Pouvoir mineur : Télépathie. Le personnage peut communiquer par télépathie à une distance de 50 m avec toutes les créatures douées de conscience avec lesquelles il partage un langage commun. R5 ‑ Profil de magie associé : ensorceleur R7 ‑ Pouvoir supérieur : Le personnage obtient la capacité Sommeil (rang 2, voie de l’envoûteur, ensorceleur), une fois par combat. Caractéristique : CHA. PANTIN OU POUPÉE Le personnage obtient un familier artificiel, qui peut être une poupée de chiffon, une merveille de miniaturisation et d’engrenages, ou encore une statuette s’animant par magie. Le pantin ou la poupée peut être un ancien familier transformé ou une nouvelle créature. Le  PARTIE I familier acquiert le type « non‑vivant » et tous les avantages qui en découlent. Le pantin possède une RD 5. Celle‑ci s’ajoute à celle obtenue à partir du rang 6. R4 ‑ Pouvoir mineur : Le personnage obtient la capacité Serviteur invisible (rang 2, voie de l’invocation, ensorceleur), 3 fois par jour. R5 ‑ Profil de magie associé : forgesort R7 ‑ Pouvoir supérieur : Le personnage obtient la capacité Peau de pierre (rang 5, voie de la magie élémentaire, magicien) qu’il peut utiliser une fois par jour. Caractéristique : CON. STIQUE La stique est une affreuse petite créature de couleur verte de 30 cm de haut, croisement entre un moustique géant et une chauve‑souris pourvue de quatre ailes. Elle possède six pattes barbelées lui permettant de s’accrocher férocement à ses victimes pour leur sucer le sang. Son exosquelette est excessivement dur et très difficile à briser sans blesser ces dernières au passage. Une stique attaque avec la valeur d’attaque magique du personnage. Si elle réussit son attaque, elle s’agrippe à sa proie pour lui aspirer le sang et inflige ainsi 1d4° DM par round. La stique vole à une vitesse de 10 m par action de mouvement. R4 ‑ Pouvoir mineur : Le personnage obtient la capacité Saignement (rang 1, voie du sang, sorcier), 3 fois par jour. R5 ‑ Profil de magie associé : sorcier R7 ‑ Pouvoir supérieur. Le personnage obtient la capacité Rituel de sang (rang 4, voie du sang, sorcier), 1 fois par combat. Caractéristique : CON. ====== VOIES D’AVENTURIER"
      }
     ]
+   },
+   {
+    "nom": "VOIE DES MUTATIONS",
+    "intro": "La voie des mutations peut également être une voie de prestige générique et peut donc être choisie par n'importe quel personnage (cf. détails des changements dans le Compagnon).",
+    "prerequis": "",
+    "ranks": [
+     {
+      "rang": 4,
+      "titre": "Mutation offensive (A)*",
+      "texte": "Le personnage obtient un appendice monstrueux de son choix pendant [VOL] minutes : une gueule démesurée, un bras monstrueux doté de griffes ou de pinces, une queue munie d'un formidable dard, etc. Il peut attaquer une fois par round (action gratuite) avec cet appendice, qui inflige [1d4° + FOR] DM. Il bénéficie de +2 FOR sur cette attaque (en attaque et aux DM). À partir du rang 7, les DM passent à [2d4° + FOR] DM."
+     },
+     {
+      "rang": 5,
+      "titre": "Mutation protectrice (A)*",
+      "texte": "Le personnage obtient les caractéristiques d'une créature d'un autre monde, adaptée à la survie dans un environnement dangereux, pendant [VOL] minutes. À chaque utilisation du sort, il choisit une mutation de son choix dans la liste suivante. • Cuirasse : +3 DEF • Écailles rouges : DM de feu et d'acide divisés par 2, immunité au poison • Fourrure violette : DM de froid et d'électricité divisés par 2, immunité aux maladies • Organes supplémentaires : vision dans le noir à 20 m et dé bonus aux tests de PER et de discrétion. Lorsqu'il lance ce sort, le PJ peut profiter en même temps de la mutation offensive (une seule incantation, un seul coût de mana pour les deux)."
+     },
+     {
+      "rang": 6,
+      "titre": "Mutation motrice (A)*",
+      "texte": "Le personnage obtient une des mutations suivantes au choix pendant [VOL] minutes. • Ailes : vol à sa vitesse normale de déplacement • Pattes démesurées : se déplace de 20 m par action de mouvement • Queue de poisson : nage de 20 m par action de mouvement et respiration aquatique. Lorsqu'il lance ce sort, le personnage peut profiter en même temps des mutations offensives et défensives (une seule incantation, un seul coût de mana pour les trois)."
+     },
+     {
+      "rang": 7,
+      "titre": "Mutation structurelle (A)*",
+      "texte": "Le personnage obtient une des mutations suivantes au choix pendant [VOL] minutes. • Muscles hypertrophiés : +2 FOR (en attaque et aux DM au contact) • Silhouette filiforme : +3 AGI et DEF • Silhouette massive : +5 aux tests de CON et RD 3. Lorsqu'il lance ce sort, le personnage peut profiter en même temps des trois mutations précédentes (une seule incantation, un seul coût de mana pour les quatre)."
+     },
+     {
+      "rang": 8,
+      "titre": "Mutation régénératrice (A)*",
+      "texte": "Une fois par jour, lorsqu'il utilise cette capacité, le personnage bénéficie de toutes ses mutations pour une durée de [1d4° + VOL] minutes. De plus, il se soigne immédiatement de [5d4° + VOL] PV."
+     }
+    ]
    }
   ]
  },
@@ -5634,6 +6708,424 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
   "Un terrible cauchemar me hante chaque nuit (est-ce que je m’en souviens ?).",
   "Je n’ai pas réussi à empêcher un grand mal et je porte ce fardeau.",
   "Je fais partie d’une organisation secrète (ou en fait partie)."
+ ],
+ "pantheon_osgild": [
+  {
+   "nom": "Arcanna",
+   "domaine": "déesse de la magie blanche",
+   "symbole": "une étoile",
+   "arme_sacree": "bâton",
+   "capacite_nom": "maîtrise de la magie",
+   "capacite_profil": "mage",
+   "capacite_voie_hint": "mage",
+   "capacite_voie": "VOIE DU MAGE",
+   "capacite_rang": 2,
+   "capacite_titre": "Maîtrise de la magie (L)*",
+   "capacite_texte": "Le mage peut détecter la présence de magie (y compris la présence d’objets magiques) dans un rayon de 10 m. Un test d’INT difficulté [10 + rang du sort] permet de déterminer la fonction générale de l’enchantement. Il peut aussi tenter de dissiper un sort non permanent d’un rang maximal égal à ceux qu’il est capable de lancer en emportant un test opposé d’attaque magique contre l’auteur du sort."
+  },
+  {
+   "nom": "Arshran",
+   "domaine": "dieu du feu et des forgerons",
+   "symbole": "une enclume",
+   "arme_sacree": "marteau",
+   "capacite_nom": "forgeron",
+   "capacite_profil": "Forgesort",
+   "capacite_voie_hint": "métal",
+   "capacite_voie": "VOIE DU MÉTAL",
+   "capacite_rang": 1,
+   "capacite_titre": "Morsure de la forge (M)*",
+   "capacite_texte": "Au prix d’une action de mouvement, le forgesort peut enflammer son bâton ou son marteau pendant INT minutes et ajoute +2 DM de feu sur les attaques au contact réalisées avec cette arme. Ce bonus augmente de +1 chaque fois que le personnage atteint le rang 4 dans une voie de forgesort. L’arme s’éteint immédiatement s’il la lâche. En plus de ce sort, le forgesort ajoute son rang + 2 aux tests d’orfèvrerie ou de forge."
+  },
+  {
+   "nom": "Arwendée",
+   "domaine": "déesse de la chasse et des archers",
+   "symbole": "une flèche",
+   "arme_sacree": "arc (long ou court, au choix)",
+   "capacite_nom": "archer émérite",
+   "capacite_profil": "Rôdeur",
+   "capacite_voie_hint": "archer",
+   "capacite_voie": "VOIE DE L’ARCHER",
+   "capacite_rang": 1,
+   "capacite_titre": "Archer émérite",
+   "capacite_texte": "Le rôdeur ajoute sa PER aux DM qu’il inflige à l’arc et +1 par rang dans la voie en initiative. Le joueur peut souhaiter une variante de cette capacité s’appliquant aux armes de jet (dague, hachette, javelot) plutôt qu’à l’arc (rebaptisez‑la voie du lancer). Dans ce cas, le PJ ajoute sa FOR aux DM qu’il inflige et double la portée de jet (pas de bonus d’Init.). Par ailleurs, toutes les capacités de la voie qui suivent s’appliquent aux armes de jet plutôt qu’à l’arc."
+  },
+  {
+   "nom": "Aurilla",
+   "domaine": "déesse de la chance et des aventuriers",
+   "symbole": "un dé",
+   "arme_sacree": "épée courte",
+   "capacite_nom": "charmant",
+   "capacite_profil": "Barde",
+   "capacite_voie_hint": "séduction",
+   "capacite_voie": "VOIE DE LA SÉDUCTION",
+   "capacite_rang": 1,
+   "capacite_titre": "Charmant",
+   "capacite_texte": "Le barde ajoute son rang + 2 aux tests effectués pour séduire, convaincre, mentir ou baratiner. Désormais, il peut dépenser 1 point de chance pour améliorer l’action d’un compagnon en vue, ce PC permet d’ajouter [1d4° + CHA] sur le résultat du test (au lieu de +10)."
+  },
+  {
+   "nom": "Axënder",
+   "domaine": "dieu du devoir et de l'honneur",
+   "symbole": "un heaume",
+   "arme_sacree": "épée longue",
+   "capacite_nom": "sans peur",
+   "capacite_profil": "Chevalier",
+   "capacite_voie_hint": "meneur d'hommes",
+   "capacite_voie": "VOIE DU MENEUR D’HOMMES",
+   "capacite_rang": 1,
+   "capacite_titre": "Sans peur",
+   "capacite_texte": "Le chevalier est immunisé aux effets de peur et il offre un bonus égal à son CHA aux tests de tous ses alliés contre ce type d’effet. De plus, le chevalier ajoute son rang + 2 aux tests de stratégie et de tactique militaire ou pour commander une troupe."
+  },
+  {
+   "nom": "Basile",
+   "domaine": "dieu de la gourmandise et de la nourriture",
+   "symbole": "un chou",
+   "arme_sacree": "gourdin",
+   "capacite_nom": "nature nourricière",
+   "capacite_profil": "Rôdeur",
+   "capacite_voie_hint": "survie",
+   "capacite_voie": "VOIE DE LA SURVIE",
+   "capacite_rang": 2,
+   "capacite_titre": "Nature nourricière",
+   "capacite_texte": "Une fois par jour, si le rôdeur passe 1d6 h en milieu naturel sauvage (pas dans un champ), il trouve de quoi nourrir une personne par rang pour une journée et, s’il réussit un test de PER (Survie) difficulté 10, il trouve des plantes médicinales pour soigner 1d4° PV par rang. Les plantes doivent être utilisées immédiatement (10 min de préparation et autant pour faire effet) et les dés peuvent être répartis sur plusieurs patients."
+  },
+  {
+   "nom": "Céres",
+   "domaine": "dieu de l'agriculture et du travail",
+   "symbole": "un épi de blé",
+   "arme_sacree": "faux à deux mains (DM 1d10)",
+   "capacite_nom": "robustesse",
+   "capacite_profil": "Guerrier",
+   "capacite_voie_hint": "résistance",
+   "capacite_voie": "VOIE DE LA RÉSISTANCE",
+   "capacite_rang": 1,
+   "capacite_titre": "Robustesse",
+   "capacite_texte": "Le guerrier augmente sa valeur maximale de PV de rang + 2. De plus, vous ajoutez votre rang + 2 à tous les tests destinés à résister aux efforts physiques, à la chaleur ou au froid (conditions naturelles)."
+  },
+  {
+   "nom": "Dénora",
+   "domaine": "déesse de la compassion et de la guérison",
+   "symbole": "une main",
+   "arme_sacree": "bâton",
+   "capacite_nom": "baies magiques",
+   "capacite_profil": "Druide",
+   "capacite_voie_hint": "protecteur",
+   "capacite_voie": "VOIE DU PROTECTEUR",
+   "capacite_rang": 1,
+   "capacite_titre": "Baies magiques (L)*",
+   "capacite_texte": "Le druide doit se trouver devant un buisson ou un arbre vivant. Son incantation fait pousser PER fruits qu’il peut cueillir. Chaque fruit offre l’équivalent d’un repas et rend [1d4°+rang] PV après 1 min à celui qui le consomme. Les effets de ces fruits ne fonctionnent qu’une fois par jour et par personnage. En plus de ce sort, le druide ajoute son rang + 2 à tous les tests de vigilance et de discrétion en pleine nature."
+  },
+  {
+   "nom": "Ellona",
+   "domaine": "déesse de la perception et de la vérité",
+   "symbole": "un œil",
+   "arme_sacree": "arc court",
+   "capacite_nom": "détection de l'invisible",
+   "capacite_profil": "Ensorceleur",
+   "capacite_voie_hint": "divination",
+   "capacite_voie": "VOIE DE LA DIVINATION",
+   "capacite_rang": 2,
+   "capacite_titre": "Détection de l’invisible (L)*",
+   "capacite_texte": "Pendant CHA minutes, l’ensorceleur détecte les créatures invisibles (le sort révèle une silhouette, mais pas l’apparence exacte de la créature) ou cachées à moins de 20 m et si un sort de Clairvoyance affecte l’endroit. Aveuglé (par magie ou dans l’obscurité), ce sort lui permet de détecter les créatures présentes (et donc d’attaquer sans malus), mais pas de distinguer son environnement."
+  },
+  {
+   "nom": "Forthur",
+   "domaine": "dieu du courage et des exploits",
+   "symbole": "un poing",
+   "arme_sacree": "épée à deux mains",
+   "capacite_nom": "tour de force",
+   "capacite_profil": "Barbare",
+   "capacite_voie_hint": "brute",
+   "capacite_voie": "VOIE DE LA BRUTE",
+   "capacite_rang": 2,
+   "capacite_titre": "Tour de force (G)",
+   "capacite_texte": "Le barbare peut temporairement décupler ses ressources physiques pour faire usage d’une force prodigieuse. Il obtient un bonus de +10 sur un test de FOR (pas un jet de DM ou un test d’attaque), mais cela lui coûte 1d4° PV (à décider avant de lancer les dés). Enfin, le barbare peut désormais porter une chemise de mailles et utiliser toutes les capacités des voies de barbare auparavant autorisées avec une armure de cuir renforcé."
+  },
+  {
+   "nom": "Gaëlm",
+   "domaine": "dieu des arts et des artistes",
+   "symbole": "une lyre",
+   "arme_sacree": "rapière",
+   "capacite_nom": "chant de réconfort",
+   "capacite_profil": "Barde",
+   "capacite_voie_hint": "musicien",
+   "capacite_voie": "VOIE DU MUSICIEN",
+   "capacite_rang": 2,
+   "capacite_titre": "Chant de réconfort (L)*",
+   "capacite_texte": "Le barde chante ou joue de la musique pendant toute la durée d’une récupération rapide (30 min). Le barde et ses alliés dans un rayon de 10 m, récupèrent 1d4° PV. Les soins passent à 2d4° au rang 4."
+  },
+  {
+   "nom": "Gorom",
+   "domaine": "dieu de la pierre et des architectes",
+   "symbole": "un marteau",
+   "arme_sacree": "marteau",
+   "capacite_nom": "peau de pierre",
+   "capacite_profil": "Barbare",
+   "capacite_voie_hint": "pagne",
+   "capacite_voie": "VOIE DU PAGNE",
+   "capacite_rang": 2,
+   "capacite_titre": "Peau de pierre",
+   "capacite_texte": "Le barbare est particulièrement endurci, il encaisse les coups plutôt que de les esquiver. Il peut choisir de remplacer son AGI par sa CON pour calculer sa DEF (la limitation du bonus maximal en fonction de l’armure portée s’applique toujours, mais cette fois elle s’applique à la CON). Autrement (si son AGI est supérieure ou égale à sa CON), il reçoit +1 en DEF et ce bonus passe à +2 au rang 4."
+  },
+  {
+   "nom": "Guardal",
+   "domaine": "dieu de la loyauté et des gardiens",
+   "symbole": "un bouclier",
+   "arme_sacree": "masse",
+   "capacite_nom": "protéger un allié",
+   "capacite_profil": "Guerrier",
+   "capacite_voie_hint": "bouclier",
+   "capacite_voie": "VOIE DU BOUCLIER",
+   "capacite_rang": 1,
+   "capacite_titre": "Protéger un allié (G)",
+   "capacite_texte": "S’il n’est pas surpris, le guerrier peut accorder un bonus de DEF de +2 à un allié à son contact contre une attaque par round. Il doit annoncer son intention avant de connaître le résultat de l’attaque. De plus, vous ajoutez votre rang + 2 à tous les tests destinés à éviter d’être surpris."
+  },
+  {
+   "nom": "Hellion",
+   "domaine": "dieu des voleurs et du pillage",
+   "symbole": "une cape",
+   "arme_sacree": "épée courte",
+   "capacite_nom": "doigts agiles",
+   "capacite_profil": "Voleur",
+   "capacite_voie_hint": "roublard",
+   "capacite_voie": "VOIE DU ROUBLARD",
+   "capacite_rang": 1,
+   "capacite_titre": "Doigts agiles",
+   "capacite_texte": "Le voleur ajoute son rang + 2 aux tests liés à la précision manuelle (crocheter une serrure, désamorcer un piège, pickpocket…) ainsi qu'aux tests pour évaluer un objet précieux (joyaux, bijoux, etc.). De plus il obtient +1 aux DM des attaques à distance avec les dagues et couteaux. Ce bonus passe à +2 au rang 3 de la voie et +3 au rang 5."
+  },
+  {
+   "nom": "Irrion",
+   "domaine": "dieu de l'ordre et de la noblesse",
+   "symbole": "une épée",
+   "arme_sacree": "épée longue",
+   "capacite_nom": "autorité naturelle",
+   "capacite_profil": "Chevalier",
+   "capacite_voie_hint": "noblesse",
+   "capacite_voie": "VOIE DE LA NOBLESSE",
+   "capacite_rang": 3,
+   "capacite_titre": "Autorité naturelle",
+   "capacite_texte": "Le chevalier ajoute son rang + 2 aux tests réalisés pour donner des ordres ou intimider. De plus, le noble chevalier reçoit la formation nécessaire au port de l’armure de plaque complète (DEF +7). Désormais, il peut utiliser toutes les capacités des voies de chevalier* en portant cette armure. * Pour un profil hybride de combattant, cette capacité permet d’augmenter le niveau d’armure d’un cran pour toutes les autres voies de combattant : jusqu’à l’armure de plaque pour les voies de guerrier et jusqu’à la chemise de mailles pour les voies de barbare."
+  },
+  {
+   "nom": "Jeweln",
+   "domaine": "dieu des souterrains et des mineurs",
+   "symbole": "une pioche",
+   "arme_sacree": "pioche à deux mains (DM 1d8)",
+   "capacite_nom": "démolition",
+   "capacite_profil": "Arquebusier",
+   "capacite_voie_hint": "explosifs",
+   "capacite_voie": "VOIE DES EXPLOSIFS",
+   "capacite_rang": 2,
+   "capacite_titre": "Démolition",
+   "capacite_texte": "L’arquebusier peut préparer un explosif qui lui permet de démolir facilement des structures. Il lui faut 3 rounds complets pour préparer et poser son explosif. Celui‑ci inflige à la structure [3d4° + INT] DM et ignore la moitié de sa RD (et seulement 2d4° DM dans un rayon de 2 m). Chaque jour, l’arquebusier peut utiliser un nombre de charges explosives égal au rang dans la voie. Ces charges permettent indifféremment d’utiliser les capacités Démolition, Piège explosif ou Boulet explosif."
+  },
+  {
+   "nom": "Linnarré",
+   "domaine": "déesse de la mer et des marins",
+   "symbole": "un coquillage",
+   "arme_sacree": "trident (semblable à un épieu)",
+   "capacite_nom": "respiration aquatique",
+   "capacite_profil": "Magicien",
+   "capacite_voie_hint": "magie élémentaire",
+   "capacite_voie": "VOIE DE LA MAGIE ÉLÉMENTAIRE",
+   "capacite_rang": 4,
+   "capacite_titre": "Respiration aquatique (A)*",
+   "capacite_texte": "Le magicien peut respirer sous l’eau pendant 10 minutes. Cette capacité peut être étendue à un compagnon par point d’INT."
+  },
+  {
+   "nom": "Mélenna",
+   "domaine": "déesse des forêts et des animaux",
+   "symbole": "un arbre",
+   "arme_sacree": "arc (long ou court, au choix)",
+   "capacite_nom": "nature nourricière",
+   "capacite_profil": "Rôdeur",
+   "capacite_voie_hint": "survie",
+   "capacite_voie": "VOIE DE LA SURVIE",
+   "capacite_rang": 2,
+   "capacite_titre": "Nature nourricière",
+   "capacite_texte": "Une fois par jour, si le rôdeur passe 1d6 h en milieu naturel sauvage (pas dans un champ), il trouve de quoi nourrir une personne par rang pour une journée et, s’il réussit un test de PER (Survie) difficulté 10, il trouve des plantes médicinales pour soigner 1d4° PV par rang. Les plantes doivent être utilisées immédiatement (10 min de préparation et autant pour faire effet) et les dés peuvent être répartis sur plusieurs patients."
+  },
+  {
+   "nom": "Méphistère",
+   "domaine": "dieu de l'ombre et des secrets",
+   "symbole": "un masque",
+   "arme_sacree": "dague",
+   "capacite_nom": "discrétion",
+   "capacite_profil": "Voleur",
+   "capacite_voie_hint": "assassin",
+   "capacite_voie": "VOIE DE L’ASSASSIN",
+   "capacite_rang": 1,
+   "capacite_titre": "Discrétion",
+   "capacite_texte": "Le voleur ajoute son rang + 2 à tous les tests de discrétion, de déguisement ou pour cacher une arme sur lui. Il apprend le langage silencieux à base de signe des voleurs (argotien) et enfin il obtient un dé bonus en attaque lorsqu’il attaque un adversaire surpris."
+  },
+  {
+   "nom": "Mirandia",
+   "domaine": "déesse du sommeil et des rêves",
+   "symbole": "une demi-lune",
+   "arme_sacree": "bâton",
+   "capacite_nom": "sommeil",
+   "capacite_profil": "Ensorceleur",
+   "capacite_voie_hint": "envoûteur",
+   "capacite_voie": "VOIE DE L’ENVOÛTEUR",
+   "capacite_rang": 2,
+   "capacite_titre": "Sommeil (L)*",
+   "capacite_texte": "Une fois par combat, l’ensorceleur vise une zone de 10 m de diamètre à une portée maximale de 20 m. Le sort affecte jusqu’à [1d4° + CHA] créatures vivantes de NC inférieur à 1. Le sort affecte les créatures de NC inférieur à 2 au rang 4 puis à 3 au rang 5. Les créatures perdent conscience pendant CHA minutes. Il est possible de les réveiller en les cognant violemment (action d’attaque, 1 DM)."
+  },
+  {
+   "nom": "Möndovaël",
+   "domaine": "dieu des nomades et du voyage",
+   "symbole": "une botte",
+   "arme_sacree": "bâton",
+   "capacite_nom": "endurant",
+   "capacite_profil": "Rôdeur",
+   "capacite_voie_hint": "survie",
+   "capacite_voie": "VOIE DE LA SURVIE",
+   "capacite_rang": 1,
+   "capacite_titre": "Survie",
+   "capacite_texte": "Le rôdeur ajoute son rang + 2 à tous les tests d’escalade et de survie en milieu naturel (s’orienter, trouver un abri et de la nourriture, etc.) dont les tests de récupération effectués chaque nuit. Lorsqu’il dort en milieu naturel, s’il dépense 1 dé de récupération (DR), il guérit 1d4° PV supplémentaire (en plus de [DR max + ½ niveau])."
+  },
+  {
+   "nom": "Morn",
+   "domaine": "dieu de la mort et du passage dans l'au-delà",
+   "symbole": "une faux",
+   "arme_sacree": "faux à deux mains (DM 1d10)",
+   "capacite_nom": "masque mortuaire",
+   "capacite_profil": "Sorcier",
+   "capacite_voie_hint": "mort",
+   "capacite_voie": "VOIE DE LA MORT",
+   "capacite_rang": 2,
+   "capacite_titre": "Masque mortuaire (M)*",
+   "capacite_texte": "Le sorcier prend l’apparence de la mort pendant INT minutes. Il est alors considéré non‑vivant et devient immunisé à la plupart des pouvoirs des morts‑vivants (drain de vigueur et affaiblissement, paralysie de la goule, etc.). De plus, ceux‑ci le prennent pour l’un des leurs. Il divise par deux tous les DM de froid. Il ne peut pas bénéficier de soins tant qu’il est sous l’effet de ce sort. Note : Les créatures non vivantes sont infatigables, ne respirent pas et sont immunisées aux maladies, aux poisons et à la plupart des attaques qui demandent un test de CON. Elles voient dans le noir comme dans de la pénombre à une distance de 30 m."
+  },
+  {
+   "nom": "Orbis",
+   "domaine": "dieu du commerce et des marchands",
+   "symbole": "une pièce d'or",
+   "arme_sacree": "arbalète légère",
+   "capacite_nom": "sac sans fond",
+   "capacite_profil": "Forgesort",
+   "capacite_voie_hint": "artefacts",
+   "capacite_voie": "VOIE DES ARTEFACTS",
+   "capacite_rang": 3,
+   "capacite_titre": "Sac sans fond",
+   "capacite_texte": "Le forgesort possède un sac magique dans lequel il peut entreposer 50 kg de matériel par rang dans la voie, tandis que le sac semble toujours peser un kilogramme. Le sac ne fonctionne pas si on tente d’y mettre une créature vivante. Le sac est de plus capable de fournir au forgesort les objets qu’il désire. Une fois par heure, il peut en retirer un ou plusieurs objets dont la valeur totale ne dépasse pas 25 pa, le poids 50 kg, la circonférence 1 m et le volume 1 m3. Ces objets ont hélas la propriété de disparaître au bout d’une heure. De ce fait, la nourriture magique retirée du sac ne nourrit pas vraiment celui qui la consomme."
+  },
+  {
+   "nom": "Oumaros",
+   "domaine": "dieu de l'air et des cieux",
+   "symbole": "un nuage",
+   "arme_sacree": "arc (long ou court, au choix)",
+   "capacite_nom": "lévitation",
+   "capacite_profil": "Magicien",
+   "capacite_voie_hint": "arcanes",
+   "capacite_voie": "VOIE DE LA MAGIE DES ARCANES",
+   "capacite_rang": 2,
+   "capacite_titre": "Lévitation (M)*",
+   "capacite_texte": "Le magicien peut se déplacer verticalement de 5 m par action de mouvement vers le haut ou de 10 m vers le bas pendant INT minutes. Rester en vol stationnaire à la même hauteur demande une action de mouvement."
+  },
+  {
+   "nom": "Perinde",
+   "domaine": "déesse de la fertilité et des mères",
+   "symbole": "une femme enceinte",
+   "arme_sacree": "bâton",
+   "capacite_nom": "prison végétale",
+   "capacite_profil": "Druide",
+   "capacite_voie_hint": "végétaux",
+   "capacite_voie": "VOIE DES VÉGÉTAUX",
+   "capacite_rang": 2,
+   "capacite_titre": "Prison végétale (L)*",
+   "capacite_texte": "Le druide peut commander à la végétation de pousser et bloquer ses ennemis (mais pas ses alliés) dans une zone de 10 m de diamètre (portée 20 m) pendant PER minutes. Les cibles sont immobilisées. À son tour, une créature peut se libérer (action d’attaque) avec un test de FOR difficulté [10 + PER du druide]. En cas de réussite, elle n’est plus affectée par le sort pour le reste du combat."
+  },
+  {
+   "nom": "Sélenne",
+   "domaine": "déesse de la paix et de la liberté",
+   "symbole": "un oiseau blanc",
+   "arme_sacree": "mains nues",
+   "capacite_nom": "poings de fer",
+   "capacite_profil": "Moine",
+   "capacite_voie_hint": "poing",
+   "capacite_voie": "VOIE DU POING",
+   "capacite_rang": 1,
+   "capacite_titre": "Poings de fer",
+   "capacite_texte": "Lorsqu’il combat à mains nues, le moine peut (s’il le souhaite) remplacer sa FOR par son AGI pour ses tests d’attaque au contact et il inflige [1d6+FOR] DM létaux (Voir « DM temporaires » page 219). Ces DM augmentent à chaque rang suivant : 1d8 au rang 2, 1d10 au rang 3, 1d12 au rang 4 et enfin 2d6 au rang 5."
+  },
+  {
+   "nom": "Solar",
+   "domaine": "dieu de la lumière et du savoir",
+   "symbole": "le soleil",
+   "arme_sacree": "masse",
+   "capacite_nom": "lumière",
+   "capacite_profil": "Magicien",
+   "capacite_voie_hint": "magie universelle",
+   "capacite_voie": "VOIE DE LA MAGIE UNIVERSELLE",
+   "capacite_rang": 1,
+   "capacite_titre": "Lumière (L)*",
+   "capacite_texte": "Le magicien désigne un objet à moins de 10 m. Celui‑ci produit de la lumière dans un rayon de 10 m pendant INT heures. Cette source de lumière n’émet pas de chaleur. Une fois par combat, le magicien peut lancer ce sort sur les yeux d’une créature dont le NC ne dépasse pas le rang atteint dans la voie. S’il réussit un test opposé d’attaque magique, elle est aveuglée pendant 1 round."
+  },
+  {
+   "nom": "Suëlle",
+   "domaine": "déesse de la beauté et de l'amour",
+   "symbole": "un cœur",
+   "arme_sacree": "bâton",
+   "capacite_nom": "beauté de la succube",
+   "capacite_profil": "Sorcier",
+   "capacite_voie_hint": "démon",
+   "capacite_voie": "VOIE DU DÉMON",
+   "capacite_rang": 2,
+   "capacite_titre": "Beauté de la succube (L)*",
+   "capacite_texte": "Le sorcier acquiert une beauté fascinante pour INT minutes. Il gagne un dé bonus aux tests de CHA ainsi qu’une attaque de contact nécessitant un test d’attaque magique (contre DEF, action d’attaque), qui inflige [1d4°+INT] DM. Le sorcier récupère autant de PV (sans dépasser son maximum de PV) que la cible en a perdu."
+  },
+  {
+   "nom": "Trenner",
+   "domaine": "dieu du temps et des ancêtres",
+   "symbole": "un sablier",
+   "arme_sacree": "bâton",
+   "capacite_nom": "rumeurs et légendes",
+   "capacite_profil": "Barde",
+   "capacite_voie_hint": "vagabond",
+   "capacite_voie": "VOIE DU VAGABOND",
+   "capacite_rang": 1,
+   "capacite_titre": "Rumeurs et légendes",
+   "capacite_texte": "À force de voyager, le barde possède une culture générale très vaste, il ajoute son rang + 2 aux tests d’INT pour se souvenir d’une information historique, politique, géographique ou occulte ou encore pour identifier un objet magique difficulté (25 – (2 x niveau de magie de l’objet))."
+  },
+  {
+   "nom": "Tulsadùm",
+   "domaine": "dieu de la jungle et des reptiles",
+   "symbole": "un serpent qui se mord la queue",
+   "arme_sacree": "arc court",
+   "capacite_nom": "terrains difficiles",
+   "capacite_profil": "Druide",
+   "capacite_voie_hint": "nature",
+   "capacite_voie": "VOIE DE LA NATURE",
+   "capacite_rang": 2,
+   "capacite_titre": "Terrains difficiles",
+   "capacite_texte": "Le druide ne subit aucune pénalité de déplacement en terrain difficile (natation, neige, boue, broussailles, pente abrupte, etc.). Il obtient un bonus de +3 en initiative, et +1 en attaque et en DEF lors d’un combat dans ces conditions."
+  },
+  {
+   "nom": "Tyriolith",
+   "domaine": "dieu du combat contre le chaos et du feu purificateur",
+   "symbole": "une flamme",
+   "arme_sacree": "masse",
+   "capacite_nom": "feu grégeois 3/jours",
+   "capacite_profil": "Forgesort",
+   "capacite_voie_hint": "élixirs",
+   "capacite_voie": "VOIE DES ÉLIXIRS",
+   "capacite_rang": 2,
+   "capacite_titre": "Feu grégeois (L)",
+   "capacite_texte": "Le forgesort lance la fiole à une distance maximale de 10 m (réussite automatique). Le contenu explose dans un rayon de 3 m en infligeant 2d4° DM. Un test d’AGI difficulté [10 + INT du forgesort] réussi permet aux victimes de diviser les DM par deux. Les DM passent à 3d4° au rang 4 et 4d4° au rang 5."
+  },
+  {
+   "nom": "Vorona",
+   "domaine": "déesse de la justice et de la loi",
+   "symbole": "une balance",
+   "arme_sacree": "épée longue",
+   "capacite_nom": "sans peur",
+   "capacite_profil": "Chevalier",
+   "capacite_voie_hint": "meneur d'hommes",
+   "capacite_voie": "VOIE DU MENEUR D’HOMMES",
+   "capacite_rang": 1,
+   "capacite_titre": "Sans peur",
+   "capacite_texte": "Le chevalier est immunisé aux effets de peur et il offre un bonus égal à son CHA aux tests de tous ses alliés contre ce type d’effet. De plus, le chevalier ajoute son rang + 2 aux tests de stratégie et de tactique militaire ou pour commander une troupe."
+  }
  ]
 }</script>
 <script>
@@ -5657,6 +7149,7 @@ const DEFAULT_SETTINGS = {
   peuplesAlternatifs: false,
   methodeAchat: false,
   ageVariable: false,
+  profilsSupplementaires: false,
 };
 function ensureSettings() {
   if (!state.settings) state.settings = Object.assign({}, DEFAULT_SETTINGS);
@@ -5672,12 +7165,21 @@ function settingsScreenHtml() {
     <div class="settings-body">
       <div class="setting-row">
         <div class="setting-info">
-          <div class="setting-name">Peuples alternatifs</div>
+          <div class="setting-name">Peuples alternatifs officiels</div>
           <div class="setting-desc">Propose des peuples optionnels/exotiques en plus des 8 peuples du livre de base, à l'étape « Peuple » de la création.</div>
         </div>
         <button class="switch ${state.settings.peuplesAlternatifs?'on':''}" data-action="setting-toggle" data-key="peuplesAlternatifs" role="switch" aria-checked="${state.settings.peuplesAlternatifs}"><span class="knob"></span></button>
       </div>
-      <p class="hint" style="margin-top:6px;">Cette option n'a pas encore de contenu : le document de règles utilisé pour cette application ne couvre que les 8 peuples du livre de base, et les peuples optionnels existants ne viennent que d'extensions ou de créations communautaires non officielles. Dites-moi lesquels vous voulez et je les ajouterai.</p>
+      <p class="hint" style="margin-top:6px;">Actuellement disponibles : âme forgée, satyre, wolfer. Donnez-moi le détail d'un peuple supplémentaire à la fois (automaton, mélonéide, krustian, nautilien…) et je l'ajouterai à la liste.</p>
+
+      <div class="setting-row" style="margin-top:12px;">
+        <div class="setting-info">
+          <div class="setting-name">Profils alternatifs officiels</div>
+          <div class="setting-desc">Ajoute 4 profils aux familles existantes : Caravanier (aventuriers), Parangon (combattants), Primaliste (mages), Chamane (mystiques).</div>
+        </div>
+        <button class="switch ${state.settings.profilsSupplementaires?'on':''}" data-action="setting-toggle" data-key="profilsSupplementaires" role="switch" aria-checked="${state.settings.profilsSupplementaires}"><span class="knob"></span></button>
+      </div>
+      <p class="hint" style="margin-top:6px;">Une fois activée, ces profils apparaissent avec les autres à l'étape « Profil » de la famille correspondante, marqués d'un badge.</p>
 
       <div class="setting-row" style="margin-top:12px;">
         <div class="setting-info">
@@ -5686,7 +7188,7 @@ function settingsScreenHtml() {
         </div>
         <button class="switch ${state.settings.methodeAchat?'on':''}" data-action="setting-toggle" data-key="methodeAchat" role="switch" aria-checked="${state.settings.methodeAchat}"><span class="knob"></span></button>
       </div>
-      <p class="hint" style="margin-top:6px;">Une fois activée, l'étape « Caractéristiques » de la création propose de choisir entre les séries fixes et cette méthode par achat de points. Ce n'est pas une règle officielle du livre de base — c'est une variante que vous m'avez fournie.</p>
+      <p class="hint" style="margin-top:6px;">Une fois activée, l'étape « Caractéristiques » de la création propose de choisir entre les séries fixes et cette méthode par achat de points. Règle optionnelle officielle, tirée de l'Atlas d'Osgild &amp; Règles Optionnelles.</p>
 
       <div class="setting-row" style="margin-top:12px;">
         <div class="setting-info">
@@ -5695,7 +7197,7 @@ function settingsScreenHtml() {
         </div>
         <button class="switch ${state.settings.ageVariable?'on':''}" data-action="setting-toggle" data-key="ageVariable" role="switch" aria-checked="${state.settings.ageVariable}"><span class="knob"></span></button>
       </div>
-      <p class="hint" style="margin-top:6px;">Une fois activée, la catégorie d'âge et ses effets s'affichent à l'étape « Peuple », sous le champ Âge. Comme pour la méthode par achat, ce n'est pas une règle du livre de base — c'est une variante que vous m'avez fournie.</p>
+      <p class="hint" style="margin-top:6px;">Une fois activée, la catégorie d'âge et ses effets s'affichent à l'étape « Peuple », sous le champ Âge. Règle optionnelle officielle, tirée elle aussi de l'Atlas d'Osgild &amp; Règles Optionnelles.</p>
     </div>
   `;
 }
@@ -5711,6 +7213,8 @@ let state = {
   ideal: '', travers: '', secret: '', // chosen (or randomly rolled) from the d20 tables
   age: '', taille: '', poids: '', // physical traits, chosen within the peuple's range at step "Peuple"
   ageBonusChoice: null, // 'PC' | 'DR' — only relevant for the "très jeune" age category
+  equipChoix: null, // [choiceGroupIdx]: chosen option index, for the current profil's equipement_choix
+  equipCustomText: {}, // {choiceGroupIdx: string} — free text for "(à préciser)" options
   savedId: null, // id of the localStorage save slot this character is tied to, once saved
   niveau: 1,
   peupleRank: null, // lazily initialised by ensureProgression()
@@ -5737,13 +7241,17 @@ let state = {
   assign: {}, // code -> base value
   methodeCarac: null, // 'serie' | 'achat' — which characteristic method is active for this character
   caracFaibles: [], // codes marked as "faible" (-1) under the point-buy method, max 2
+  pretreType: null, // 'generaliste' | 'specialiste' — only asked when the profil is Prêtre
+  pretreDieuNom: null, // chosen deity's name, when pretreType==='specialiste'
+  pretreDivineVoieIdx: null, // 0 or 1 — which of the 2 chosen creation voies has its rank 1 replaced by the divine capacity (only when the capacity's own rank is 1)
+  pretreDivineTarget: null, // {kind:'peuple'|'mage'|'profil'|'slot', idx} — auto-bound to the first voie that reaches the divine capacity's rank, when that rank is > 1
   peupleChoice: {}, // for +1/-1 choices: {plus: 'PER', minus:'FOR'} etc, or humain: {plus:'INT'}
   demiElfeVoie: null, // 'Humain' | 'Elfe haut' | 'Elfe sylvain'
   voiesChoisies: [], // array of voie objects (2 of them) from profil
   mageBonus: null, // {type:'voie', index:0} or {type:'mage'}
 };
 
-const TOTAL_STEPS = 11; // 0..11 -> 12 screens, sheet is step 11
+const TOTAL_STEPS = 12; // 0..12 -> 13 screens, sheet is step 12
 
 // ===== Local save slots (browser storage, survives closing/reopening this file) =====
 const SAVES_KEY = 'cof2_character_saves_v1';
@@ -5791,7 +7299,7 @@ function loadSave(id) {
   if (!entry) return;
   state = JSON.parse(JSON.stringify(entry.state));
   state.savedId = id;
-  state.step = 11; // saves are only offered once a fiche exists, so resume there
+  state.step = 12; // saves are only offered once a fiche exists, so resume there
   if (!state.languesChoisies) state.languesChoisies = []; // older saves predate this field
   if (!state.langueSlotIsTalent) state.langueSlotIsTalent = [];
   if (state.ideal === undefined) state.ideal = '';
@@ -5803,6 +7311,12 @@ function loadSave(id) {
   if (state.methodeCarac === undefined) state.methodeCarac = null;
   if (!state.caracFaibles) state.caracFaibles = [];
   if (state.ageBonusChoice === undefined) state.ageBonusChoice = null;
+  if (state.equipChoix === undefined) state.equipChoix = null;
+  if (!state.equipCustomText) state.equipCustomText = {};
+  if (state.pretreType === undefined) state.pretreType = null;
+  if (state.pretreDieuNom === undefined) state.pretreDieuNom = null;
+  if (state.pretreDivineVoieIdx === undefined) state.pretreDivineVoieIdx = null;
+  if (state.pretreDivineTarget === undefined) state.pretreDivineTarget = null;
 }
 function formatSaveDate(iso) {
   try {
@@ -5814,6 +7328,14 @@ function formatSaveDate(iso) {
 
 function famille() { return state.familleIdx!=null ? DATA.families[state.familleIdx] : null; }
 function profil() { return (state.familleIdx!=null && state.profilIdx!=null) ? DATA.families[state.familleIdx].profils[state.profilIdx] : null; }
+function isPretre() { const p = profil(); return !!p && p.nom === 'Prêtre'; }
+
+// A small consistent marker shown wherever an activated Réglages option is
+// currently shaping what's on screen, so it's always clear that content
+// comes from an optional variant rather than the base rules.
+function settingBadgeHtml(label) {
+  return `<span class="setting-badge">⚙ ${label||'Réglage activé'}</span>`;
+}
 function peuple() { return state.peupleIdx!=null ? DATA.peoples[state.peupleIdx] : null; }
 
 // ===== Variable starting age (optional, non-official variant) =====
@@ -5880,7 +7402,7 @@ function ageAdjustmentsReminderHtml() {
     parts.push('−1 AGI', '−1 CON', '+4 points de capacité à la création (rang 3 max)');
   }
   return `<div class="dcard" style="margin-bottom:14px;">
-    <div class="dcard-title">Ajustements liés à l'âge — ${AGE_CATEGORY_LABELS[cat]}</div>
+    <div class="dcard-title" style="display:flex; align-items:center; justify-content:space-between; gap:8px;"><span>Ajustements liés à l'âge — ${AGE_CATEGORY_LABELS[cat]}</span>${settingBadgeHtml('Âge variable')}</div>
     <p class="hint" style="margin:0;">${parts.join(' · ')}</p>
   </div>`;
 }
@@ -5904,7 +7426,7 @@ function render() {
     <div class="header">
       <div class="title-row">
         <div class="brand">✦ Forger un héros</div>
-        <div class="steplabel">${state.step===11? 'Fiche' : 'Étape ' + (state.step) + ' / 10'}</div>
+        <div class="steplabel">${state.step===12? 'Fiche' : 'Étape ' + (state.step) + ' / 11'}</div>
       </div>
       <div class="rail">${railHtml()}</div>
     </div>
@@ -5917,7 +7439,7 @@ function render() {
 
 function railHtml() {
   let segs = '';
-  for (let i=0;i<=10;i++){
+  for (let i=0;i<=11;i++){
     let cls = i < state.step ? 'done' : (i===state.step ? 'active' : '');
     // Completed steps are clickable so the person can jump straight back to
     // review or change an earlier choice, instead of only stepping back one
@@ -5937,15 +7459,16 @@ function sceneHtml() {
     case 0: return step0();
     case 1: return step1_famille();
     case 2: return step2_profil();
-    case 3: return step3_peuple();
-    case 4: return step4_caracteristiques();
-    case 5: return step5_modpeuple();
-    case 6: return step6_voies();
-    case 7: return step7_voiepeuple();
-    case 8: return step8_progression();
-    case 9: return step9_equipement();
-    case 10: return step10_touchefinale();
-    case 11: return step11_fiche();
+    case 3: return step3_religion();
+    case 4: return step3_peuple();
+    case 5: return step4_caracteristiques();
+    case 6: return step5_modpeuple();
+    case 7: return step6_voies();
+    case 8: return step7_voiepeuple();
+    case 9: return step8_progression();
+    case 10: return step9_equipement();
+    case 11: return step10_touchefinale();
+    case 12: return step11_fiche();
     default: return '';
   }
 }
@@ -6010,13 +7533,16 @@ function step1_famille() {
 
 function step2_profil() {
   const fam = famille();
+  const showSupp = state.settings && state.settings.profilsSupplementaires;
   let cards = fam.profils.map((p,i) => {
+    if (p.supplementaire && !showSupp) return ''; // hidden unless the setting is on, index stays true to fam.profils
     const sel = state.profilIdx===i ? 'selected' : '';
     return `<div class="card ${sel}" data-action="profil" data-idx="${i}">
       <div class="card-head">
         <div>
           <div class="card-name">${p.nom}</div>
         </div>
+        ${p.supplementaire ? settingBadgeHtml('Profil supplémentaire') : ''}
       </div>
       <div class="card-desc">${p.accroche}</div>
       <div class="tag-row">${p.carac_cles.map(c=>`<span class="tag key">${c}</span>`).join('')}</div>
@@ -6026,6 +7552,50 @@ function step2_profil() {
     <h1 class="scene-title">Choisir un profil</h1>
     <p class="lede">Les caractéristiques en évidence sont celles associées au profil — il est conseillé d'y affecter vos meilleures valeurs.</p>
     ${cards}`;
+}
+
+function step3_religion() {
+  const generalisteChosen = state.pretreType === 'generaliste';
+  const specialisteChosen = state.pretreType === 'specialiste';
+  const dieu = state.pretreDieuNom ? DATA.pantheon_osgild.find(d => d.nom === state.pretreDieuNom) : null;
+
+  let body = `<div class="choice-btns">
+    <button class="chip ${generalisteChosen?'on':''}" data-action="pretre-type" data-type="generaliste">Généraliste</button>
+    <button class="chip ${specialisteChosen?'on':''}" data-action="pretre-type" data-type="specialiste">Spécialiste</button>
+  </div>`;
+
+  if (generalisteChosen) {
+    body += `<div class="dcard" style="margin-top:12px;">
+      <div class="dcard-title">Prêtre généraliste</div>
+      <p class="hint" style="margin:0;">Vous priez l'ensemble (ou une sélection) des dieux d'un panthéon, sans exclusivité. Le profil suit les règles de base, sans aucune modification — la liste des dieux d'Osgild peut simplement vous inspirer pour vos prières du quotidien.</p>
+    </div>`;
+  } else if (specialisteChosen) {
+    body += `<p class="hint" style="margin-top:12px;">Choisissez le dieu unique dont vous portez la parole. Vous maîtrisez son arme sacrée et obtenez automatiquement sa capacité divine.</p>
+      <div class="deity-list">
+        ${DATA.pantheon_osgild.map(d => `<button class="deity-row ${state.pretreDieuNom===d.nom?'on':''}" data-action="pretre-dieu" data-nom="${escapeHtml(d.nom)}">
+          <span class="deity-nom">${escapeHtml(d.nom)}</span>
+          <span class="deity-domaine">${escapeHtml(d.domaine)}</span>
+        </button>`).join('')}
+      </div>`;
+    if (dieu) {
+      body += `<div class="dcard" style="margin-top:12px;">
+        <div class="dcard-title">${dieu.nom}, ${dieu.domaine}</div>
+        <p class="hint" style="margin:0 0 8px;">Symbole : ${dieu.symbole} · Arme sacrée : ${dieu.arme_sacree}</p>
+        <div class="rank-item">
+          <div class="rank-num">${dieu.capacite_rang}</div>
+          <div class="rank-body">
+            <div class="rank-title">${dieu.capacite_titre}${isSpell(dieu.capacite_titre)?' <span class="spell-star">✦</span>':''} <span style="font-size:11px;color:#8a7b5c;">(${dieu.capacite_voie_hint!=='mage'?dieu.capacite_profil:'voie du mage'})</span></div>
+            <div class="rank-text">${dieu.capacite_texte}</div>
+          </div>
+        </div>
+      </div>`;
+    }
+  }
+
+  return `<div class="eyebrow">Prêtre</div>
+    <h1 class="scene-title">Généraliste ou spécialiste ?</h1>
+    <p class="lede">Un prêtre généraliste sert un panthéon dans son ensemble ; un spécialiste porte la parole d'un seul dieu, à l'exclusion de tout autre.</p>
+    ${body}`;
 }
 
 // Parse the min (and max, when given) out of the peuple's range strings,
@@ -6041,10 +7611,12 @@ function peupleTailleRange(p) { return parseRange(p.taille); }
 function peuplePoidsRange(p) { return parseRange(p.poids); }
 
 function step3_peuple() {
+  const showAlt = state.settings && state.settings.peuplesAlternatifs;
   let cards = DATA.peoples.map((p,i) => {
+    if (p.alternatif && !showAlt) return ''; // hidden unless the setting is on, but index stays true to DATA.peoples
     const sel = state.peupleIdx===i ? 'selected' : '';
     return `<div class="card ${sel}" data-action="peuple" data-idx="${i}">
-      <div class="card-head"><div class="card-name">${p.nom}</div></div>
+      <div class="card-head"><div class="card-name">${p.nom}</div>${p.alternatif ? settingBadgeHtml('Peuple alternatif') : ''}</div>
       <div class="card-desc">${p.description}</div>
       <div class="tag-row">
         <span class="tag">${p.caracteristiques_mod}</span>
@@ -6117,7 +7689,7 @@ function ageCategoryBoxHtml() {
     </div>`;
   }
   return `<div class="dcard" style="margin:4px 0 8px;">
-    <div class="dcard-title">Catégorie d'âge : ${AGE_CATEGORY_LABELS[cat]}</div>
+    <div class="dcard-title" style="display:flex; align-items:center; justify-content:space-between; gap:8px;"><span>Catégorie d'âge : ${AGE_CATEGORY_LABELS[cat]}</span>${settingBadgeHtml('Âge variable')}</div>
     <p class="hint" style="margin:0;">${effects[cat]}</p>
     ${choiceHtml}
   </div>`;
@@ -6267,7 +7839,7 @@ function step4_achat(p, methodSwitcher) {
   }).join('');
 
   return `<div class="eyebrow">${p.nom}</div>
-    <h1 class="scene-title">Répartir les caractéristiques</h1>
+    <h1 class="scene-title">Répartir les caractéristiques ${settingBadgeHtml('Méthode par achat')}</h1>
     <p class="lede">Toutes les caractéristiques démarrent à 0. Achetez des valeurs plus élevées selon le barème (+1 : 1 pt, +2 : 2 pts, +3 : 4 pts, +4 : 6 pts) pour un total de 7 points. ★ = caractéristiques associées au profil.</p>
     ${methodSwitcher}
 
@@ -6379,6 +7951,7 @@ function step6_voies() {
     const r1 = v.ranks[0];
     return `<div class="card ${sel}" data-action="voie" data-idx="${i}">
       <div class="card-head"><div class="card-name">${titleCase(v.nom)}</div></div>
+      ${v.intro ? `<p class="card-desc" style="margin-top:-4px;">${v.intro}</p>` : ''}
       <div class="rank-item" style="border-top:none;">
         <div class="rank-num">1</div>
         <div class="rank-body">
@@ -6419,13 +7992,31 @@ function step6_voies() {
     }
   }
 
+  let divineChoice = '';
+  const dieuR1 = pretreDivineRank1();
+  if (dieuR1 && chosen.length===2) {
+    divineChoice = `<div class="section-div">Capacité divine — ${dieuR1.nom}</div>
+      <p style="color:#cfc2a3;font-size:14px;">Cette capacité (rang 1) remplace obligatoirement le rang 1 d'une des deux voies choisies.</p>
+      <div class="choice-btns">
+        ${chosen.map((ci, pos) => {
+          const v = voies[ci];
+          const on = state.pretreDivineVoieIdx === pos;
+          return `<button class="chip ${on?'on':''}" data-action="pretre-divine-voie" data-pos="${pos}">${titleCase(v.nom)}</button>`;
+        }).join('')}
+      </div>`;
+    if (state.pretreDivineVoieIdx !== null) {
+      divineChoice += `<div class="dcard"><div class="rank-item" style="border-top:none;"><div class="rank-num">1</div><div class="rank-body"><div class="rank-title">${dieuR1.capacite_titre}${isSpell(dieuR1.capacite_titre)?' <span class="spell-star">✦</span>':''}</div><div class="rank-text">${dieuR1.capacite_texte}</div></div></div></div>`;
+    }
+  }
+
   return `<div class="eyebrow">${p.nom}</div>
     <h1 class="scene-title">Choisir ${need} voie${need>1?'s':''}</h1>
     <p class="lede">Vous obtenez automatiquement le rang 1 de chaque voie choisie.</p>
     ${warn}
     <div class="badge-count">${chosen.length} / ${need} sélectionnée(s)</div>
     ${cards}
-    ${mageBonus}`;
+    ${mageBonus}
+    ${divineChoice}`;
 }
 
 function step7_voiepeuple() {
@@ -6474,12 +8065,56 @@ function step8_progression() {
     ${progressionSectionHtml(s)}`;
 }
 
+// Combines a profile's fixed starting equipment with whatever the player
+// picked for each "au choix" group (falling back to the first option so
+// there's always a sensible default even before the player visits the
+// Équipement step).
+function equipmentChosenText(p) {
+  const choix = p.equipement_choix || [];
+  const parts = choix.map((grp, gi) => {
+    const idx = (state.equipChoix && state.equipChoix[gi] !== undefined) ? state.equipChoix[gi] : 0;
+    let opt = grp.options[idx] || '';
+    if (opt.includes('(à préciser)') && state.equipCustomText && state.equipCustomText[gi]) {
+      opt = opt.replace('(à préciser)', `: ${state.equipCustomText[gi]}`);
+    }
+    return opt;
+  });
+  // A prêtre spécialiste always masters and carries their deity's sacred weapon.
+  if (isPretre() && state.pretreType === 'specialiste' && state.pretreDieuNom) {
+    const dieu = DATA.pantheon_osgild.find(d => d.nom === state.pretreDieuNom);
+    if (dieu) parts.push(`Arme sacrée de ${dieu.nom} : ${dieu.arme_sacree}.`);
+  }
+  return [p.equipement_depart, ...parts].filter(Boolean).join(' ');
+}
+
 function step9_equipement() {
   const p = profil();
+  const choix = p.equipement_choix || [];
+  if (!state.equipChoix || state.equipChoix.length !== choix.length) {
+    state.equipChoix = choix.map(() => 0);
+  }
+  const choixHtml = choix.map((grp, gi) => {
+    const chosenIdx = state.equipChoix[gi];
+    const chosenOpt = grp.options[chosenIdx] || '';
+    const isCustom = chosenOpt.includes('(à préciser)');
+    return `<div class="dcard">
+      <div class="dcard-title">${grp.label || "Choix d'équipement"}</div>
+      <div class="choice-btns">
+        ${grp.options.map((opt,oi) => `<button class="chip ${chosenIdx===oi?'on':''}" data-action="equip-choice" data-group="${gi}" data-opt="${oi}">${opt}</button>`).join('')}
+      </div>
+      ${isCustom ? `<input class="name-input" style="margin-top:8px;" data-action-input="equip-custom" data-group="${gi}" value="${escapeHtml((state.equipCustomText||{})[gi]||'')}" placeholder="Précisez l'arme…">` : ''}
+    </div>`;
+  }).join('');
+
+  const dieu = (isPretre() && state.pretreType==='specialiste' && state.pretreDieuNom)
+    ? DATA.pantheon_osgild.find(d => d.nom === state.pretreDieuNom) : null;
+
   return `<div class="eyebrow">Barda de départ</div>
     <h1 class="scene-title">Équipement</h1>
     <div class="dcard"><div class="dcard-title">Sac d'aventurier</div><p>${DATA.equipement_generique}</p></div>
     <div class="dcard"><div class="dcard-title">Équipement de ${p.nom}</div><p>${p.equipement_depart}</p></div>
+    ${choixHtml}
+    ${dieu ? `<div class="dcard"><div class="dcard-title">Arme sacrée de ${dieu.nom}</div><p>${dieu.arme_sacree}</p></div>` : ''}
     <div class="dcard"><div class="dcard-title">Armes &amp; armures maîtrisées</div><p>${p.armes_armures}</p></div>`;
 }
 
@@ -6590,6 +8225,40 @@ function canAcquire(nextRank, isOpeningNewVoie, isPrestige) {
   return {ok:true, cost, reqLevel};
 }
 
+// ===== Hybrid profile: points de vigueur (simplified house rule) =====
+// Rule: PV gained per level depend on which family the capacities taken at
+// that level come from — same family throughout is the simple case (use
+// that family's flat PV/level); a mix averages the families involved. Our
+// point pool isn't tracked level-by-level, so per the simplified variant
+// agreed with the user, this instead blends ACROSS ALL capacity points
+// currently spent (weighted by how many points went to each family),
+// always rounding down — a reasonable approximation of the same intent.
+// Voie de peuple / mage / prestige / the 2 creation voies always count as
+// the primary family (never averaged), matching "l'alternative" in the
+// rule text for voie de peuple, generalised to the other primary-only
+// categories since none of them represent a genuine second family either.
+function hybridPvBase() {
+  const fam = famille();
+  const primaryBase = fam.stats.pv_base;
+  const secondaryPointsByFam = {};
+  (state.extraSlots||[]).forEach(slot => {
+    if (!slot || slot.familleIdx === state.familleIdx) return;
+    let pts = rankCost(1);
+    for (let r=2; r<=slot.rank; r++) pts += rankCost(r);
+    secondaryPointsByFam[slot.familleIdx] = (secondaryPointsByFam[slot.familleIdx]||0) + pts;
+  });
+  const secKeys = Object.keys(secondaryPointsByFam);
+  if (secKeys.length === 0) return primaryBase; // "cas idéal" — one family throughout
+  const totalSecondary = secKeys.reduce((s,k) => s + secondaryPointsByFam[k], 0);
+  const totalSpent = pointsSpent();
+  const totalPrimary = Math.max(0, totalSpent - totalSecondary);
+  let weightedSum = primaryBase * totalPrimary;
+  secKeys.forEach(k => { weightedSum += DATA.families[k].stats.pv_base * secondaryPointsByFam[k]; });
+  const totalPts = totalPrimary + totalSecondary;
+  if (totalPts === 0) return primaryBase;
+  return Math.floor(weightedSum / totalPts);
+}
+
 function computeSheet() {
   ensureProgression();
   const fam = famille(); const p = profil(); const pe = peuple();
@@ -6602,9 +8271,10 @@ function computeSheet() {
   const INT = finalCaracValue('INT');
 
   const niveau = state.niveau;
-  const pvBase = fam.stats.pv_base;
+  const pvBase = hybridPvBase();
   // Level 1 baseline is 2× the family base + CON; each level beyond that
-  // adds (family base + CON), per "Progression & niveau".
+  // adds (family base + CON), per "Progression & niveau". pvBase reflects
+  // the hybrid blend above once any hybrid capacity points are spent.
   const pv = (2*pvBase + CON) + (niveau - 1) * (pvBase + CON);
   const drCount = (fam.stats.dr_bonus ? 3 : 2) + CON + (ageBonusIsDR() ? 1 : 0);
   const pc = 2 + CHA + (fam.stats.pc_bonus || 0) + (ageBonusIsPC() ? 1 : 0);
@@ -6628,32 +8298,42 @@ function computeSheet() {
     peupleVoieObj = pe.voies[0];
   }
   if (peupleVoieObj) {
+    peupleVoieObj = voieWithDivineOverride(peupleVoieObj, 'peuple');
     peupleVoieNom = peupleVoieObj.nom;
     peupleVoieRank1 = peupleVoieObj.ranks[0];
     peupleVoieObj.ranks.slice(0, state.peupleRank).forEach(r => { if (isSpell(r.titre)) spellCount++; });
   }
   if (state.mageBonus && state.mageBonus.type==='mage') {
-    DATA.mage_voies[0].ranks.slice(0, state.mageVoieRank).forEach(r => { if (isSpell(r.titre)) spellCount++; });
+    const mageVoie = voieWithDivineOverride(DATA.mage_voies[0], 'mage');
+    mageVoie.ranks.slice(0, state.mageVoieRank).forEach(r => { if (isSpell(r.titre)) spellCount++; });
   }
   // The 2 voies chosen at creation (still using p.voies[i] since they're
   // always from the primary profile).
   state.voiesChoisies.forEach(i => {
     const owned = state.profilVoieRanks[i] || 0;
-    p.voies[i].ranks.slice(0, owned).forEach(r => { if (isSpell(r.titre)) spellCount++; });
+    const v = voieWithDivineOverride(p.voies[i], 'profil', i);
+    v.ranks.slice(0, owned).forEach(r => { if (isSpell(r.titre)) spellCount++; });
   });
   // The 3 extra slots, each possibly from a different profile.
-  (state.extraSlots||[]).forEach(slot => {
+  (state.extraSlots||[]).forEach((slot, slotIdx) => {
     if (!slot) return;
     const srcFam = DATA.families[slot.familleIdx];
     const srcProfil = srcFam && srcFam.profils[slot.profilIdx];
     if (!srcProfil) return;
-    srcProfil.voies[slot.voieIdx].ranks.slice(0, slot.rank).forEach(r => { if (isSpell(r.titre)) spellCount++; });
+    const v = voieWithDivineOverride(srcProfil.voies[slot.voieIdx], 'slot', slotIdx);
+    v.ranks.slice(0, slot.rank).forEach(r => { if (isSpell(r.titre)) spellCount++; });
   });
   // The prestige voie, if any (ranks 4-8, so filtered by rank number rather
   // than sliced by count).
   if (state.prestigeChoice) {
     const pv = DATA.prestige_voies[state.prestigeChoice.famille][state.prestigeChoice.idx];
     (pv.ranks||[]).filter(r => r.rang <= state.prestigeRank).forEach(r => { if (isSpell(r.titre)) spellCount++; });
+  }
+  // The prêtre spécialiste's divine capacity, when its rank is > 1 (rank-1
+  // ones are already counted above, woven into a chosen voie).
+  if (isPretre() && state.pretreType==='specialiste' && state.pretreDieuNom) {
+    const dieu = DATA.pantheon_osgild.find(d => d.nom === state.pretreDieuNom);
+    if (dieu && dieu.capacite_rang !== 1 && isSpell(dieu.capacite_titre)) spellCount++;
   }
   const pm = spellCount>0 ? (VOL + spellCount) : 0;
 
@@ -6769,7 +8449,7 @@ function step11_fiche() {
       <div class="sheet-sub">${s.p.nom} · ${s.pe.nom} · Niveau ${s.niveau}</div>
     </div>
 
-    ${capaRemaining > 0 ? `<div class="warn">⚠️ Il vous reste ${capaRemaining} point${capaRemaining>1?'s':''} de capacité non dépensé${capaRemaining>1?'s':''} au niveau ${s.niveau}. <a data-action="goto" data-step="8" style="color:inherit; text-decoration:underline;">Retourner à la progression</a> pour les utiliser.</div>` : ''}
+    ${capaRemaining > 0 ? `<div class="warn">⚠️ Il vous reste ${capaRemaining} point${capaRemaining>1?'s':''} de capacité non dépensé${capaRemaining>1?'s':''} au niveau ${s.niveau}. <a data-action="goto" data-step="9" style="color:inherit; text-decoration:underline;">Retourner à la progression</a> pour les utiliser.</div>` : ''}
 
     ${portraitHtml}
 
@@ -6791,10 +8471,10 @@ function step11_fiche() {
     <div class="section-div">Statistiques dérivées</div>
     <div class="derived-grid">${derived.map(([k,v])=>`<div class="derived-row"><span class="k">${k}</span><span class="v">${v}</span></div>`).join('')}</div>
     <p class="hint">La FOR s'ajoute aux DM des armes de contact ; aucune valeur n'est ajoutée aux DM des armes à distance (sauf capacité contraire). Les valeurs d'attaque cessent d'augmenter au niveau 10.</p>
-    <a class="restart-link" data-action="goto" data-step="8" style="margin-top:0;">✦ Voir / modifier la progression (niveau, voies, points de capacité)</a>
+    <a class="restart-link" data-action="goto" data-step="9" style="margin-top:0;">✦ Voir / modifier la progression (niveau, voies, points de capacité)</a>
 
     <div class="section-div">Équipement</div>
-    <div class="dcard"><p>${DATA.equipement_generique}</p><p>${s.p.equipement_depart}</p><p>${s.p.armes_armures}</p></div>
+    <div class="dcard"><p>${DATA.equipement_generique}</p><p>${equipmentChosenText(s.p)}</p><p>${s.p.armes_armures}</p></div>
 
     <a class="restart-link" data-action="restart">✦ Créer un nouveau héros</a>
   `;
@@ -6849,9 +8529,11 @@ function progressionSectionHtml(s) {
     html += voieFullHtml(DATA.mage_voies[0], state.mageVoieRank, acquireButtonHtml(state.mageVoieRank, false, 'acquire-mage-voie', null, false, 2));
   }
 
+  html += pretreDivinePendingHtml();
+
   // The 2 voies chosen at creation — always from the primary profile.
   state.voiesChoisies.forEach(i => {
-    const v = p.voies[i];
+    const v = voieWithDivineOverride(p.voies[i], 'profil', i);
     const owned = state.profilVoieRanks[i] || 0;
     const baseline = (state.mageBonus && state.mageBonus.type==='voie' && state.mageBonus.index===i) ? 2 : 1;
     html += voieFullHtml(v, owned, acquireButtonHtml(owned, false, 'acquire-profil', i, false, baseline));
@@ -6876,9 +8558,16 @@ function slotsSectionHtml(s) {
     if (slot) {
       const srcFam = DATA.families[slot.familleIdx];
       const srcProfil = srcFam.profils[slot.profilIdx];
-      const v = srcProfil.voies[slot.voieIdx];
+      const v = voieWithDivineOverride(srcProfil.voies[slot.voieIdx], 'slot', slotIdx);
       const isHybrid = !(slot.familleIdx===state.familleIdx && slot.profilIdx===state.profilIdx);
       const extra = acquireButtonHtml(slot.rank, false, 'acquire-slot', slotIdx);
+      const hasSpells = v.ranks.some(r => isSpell(r.titre));
+      const masteryNote = (isHybrid && slot.rank >= 2)
+        ? `<p class="hint" style="margin:8px 0 0; color:#e8c65a;">Rang 2 atteint : vous maîtrisez désormais les armes et l'armure de ${srcProfil.nom} — « ${srcProfil.armes_armures || 'voir le profil correspondant'} »</p>`
+        : '';
+      const spellArmorNote = (isHybrid && hasSpells && srcProfil.nom !== 'Prêtre')
+        ? `<p class="hint" style="margin:8px 0 0;">Sorts de cette voie : s'ils sont lancés avec une armure non autorisée pour ${srcProfil.nom}, ils coûtent des PM supplémentaires (égal au bonus de DEF de l'armure portée) — voir Livre des règles.</p>`
+        : '';
       html += `<div class="dcard" style="position:relative;">
         ${isHybrid ? `<div class="tag key" style="position:absolute; top:12px; right:12px;">Hybride · ${srcProfil.nom}</div>` : ''}
         <div class="dcard-title">${titleCase(v.nom)}</div>
@@ -6892,6 +8581,8 @@ function slotsSectionHtml(s) {
             </div>
           </div>`;
         }).join('')}
+        ${masteryNote}
+        ${spellArmorNote}
         ${extra}
       </div>`;
     } else if (state.pickingSlot === slotIdx) {
@@ -7011,6 +8702,72 @@ function prestigeSectionHtml(s) {
   return html;
 }
 
+// A prêtre spécialiste's divine capacity replaces the first capacity of
+// its own rank that the player acquires, in any voie the player has (voie
+// de peuple, voie du mage, either of the 2 creation voies, or a hybrid
+// slot). Rank 1 is a special case — since the 2 creation voies both start
+// at rank 1 simultaneously, "the first one" needs an explicit choice, made
+// right after picking those 2 voies (see pretreDivineRank1). Any other
+// rank is unambiguous — whichever voie the player happens to bring to
+// that rank first (at creation via the variable-age variant, or later
+// through progression) gets bound automatically, tracked in
+// state.pretreDivineTarget = {kind:'peuple'|'mage'|'profil'|'slot', idx}.
+function pretreDivineDieu() {
+  if (!isPretre() || state.pretreType!=='specialiste' || !state.pretreDieuNom) return null;
+  return DATA.pantheon_osgild.find(d => d.nom === state.pretreDieuNom) || null;
+}
+function pretreDivineRank1() {
+  const dieu = pretreDivineDieu();
+  return (dieu && dieu.capacite_rang === 1) ? dieu : null;
+}
+function divineTargetMatches(kind, idx) {
+  const dieu = pretreDivineDieu();
+  if (!dieu) return false;
+  if (dieu.capacite_rang === 1) {
+    if (kind !== 'profil' || state.pretreDivineVoieIdx === null) return false;
+    return state.voiesChoisies[state.pretreDivineVoieIdx] === idx;
+  }
+  const t = state.pretreDivineTarget;
+  return !!t && t.kind === kind && t.idx === (idx===undefined ? null : idx);
+}
+// Called right after a rank is successfully acquired anywhere, to bind the
+// divine capacity (rank > 1 only) to the first qualifying voie.
+function maybeBindDivineTarget(kind, idx, newRank) {
+  const dieu = pretreDivineDieu();
+  if (!dieu || dieu.capacite_rang === 1) return;
+  if (state.pretreDivineTarget) return;
+  if (newRank !== dieu.capacite_rang) return;
+  state.pretreDivineTarget = {kind, idx: (idx===undefined ? null : idx)};
+}
+// Called after undoing a rank, to free up the binding if it no longer
+// reaches the required rank (so it can bind elsewhere later).
+function maybeUnbindDivineTarget(kind, idx, newRank) {
+  const dieu = pretreDivineDieu();
+  const t = state.pretreDivineTarget;
+  if (!dieu || !t || t.kind !== kind || t.idx !== (idx===undefined ? null : idx)) return;
+  if (newRank < dieu.capacite_rang) state.pretreDivineTarget = null;
+}
+function voieWithDivineOverride(v, kind, idx) {
+  const dieu = pretreDivineDieu();
+  if (!dieu || !divineTargetMatches(kind, idx)) return v;
+  const ranks = v.ranks.map(r => r.rang === dieu.capacite_rang
+    ? {rang: r.rang, titre: `${dieu.capacite_titre} — capacité divine (${dieu.nom})`, texte: dieu.capacite_texte}
+    : r);
+  return Object.assign({}, v, {ranks});
+}
+// A compact reminder, shown once, that a not-yet-bound higher-rank divine
+// capacity is still pending — it isn't its own acquirable box, just a note
+// pointing at the mechanic, since the actual text appears woven into
+// whichever voie first reaches that rank.
+function pretreDivinePendingHtml() {
+  const dieu = pretreDivineDieu();
+  if (!dieu || dieu.capacite_rang === 1 || state.pretreDivineTarget) return '';
+  return `<div class="dcard voie-unopened">
+    <div class="dcard-title">Capacité divine en attente — ${dieu.nom}</div>
+    <p class="hint" style="margin:0;">« ${dieu.capacite_titre} » (rang ${dieu.capacite_rang}) remplacera automatiquement la première capacité de rang ${dieu.capacite_rang} que vous débloquerez, dans n'importe laquelle de vos voies.</p>
+  </div>`;
+}
+
 function voieFullHtml(v, maxRank, extraHtml) {
   const ranks = v.ranks.map(r => {
     const locked = r.rang > maxRank;
@@ -7022,7 +8779,8 @@ function voieFullHtml(v, maxRank, extraHtml) {
       </div>
     </div>`;
   }).join('');
-  return `<div class="dcard"><div class="dcard-title">${titleCase(v.nom)}</div>${ranks}${extraHtml||''}</div>`;
+  const introHtml = v.intro ? `<p class="hint" style="margin:2px 0 8px;">${v.intro}</p>` : '';
+  return `<div class="dcard"><div class="dcard-title">${titleCase(v.nom)}</div>${introHtml}${ranks}${extraHtml||''}</div>`;
 }
 
 // ===== Printable sheet (official-template-inspired, 2 pages) =====
@@ -7193,7 +8951,7 @@ function closePreview() {
 function renderPrintSheet() {
   const container = document.getElementById('printSheet');
   if (!container) return;
-  if (state.step !== 11) { container.innerHTML = ''; return; }
+  if (state.step !== 12) { container.innerHTML = ''; return; }
 
   const s = computeSheet();
   const p = s.p, pe = s.pe, fam = s.fam;
@@ -7203,12 +8961,15 @@ function renderPrintSheet() {
   const isDemiElfe = pe.nom.startsWith('Demi‑elfe') || pe.nom.startsWith('Demi-elfe');
   const mageVoieChosen = state.mageBonus && state.mageBonus.type==='mage';
   if (mageVoieChosen) {
-    voiePeupleHtml = psVoieBox(DATA.mage_voies[0].nom, DATA.mage_voies[0].ranks, state.mageVoieRank);
+    const mv = voieWithDivineOverride(DATA.mage_voies[0], 'mage');
+    voiePeupleHtml = psVoieBox(mv.nom, mv.ranks, state.mageVoieRank);
   } else if (isDemiElfe && state.demiElfeVoie) {
     const src = DATA.peoples.find(p2 => p2.nom.startsWith(state.demiElfeVoie));
-    voiePeupleHtml = psVoieBox(src.voies[0].nom, src.voies[0].ranks, state.peupleRank);
+    const pv = voieWithDivineOverride(src.voies[0], 'peuple');
+    voiePeupleHtml = psVoieBox(pv.nom, pv.ranks, state.peupleRank);
   } else if (!isDemiElfe) {
-    voiePeupleHtml = psVoieBox(pe.voies[0].nom, pe.voies[0].ranks, state.peupleRank);
+    const pv = voieWithDivineOverride(pe.voies[0], 'peuple');
+    voiePeupleHtml = psVoieBox(pv.nom, pv.ranks, state.peupleRank);
   } else {
     voiePeupleHtml = psEmptyVoieBox('VOIE DU PEUPLE');
   }
@@ -7219,7 +8980,7 @@ function renderPrintSheet() {
   // (yet) opened only show a generic placeholder, not their name, so the
   // sheet doesn't spoil/clutter with capacities the player hasn't picked.
   const voieSlots = state.voiesChoisies.map(i => {
-    const v = p.voies[i];
+    const v = voieWithDivineOverride(p.voies[i], 'profil', i);
     const owned = state.profilVoieRanks[i] || 0;
     return psVoieBox(v.nom, v.ranks, owned);
   });
@@ -7227,7 +8988,7 @@ function renderPrintSheet() {
     if (!slot) { voieSlots.push(psEmptyVoieBox(`Voie ${slotIdx+3}`)); return; }
     const srcFam = DATA.families[slot.familleIdx];
     const srcProfil = srcFam.profils[slot.profilIdx];
-    const v = srcProfil.voies[slot.voieIdx];
+    const v = voieWithDivineOverride(srcProfil.voies[slot.voieIdx], 'slot', slotIdx);
     const isHybrid = !(slot.familleIdx===state.familleIdx && slot.profilIdx===state.profilIdx);
     voieSlots.push(psVoieBox(v.nom, v.ranks, slot.rank, isHybrid ? srcProfil.nom : null));
   });
@@ -7243,7 +9004,7 @@ function renderPrintSheet() {
     voieSlots.push(psEmptyVoieBox('PRESTIGE'));
   }
 
-  const equipText = [DATA.equipement_generique, p.equipement_depart, p.armes_armures].join(' ');
+  const equipText = [DATA.equipement_generique, equipmentChosenText(p), p.armes_armures].join(' ');
   const langueList = DATA.langues.liste.slice(0, 6).join(' · ');
 
   container.innerHTML = `
@@ -7308,6 +9069,12 @@ function renderPrintSheet() {
         <div class="lab">Équipement</div>
         <p>${equipText}</p>
       </div>
+      ${(p.nom==='Prêtre' && state.pretreType==='specialiste' && state.pretreDieuNom) ? (() => {
+        const dieu = DATA.pantheon_osgild.find(d => d.nom === state.pretreDieuNom);
+        if (!dieu) return '';
+        if (dieu.capacite_rang === 1) return ''; // already shown as rank 1 of the chosen voie, on the voies page
+        return `<div class="ps-langbox" style="margin-top:8px;"><div class="lab">Capacité divine — ${escapeHtml(dieu.nom)} (rang ${dieu.capacite_rang})</div><p><strong>${escapeHtml(dieu.capacite_titre)} :</strong> ${escapeHtml(dieu.capacite_texte)}</p></div>`;
+      })() : ''}
 
       <div class="ps-boxlabel" style="margin-top:12px;">Description &amp; historique</div>
       <div class="ps-histoire">${histoireHtml(state.histoire)}</div>
@@ -7347,7 +9114,7 @@ function escapeHtml(s) {
 
 // ===== Footer / nav =====
 function footerHtml() {
-  if (state.step===11) {
+  if (state.step===12) {
     return `<div class="footer"><div class="footer-inner">
       <button class="btn btn-prev" data-action="prev" style="flex:1;">← Revenir modifier</button>
     </div></div>`;
@@ -7365,15 +9132,20 @@ function validateStep(step) {
     case 0: return true;
     case 1: return state.familleIdx !== null;
     case 2: return state.profilIdx !== null;
-    case 3: return state.peupleIdx !== null;
-    case 4: {
+    case 3: {
+      if (!isPretre()) return true; // skipped entirely for non-Prêtre profiles
+      if (state.pretreType === 'specialiste') return !!state.pretreDieuNom;
+      return !!state.pretreType;
+    }
+    case 4: return state.peupleIdx !== null;
+    case 5: {
       if (state.settings && state.settings.methodeAchat && state.methodeCarac === 'achat') {
         return achatSpent() <= achatBudget();
       }
       if (!state.serie) return false;
       return CARAC_ORDER.every(c => state.assign[c] !== undefined);
     }
-    case 5: {
+    case 6: {
       const pe = peuple();
       const mod = pe.modificateurs;
       if (pe.nom.startsWith('Humain')) return !!state.peupleChoice.plus;
@@ -7382,20 +9154,21 @@ function validateStep(step) {
       if (Array.isArray(mod.minus)) ok = ok && !!state.peupleChoice.minus;
       return ok;
     }
-    case 6: {
+    case 7: {
       const p = profil();
       const need = Math.min(2, p.voies.length);
       let ok = state.voiesChoisies.length === need;
       if (ok && famille().famille.includes('mages')) ok = !!state.mageBonus;
+      if (ok && pretreDivineRank1()) ok = state.pretreDivineVoieIdx !== null;
       return ok;
     }
-    case 7: {
+    case 8: {
       const pe = peuple();
       if (pe.nom.startsWith('Demi‑elfe') || pe.nom.startsWith('Demi-elfe')) return !!state.demiElfeVoie;
       return true;
     }
-    case 8: return true;
     case 9: return true;
+    case 10: return true;
     default: return true;
   }
 }
@@ -7444,6 +9217,13 @@ function bindEvents() {
   // would steal focus mid-typing like the other text fields.
   const ageEl = document.querySelector('[data-action-input="age"]');
   if (ageEl) ageEl.addEventListener('change', () => render());
+
+  document.querySelectorAll('[data-action-input="equip-custom"]').forEach(el => {
+    el.addEventListener('input', e => {
+      if (!state.equipCustomText) state.equipCustomText = {};
+      state.equipCustomText[e.target.dataset.group] = e.target.value;
+    });
+  });
 
   // Generic click handling for every actionable element EXCEPT <select> — a
   // <select> must only react to 'change', otherwise the click that opens its
@@ -7499,6 +9279,15 @@ function onAction(e) {
       break;
     case 'profil':
       state.profilIdx = Number(el.dataset.idx);
+      state.equipChoix = null; state.equipCustomText = {};
+      state.pretreType = null; state.pretreDieuNom = null;
+      break;
+    case 'pretre-type':
+      state.pretreType = el.dataset.type;
+      if (state.pretreType === 'generaliste') state.pretreDieuNom = null;
+      break;
+    case 'pretre-dieu':
+      state.pretreDieuNom = el.dataset.nom;
       break;
     case 'peuple': {
       state.peupleIdx = Number(el.dataset.idx);
@@ -7541,6 +9330,13 @@ function onAction(e) {
     case 'age-bonus-choice':
       state.ageBonusChoice = el.dataset.choice;
       break;
+    case 'equip-choice': {
+      const gi = Number(el.dataset.group);
+      const oi = Number(el.dataset.opt);
+      if (!state.equipChoix) state.equipChoix = [];
+      state.equipChoix[gi] = oi;
+      break;
+    }
     case 'pmplus':
       state.peupleChoice.plus = el.dataset.code;
       break;
@@ -7555,7 +9351,7 @@ function onAction(e) {
       const pos = state.voiesChoisies.indexOf(idx);
       const p = profil();
       const need = Math.min(2, p.voies.length);
-      if (pos>-1) { state.voiesChoisies.splice(pos,1); state.mageBonus=null; }
+      if (pos>-1) { state.voiesChoisies.splice(pos,1); state.mageBonus=null; state.pretreDivineVoieIdx=null; }
       else if (state.voiesChoisies.length < need) { state.voiesChoisies.push(idx); }
       state.profilVoieRanks = null; state.extraSlots = null; state.pickingSlot = null; state.pickingSlotProfile = null; // re-derive from the (possibly changed) creation choices
       break;
@@ -7563,6 +9359,10 @@ function onAction(e) {
     case 'magebonus-voie':
       state.mageBonus = {type:'voie', index:Number(el.dataset.idx)};
       state.profilVoieRanks = null; state.peupleRank = null; state.mageVoieRank = null; state.extraSlots = null; state.pickingSlot = null; state.pickingSlotProfile = null;
+      break;
+    case 'pretre-divine-voie':
+      state.pretreDivineVoieIdx = Number(el.dataset.pos);
+      state.profilVoieRanks = null; // re-derive so the substituted voie's rank1 is picked up fresh
       break;
     case 'magebonus-mage':
       state.mageBonus = {type:'mage'};
@@ -7573,18 +9373,28 @@ function onAction(e) {
       break;
     case 'goto': {
       const target = Number(el.dataset.step);
-      if (target < state.step) { state.step = target; window.scrollTo(0,0); }
+      if (target < state.step) { state.step = (target===3 && !isPretre()) ? 2 : target; window.scrollTo(0,0); }
       break;
     }
-    case 'next':
-      if (validateStep(state.step)) { state.step++; window.scrollTo(0,0); }
+    case 'next': {
+      if (validateStep(state.step)) {
+        let n = state.step + 1;
+        if (n === 3 && !isPretre()) n = 4;
+        state.step = n;
+        window.scrollTo(0,0);
+      }
       break;
-    case 'prev':
-      state.step--; window.scrollTo(0,0);
+    }
+    case 'prev': {
+      let n = state.step - 1;
+      if (n === 3 && !isPretre()) n = 2;
+      state.step = n;
+      window.scrollTo(0,0);
       break;
+    }
     case 'restart': {
       const keepSettings = state.settings; // app-wide preference, survives creating a new hero
-      state = {step:0, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', ageBonusChoice:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
+      state = {step:0, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', ageBonusChoice:null, equipChoix:null, equipCustomText:{}, pretreType:null, pretreDieuNom:null, pretreDivineVoieIdx:null, pretreDivineTarget:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
       window.scrollTo(0,0);
       break;
     }
@@ -7602,22 +9412,22 @@ function onAction(e) {
     case 'acquire-peuple': {
       ensureProgression();
       const chk = canAcquire(state.peupleRank + 1, false);
-      if (chk.ok) state.peupleRank += 1;
+      if (chk.ok) { state.peupleRank += 1; maybeBindDivineTarget('peuple', undefined, state.peupleRank); }
       break;
     }
     case 'acquire-peuple-undo':
       ensureProgression();
-      if (state.peupleRank > 1) state.peupleRank -= 1;
+      if (state.peupleRank > 1) { state.peupleRank -= 1; maybeUnbindDivineTarget('peuple', undefined, state.peupleRank); }
       break;
     case 'acquire-mage-voie': {
       ensureProgression();
       const chk = canAcquire(state.mageVoieRank + 1, false);
-      if (chk.ok) state.mageVoieRank += 1;
+      if (chk.ok) { state.mageVoieRank += 1; maybeBindDivineTarget('mage', undefined, state.mageVoieRank); }
       break;
     }
     case 'acquire-mage-voie-undo':
       ensureProgression();
-      if (state.mageVoieRank > 2) state.mageVoieRank -= 1;
+      if (state.mageVoieRank > 2) { state.mageVoieRank -= 1; maybeUnbindDivineTarget('mage', undefined, state.mageVoieRank); }
       break;
     case 'acquire-profil': {
       // Only ever used for the 2 voies chosen at creation now — advancing
@@ -7626,7 +9436,7 @@ function onAction(e) {
       const idx = Number(el.dataset.idx);
       const owned = state.profilVoieRanks[idx] || 0;
       const chk = canAcquire(owned + 1, false);
-      if (chk.ok) state.profilVoieRanks[idx] = owned + 1;
+      if (chk.ok) { state.profilVoieRanks[idx] = owned + 1; maybeBindDivineTarget('profil', idx, owned + 1); }
       break;
     }
     case 'acquire-profil-undo': {
@@ -7634,7 +9444,7 @@ function onAction(e) {
       const idx = Number(el.dataset.idx);
       const baseline = (state.mageBonus && state.mageBonus.type==='voie' && state.mageBonus.index===idx) ? 2 : 1;
       const owned = state.profilVoieRanks[idx] || 0;
-      if (owned > baseline) state.profilVoieRanks[idx] = owned - 1;
+      if (owned > baseline) { state.profilVoieRanks[idx] = owned - 1; maybeUnbindDivineTarget('profil', idx, owned - 1); }
       break;
     }
     case 'acquire-slot': {
@@ -7643,7 +9453,7 @@ function onAction(e) {
       const slot = state.extraSlots[slotIdx];
       if (!slot) break;
       const chk = canAcquire(slot.rank + 1, false);
-      if (chk.ok) slot.rank += 1;
+      if (chk.ok) { slot.rank += 1; maybeBindDivineTarget('slot', slotIdx, slot.rank); }
       break;
     }
     case 'acquire-slot-undo': {
@@ -7651,8 +9461,8 @@ function onAction(e) {
       const slotIdx = Number(el.dataset.idx);
       const slot = state.extraSlots[slotIdx];
       if (!slot) break;
-      if (slot.rank > 1) slot.rank -= 1;
-      else state.extraSlots[slotIdx] = null; // rank 1 -> fully close the slot again
+      if (slot.rank > 1) { slot.rank -= 1; maybeUnbindDivineTarget('slot', slotIdx, slot.rank); }
+      else { state.extraSlots[slotIdx] = null; maybeUnbindDivineTarget('slot', slotIdx, 0); } // rank 1 -> fully close the slot again
       break;
     }
     case 'prestige-pick-open':

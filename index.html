@@ -50,16 +50,14 @@ body{
   background:linear-gradient(180deg, var(--void) 70%, transparent);
 }
 .title-row{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px;}
-.settings-cta{
-  display:flex; align-items:center; justify-content:center; gap:8px;
-  width:100%; margin:4px 0 18px;
-  padding:13px 18px; border-radius:8px;
-  background:transparent; border:1.5px solid var(--gold);
-  color:var(--gold-bright); cursor:pointer;
-  font-family:'Cinzel', serif; font-size:14px; letter-spacing:1px;
+.header-right{ display:flex; align-items:center; gap:10px; }
+.settings-btn{
+  width:26px; height:26px; padding:0; flex:0 0 auto;
+  background:transparent; border:none; color:var(--steel-bright); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
 }
-.settings-cta svg{ width:18px; height:18px; }
-.settings-cta:active{ background:rgba(201,162,39,0.1); }
+.settings-btn svg{ width:18px; height:18px; }
+.settings-btn:active{ color:var(--gold); }
 .brand{
   font-family:'Cinzel Decorative', serif;
   font-weight:700;
@@ -741,6 +739,26 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
   flex:1 1 auto; overflow-y:auto; padding:14px;
   -webkit-overflow-scrolling:touch;
 }
+.preview-zoombar{
+  flex:0 0 auto; display:flex; align-items:center; justify-content:center; gap:10px;
+  padding:8px 16px; border-bottom:1px solid rgba(201,162,39,0.25);
+}
+.zoom-btn{
+  width:30px; height:30px; border-radius:50%; flex:0 0 auto;
+  background:transparent; border:1.5px solid var(--steel-bright); color:var(--parchment);
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+}
+.zoom-btn:active{ background:rgba(201,162,39,0.15); }
+.zoom-level{
+  font-family:'Cinzel', serif; font-size:12px; color:var(--gold-bright);
+  min-width:44px; text-align:center;
+}
+.zoom-fit{
+  background:transparent; border:1px solid rgba(201,162,39,0.4); color:var(--gold-bright);
+  border-radius:14px; padding:5px 12px; font-size:11px; font-family:'Cinzel', serif;
+  letter-spacing:0.5px; cursor:pointer;
+}
+.zoom-fit:active{ background:rgba(201,162,39,0.15); }
 .preview-actions{
   flex:0 0 auto; display:flex; gap:10px; padding:12px 16px 6px;
   border-top:1px solid rgba(201,162,39,0.25);
@@ -869,6 +887,12 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
   <div class="preview-topbar">
     <span class="preview-title">✦ Aperçu avant impression</span>
     <button class="preview-close" data-action="closepreview">✕</button>
+  </div>
+  <div class="preview-zoombar">
+    <button class="zoom-btn" data-action="preview-zoom-out" aria-label="Zoom arrière">−</button>
+    <span class="zoom-level" id="previewZoomLevel">100%</span>
+    <button class="zoom-btn" data-action="preview-zoom-in" aria-label="Zoom avant">+</button>
+    <button class="zoom-fit" data-action="preview-zoom-fit">Ajuster</button>
   </div>
   <div class="preview-scroll preview-mode" id="previewScroll"></div>
   <div class="preview-actions">
@@ -3063,6 +3087,105 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
         }
        ],
        "intro": ""
+      },
+      {
+       "nom": "VOIE DES ARCANES EXHUMÉS",
+       "intro": "",
+       "prerequis": "",
+       "supplementaire": true,
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Message magique (L)*",
+         "texte": "Le magicien touche une surface inerte (un mur, un arbre, etc.) de son choix et l'enchante pendant 24 h. Lorsqu'une créature passe dans un rayon de 5 m, une bouche apparaît sur la surface et délivre un message prédéterminé d'un nombre maximal de mots égal au niveau du magicien +5. Le sort devient permanent s'il est lancé comme un sort de rang 4 (4 PM) et que le magicien dépense une gemme d'une valeur de 200 pa."
+        },
+        {
+         "rang": 2,
+         "titre": "Toiles (L)*",
+         "texte": "Le magicien projette une toile gluante pour emprisonner ses ennemis (mais pas ses alliés) dans une zone de 5 m de diamètre (portée 10 m) pendant INT rounds. Les cibles sont immobilisées. À son tour, une créature peut se libérer (action d'attaque) avec un test de FOR difficulté [10 + INT du magicien]. En cas de réussite, la victime n'est plus affectée par le sort pour le reste du combat. Si on met le feu aux toiles, elles sont détruites, mais les créatures emprisonnées subissent 1d6 DM."
+        },
+        {
+         "rang": 3,
+         "titre": "Sphère de ténèbres (M)*",
+         "texte": "Le sort invoque une sphère d'un noir absolu d'environ 50 cm de diamètre pendant niveau rounds. Le magicien peut la faire attaquer une fois par round au prix d'une action de mouvement à une portée maximale de 10 m. Il utilise sa valeur d'attaque magique et la sphère inflige [1d4° + INT] DM de désintégration."
+        },
+        {
+         "rang": 4,
+         "titre": "Chien de garde (L)*",
+         "texte": "Par un rituel d'une durée de 5 min, le magicien invoque un chien de garde fantomatique pour surveiller une zone de 20 m de diamètre pendant 24 h. Lorsqu'une créature pénètre dans la zone protégée, le chien de garde apparaît et il attaque en poussant un hurlement glaçant. Le magicien peut désigner jusqu'à INT créatures que le chien de garde laisse passer sans intervenir."
+        },
+        {
+         "rang": 5,
+         "titre": "Nuage empoisonné (L)*",
+         "texte": "Le personnage crée un nuage de gaz jaunâtre immobile de 10 m de côté qui inflige [3d4° + INT] DM de poison par round à toutes les créatures présentes dans la zone pendant INT minutes. Chaque round, un test de CON difficulté 15 permet de diviser les DM par deux. Ce nuage peut être dispersé par un vent puissant."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DES ARCANES OUBLIÉS",
+       "intro": "",
+       "prerequis": "",
+       "supplementaire": true,
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Ventriloquie (G) ou (M)*",
+         "texte": "Le personnage peut projeter sa voix et la faire surgir d'un point de son choix situé à moins de 20 m de lui pendant INT rounds. Ce sort coûte 1 PM s'il est lancé en action gratuite ou 0 PM s'il est lancé en action de mouvement."
+        },
+        {
+         "rang": 2,
+         "titre": "Bouclier de mana (G)*",
+         "texte": "Le magicien peut lancer ce sort une fois par round en action gratuite, contre une attaque de son choix (mais avant de connaître le résultat d'un test d'attaque). Le sort lui confère un bonus de +6 en DEF et annule complètement les DM d'un Projectile de mana."
+        },
+        {
+         "rang": 3,
+         "titre": "Corde magique (L)*",
+         "texte": "Le magicien touche une corde d'une longueur maximale de 20 m et celle-ci se dresse par magie pendant INT minutes. Il peut la faire se déplacer de 10 m par action de mouvement, s'attacher ou se détacher à distance, et elle peut ramper sur n'importe quelle surface verticale. Chaque round, s'il lui en donne l'ordre (G), la corde peut tenter de renverser un adversaire à portée. La cible doit réussir un test d'AGI difficulté 10 ou être renversée. La corde possède une DEF 10 et 15 PV. Sa longueur est réduite de 1 m par PV perdu."
+        },
+        {
+         "rang": 4,
+         "titre": "Rétrécissement (A) ou (L)*",
+         "texte": "Le magicien (A) ou une cible humanoïde (L) de taille moyenne volontaire voit sa taille réduite à 10 cm (taille minuscule) pendant INT minutes. Sous cette forme, la créature peut passer dans des espaces minuscules et elle obtient un bonus de +10 en discrétion. En revanche, elle subit +1d4° DM par catégorie de taille de la créature qui l'attaque (minuscule +1d4°, très petite +2d4°, petite +3d4°, moyenne +4d4°, grande +5d4°, énorme +6d4°, colossale +7d4°). Elle inflige seulement 1 DM par attaque durant la durée du sort. Si elle doit reprendre sa taille dans un espace clos, elle subit 1 DM par round jusqu'à trouver un espace suffisant."
+        },
+        {
+         "rang": 5,
+         "titre": "Zone de magie nulle (L)*",
+         "texte": "Le personnage crée une zone immobile de 10 m de diamètre centrée sur lui-même dans laquelle aucune magie ne fonctionne. Les sorts présents cessent de faire effet, les pouvoirs spéciaux qui ne sont pas des sorts, mais qui sont clairement des effets magiques aussi. Les souffles (souffle d'un dragon, par exemple) et les attaques naturelles extraordinaires qui ne sont pas des pouvoirs magiques voient leurs effets divisés par deux."
+        }
+       ]
+      },
+      {
+       "nom": "VOIE DES ARCANES PERDUS",
+       "intro": "",
+       "prerequis": "",
+       "supplementaire": true,
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Disque de transport (L)*",
+         "texte": "Le magicien invoque un disque lumineux d'environ 1 m de diamètre qui le suit à une portée de 0 à 10 m (au choix du magicien) pendant INT heures. Le disque peut transporter [niveau x 20] kg. Si le disque est capable de supporter le poids du magicien, alors il peut monter dessus et se déplacer horizontalement de 5 m par action de mouvement (par exemple, pour traverser un précipice). Il peut transporter d'autres créatures (une seule créature de taille M à la fois) tant que le disque reste à portée."
+        },
+        {
+         "rang": 2,
+         "titre": "Fuite rapide (M)*",
+         "texte": "Le magicien se déplace à une vitesse incroyable, il parcourt 20 m par action de mouvement pendant INT minutes."
+        },
+        {
+         "rang": 3,
+         "titre": "Agrandissement (A) ou (L)*",
+         "texte": "Le magicien (A) ou une cible volontaire (L) qu'il touche voit sa taille augmenter d'une catégorie pendant INT minutes (pour un humain, taille grande, soit environ 1 m de plus). La cible reçoit un bonus de +3 à ses tests de FOR, à ses DM ainsi qu'une RD de la même valeur. Si une créature grandit dans un endroit qui n'est pas approprié, elle subit 2d4° DM (basés sur le niveau de la victime) et le sort est un échec."
+        },
+        {
+         "rang": 4,
+         "titre": "Inversion de la gravité (A)*",
+         "texte": "Le personnage désigne une zone d'un maximum de 10 x 10 m à une portée de 10 m dans laquelle la gravité s'inverse. Toutes les créatures au sol chutent vers le haut et subissent des DM comme si elles tombaient au sol lorsqu'elles rencontrent un obstacle (plafond). Si elles ne rencontrent aucun obstacle, elles s'élèvent dans les airs jusqu'à une hauteur de 6 m. Juste après, toutes les victimes chutent à nouveau lorsque la gravité reprend son sens normal. Les DM de chute sont égaux à 1d4° tous les 3 m (dé évolutif selon le niveau de la cible, DM max 4d4°) et à la fin du sort les victimes doivent réussir un test d'AGI difficulté 20 ou être renversées."
+        },
+        {
+         "rang": 5,
+         "titre": "Métamorphose (L)*",
+         "texte": "Le magicien prend la forme d'une créature vivante non humanoïde de son choix (voir le chapitre « Adversité » du livre de règles de COF) qu'il a déjà rencontrée ou dont il dispose d'un morceau (poil, goutte de sang, etc.) pendant INT minutes. Le coût en PM ainsi que le niveau requis dépendent du NC de la créature et ils sont indiqués dans le tableau du livre de règles (non reproduit ici). Le magicien utilise le profil de la créature choisie pendant toute la durée du sort à l'exception de l'INT et des PV. Il ne peut utiliser ses propres capacités et il lui faut une action limitée pour reprendre sa forme. S'il est réduit à 0 PV avant la fin du sort, il retrouve automatiquement sa forme normale."
+        }
+       ]
       }
      ],
      "accroche": "Un intellectuel qui pratique une magie académique efficace et directe.",
@@ -3233,6 +3356,39 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
         }
        ],
        "intro": ""
+      },
+      {
+       "nom": "VOIES DES ARCANES OBSCURS",
+       "intro": "",
+       "prerequis": "",
+       "supplementaire": true,
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Contact vampirique (L)*",
+         "texte": "Si le sorcier réussit un test d'attaque magique contre la DEF d'une cible vivante à son contact, il lui inflige 1d4°+INT DM et se soigne d'autant."
+        },
+        {
+         "rang": 2,
+         "titre": "Tentation du démon (A)*",
+         "texte": "Si le sorcier réussit un test d'attaque magique contre une cible vivante à portée (10 m), il invoque son fantasme le plus important à une portée maximale de 20 m. Seule la créature ciblée voit l'être/l'objet et sait ce dont il s'agit. Pendant [INT du sorcier] rounds, elle cesse toute activité pour s'approcher et subit un malus de -10 aux tests de PER. Le sort est brisé si la cible est attaquée. Si la créature est d'un NC supérieur au niveau du sorcier, le sort ne fait effet qu'un seul round. Une cible ne peut pas être ciblée par ce sort plus d'une fois par combat."
+        },
+        {
+         "rang": 3,
+         "titre": "Épidémie (M)*",
+         "texte": "Le sorcier vise une créature humanoïde vivante à une portée de 20 m. Elle doit faire un test de CON difficulté [10 + INT] ou contracter une maladie au choix après 1d6 x 10 min d'incubation pour une durée de 24 h. • Bubonite : des ganglions douloureux, dé malus en CON, FOR et attaque au contact • Rhinusite : tousse et mouche, dé malus en PER, VOL et attaque magique • Pustulite : des pustules suintantes, dé malus en CHA, AGI et attaque à distance. La créature est contagieuse et dans une communauté, elle contamine 5 créatures supplémentaires par heure jusqu'à la fin du sort (soit environ 120 personnes en 24 h). Les créatures d'un NC égal ou supérieur au niveau du sorcier ne sont pas affectées."
+        },
+        {
+         "rang": 4,
+         "titre": "Aura maudite (L)*",
+         "texte": "Le sorcier invoque autour de lui une aura d'énergie nécrotique pendant INT rounds. Toutes les créatures vivantes dans un rayon de 5 m autour de lui subissent 1d4° DM par round, tandis que les morts-vivants récupèrent 1d4° PV par round."
+        },
+        {
+         "rang": 5,
+         "titre": "Extinction de masse (A)*",
+         "texte": "Toutes les créatures vivantes de NC 1 ou inférieur dans un rayon de 10 m autour du sorcier doivent réussir un test de CON difficulté [10 + INT] ou périr. Ce sort tue aussi les plantes. La somme des NC des créatures affectées ne peut pas dépasser le niveau du sorcier. Les créatures les plus proches du sorcier sont affectées les premières."
+        }
+       ]
       }
      ],
      "accroche": "Un adepte de la magie noire qui contrôle les morts et les démons.",
@@ -3954,6 +4110,39 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
         }
        ],
        "intro": ""
+      },
+      {
+       "nom": "VOIE DE LA CORRUPTION",
+       "intro": "",
+       "prerequis": "",
+       "supplementaire": true,
+       "ranks": [
+        {
+         "rang": 1,
+         "titre": "Blessure mineure (A)*",
+         "texte": "Le prêtre touche un adversaire de sa main, il doit réussir un test d'attaque au contact avec un dé bonus. La victime subit [2d4° + CHA du prêtre] DM. Ce sort peut être lancé une fois par jour par rang atteint dans la voie."
+        },
+        {
+         "rang": 2,
+         "titre": "Poison (A)",
+         "texte": "Le prêtre doit réussir un test d'attaque au contact pour toucher sa victime. Celle-ci subit immédiatement 1d4° DM de poison et la cible doit réussir un test de CON difficulté [10 + CHA du prêtre] ou être affaiblie pendant 1 round. Si la cible est d'un NC inférieur au rang atteint dans le sort, la victime est affaiblie jusqu'à ce qu'elle termine une récupération rapide. Les créatures non-vivantes sont immunisées à ce sort."
+        },
+        {
+         "rang": 3,
+         "titre": "Blessure majeure (L)*",
+         "texte": "Une fois par combat, le prêtre peut blesser une cible à une portée de 20 m. Elle subit automatiquement [2d4° + Niveau du prêtre] DM. Le montant des DM infligés augmente de +1d4° chaque fois que le personnage atteint le rang 5 dans une voie de prêtre."
+        },
+        {
+         "rang": 4,
+         "titre": "Vengeance",
+         "texte": "Une fois par jour, lorsque le personnage tombe à 0 PV, il produit une onde d'énergie négative qui inflige [2d4° + CHA] DM à tous ses adversaires dans un rayon de 20 m et le double pour celui qui lui a infligé les DM qui l'ont porté à 0 PV."
+        },
+        {
+         "rang": 5,
+         "titre": "Épidémie (L)*",
+         "texte": "Une fois par jour, le prêtre peut rendre malade une créature humanoïde par point de CHA dans un rayon de 5 m autour de lui. Chaque victime doit réussir un test de CON difficulté [10 + CHA] ou être affaiblie jusqu'à ce qu'elle termine une récupération rapide ou qu'un sort de Délivrance permette de la soigner."
+        }
+       ]
       }
      ],
      "accroche": "Le bras armé d’une religion, capable de soigner comme d’occire les infidèles.",
@@ -4467,7 +4656,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
       {
        "rang": 1,
        "titre": "Diversité",
-       "texte": "Un humain obtient un bonus de +3 aux tests de deux domaines associés à son origine géographique ou sociale (voir ci‑dessous). De plus, il gagne 1 PC supplémentaire."
+       "texte": "Un humain obtient un bonus de +3 aux tests de deux domaines associés à son origine géographique ou sociale (voir livre de base). De plus, il gagne 1 PC supplémentaire."
       },
       {
        "rang": 2,
@@ -7126,6 +7315,81 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
    "capacite_titre": "Sans peur",
    "capacite_texte": "Le chevalier est immunisé aux effets de peur et il offre un bonus égal à son CHA aux tests de tous ses alliés contre ce type d’effet. De plus, le chevalier ajoute son rang + 2 aux tests de stratégie et de tactique militaire ou pour commander une troupe."
   }
+ ],
+ "armures": [
+  {
+   "nom": "Aucune",
+   "def": 0,
+   "agi_max": null,
+   "prix": null,
+   "bouclier": false
+  },
+  {
+   "nom": "Tissus matelassés, fourrures",
+   "def": 1,
+   "agi_max": 7,
+   "prix": "2 pa",
+   "bouclier": false
+  },
+  {
+   "nom": "Cuir simple",
+   "def": 2,
+   "agi_max": 6,
+   "prix": "4 pa",
+   "bouclier": false
+  },
+  {
+   "nom": "Cuir renforcé, broigne",
+   "def": 3,
+   "agi_max": 5,
+   "prix": "8 pa",
+   "bouclier": false
+  },
+  {
+   "nom": "Chemise de mailles",
+   "def": 4,
+   "agi_max": 4,
+   "prix": "15 pa",
+   "bouclier": false
+  },
+  {
+   "nom": "Cotte de mailles",
+   "def": 5,
+   "agi_max": 3,
+   "prix": "25 pa",
+   "bouclier": false
+  },
+  {
+   "nom": "Armure de plaques",
+   "def": 6,
+   "agi_max": 2,
+   "prix": "60 pa",
+   "bouclier": false
+  },
+  {
+   "nom": "Plaque complète",
+   "def": 7,
+   "agi_max": 1,
+   "prix": "200 pa",
+   "bouclier": false
+  }
+ ],
+ "boucliers": [
+  {
+   "nom": "Aucun",
+   "def": 0,
+   "prix": null
+  },
+  {
+   "nom": "Petit bouclier",
+   "def": 1,
+   "prix": "2 pa"
+  },
+  {
+   "nom": "Grand bouclier",
+   "def": 2,
+   "prix": "4 pa"
+  }
  ]
 }</script>
 <script>
@@ -7150,6 +7414,7 @@ const DEFAULT_SETTINGS = {
   methodeAchat: false,
   ageVariable: false,
   profilsSupplementaires: false,
+  voiesSupplementaires: false,
 };
 function ensureSettings() {
   if (!state.settings) state.settings = Object.assign({}, DEFAULT_SETTINGS);
@@ -7183,6 +7448,15 @@ function settingsScreenHtml() {
 
       <div class="setting-row" style="margin-top:12px;">
         <div class="setting-info">
+          <div class="setting-name">Voies supplémentaires officielles</div>
+          <div class="setting-desc">Augmente le nombre de voies accessibles à certains profils de mage et de mystique, en plus des 5 voies habituelles.</div>
+        </div>
+        <button class="switch ${state.settings.voiesSupplementaires?'on':''}" data-action="setting-toggle" data-key="voiesSupplementaires" role="switch" aria-checked="${state.settings.voiesSupplementaires}"><span class="knob"></span></button>
+      </div>
+      <p class="hint" style="margin-top:6px;">Actuellement disponibles : 3 voies pour le Magicien (Arcanes exhumés, oubliés, perdus). D'autres profils suivront — donnez-moi le détail d'une voie à la fois.</p>
+
+      <div class="setting-row" style="margin-top:12px;">
+        <div class="setting-info">
           <div class="setting-name">Méthode par achat</div>
           <div class="setting-desc">Répartir les caractéristiques en dépensant des points selon un barème de coûts, plutôt qu'en choisissant une série fixe (Polyvalent/Expert/Spécialiste).</div>
         </div>
@@ -7204,14 +7478,20 @@ function settingsScreenHtml() {
 
 // ===== State =====
 let state = {
-  step: 0,
+  step: 1,
   nom: '',
   portrait: null, // data URL string, or null
   histoire: '', // free-text background/history, written by the player
   languesChoisies: [], // one entry per earned slot: a known language name, or a custom "talent secondaire"
   langueSlotIsTalent: [], // parallel array: true if that slot is in "talent secondaire" mode
   ideal: '', travers: '', secret: '', // chosen (or randomly rolled) from the d20 tables
-  age: '', taille: '', poids: '', // physical traits, chosen within the peuple's range at step "Peuple"
+  age: '', taille: '', poids: '', genre: null, // physical traits, chosen within the peuple's range at step "Peuple"
+  monnaie: null, // {pp, po, pa} — lazily rolled (2d6 PA) the first time the Équipement step renders
+  armureIdx: 0, // index into DATA.armures — defaults to "Aucune"
+  bouclierIdx: 0, // index into DATA.boucliers — defaults to "Aucun"
+  defBonusManuel: 0, // free-form DEF adjustment for capacities not otherwise tracked (e.g. Peau de pierre)
+  armes: null, // [{nom,type,bonusVoie,dm,notes}] × 5 — lazily initialised by ensureArmes()
+  initBonusManuel: 0, // free-form Initiative adjustment for capacities not otherwise tracked
   ageBonusChoice: null, // 'PC' | 'DR' — only relevant for the "très jeune" age category
   equipChoix: null, // [choiceGroupIdx]: chosen option index, for the current profil's equipement_choix
   equipCustomText: {}, // {choiceGroupIdx: string} — free text for "(à préciser)" options
@@ -7307,6 +7587,12 @@ function loadSave(id) {
   if (state.secret === undefined) state.secret = '';
   if (state.age === undefined) state.age = '';
   if (state.taille === undefined) state.taille = '';
+  if (state.genre === undefined) state.genre = null;
+  if (state.monnaie === undefined) state.monnaie = null;
+  if (state.armureIdx === undefined || state.armureIdx === null) state.armureIdx = 0;
+  if (state.bouclierIdx === undefined || state.bouclierIdx === null) state.bouclierIdx = 0;
+  if (state.defBonusManuel === undefined || state.defBonusManuel === null) state.defBonusManuel = 0;
+  if (state.initBonusManuel === undefined || state.initBonusManuel === null) state.initBonusManuel = 0;
   if (state.poids === undefined) state.poids = '';
   if (state.methodeCarac === undefined) state.methodeCarac = null;
   if (!state.caracFaibles) state.caracFaibles = [];
@@ -7420,13 +7706,21 @@ function finalCaracValue(code) {
 function isSpell(titre) { return titre.includes('*'); }
 
 // ===== Render root =====
+// Set right before a state mutation that should scroll a specific element
+// into view on the next render, instead of the usual scroll-to-top — e.g.
+// jumping to "Apparence physique" once a peuple is chosen, so the person
+// doesn't miss it below the fold.
+let pendingScrollTarget = null;
 function render() {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="header">
       <div class="title-row">
         <div class="brand">✦ Forger un héros</div>
-        <div class="steplabel">${state.step===12? 'Fiche' : 'Étape ' + (state.step) + ' / 11'}</div>
+        <div class="header-right">
+          <div class="steplabel">${state.step===12? 'Fiche' : 'Étape ' + (state.step) + ' / 11'}</div>
+          <button class="settings-btn" data-action="settings-open" aria-label="Réglages">${GEAR_ICON}</button>
+        </div>
       </div>
       <div class="rail">${railHtml()}</div>
     </div>
@@ -7435,11 +7729,16 @@ function render() {
   `;
   bindEvents();
   renderPrintSheet();
+  if (pendingScrollTarget) {
+    const el = document.getElementById(pendingScrollTarget);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    pendingScrollTarget = null;
+  }
 }
 
 function railHtml() {
   let segs = '';
-  for (let i=0;i<=11;i++){
+  for (let i=1;i<=11;i++){
     let cls = i < state.step ? 'done' : (i===state.step ? 'active' : '');
     // Completed steps are clickable so the person can jump straight back to
     // review or change an earlier choice, instead of only stepping back one
@@ -7456,7 +7755,6 @@ function railHtml() {
 // ===== Step content =====
 function sceneHtml() {
   switch(state.step) {
-    case 0: return step0();
     case 1: return step1_famille();
     case 2: return step2_profil();
     case 3: return step3_religion();
@@ -7473,7 +7771,7 @@ function sceneHtml() {
   }
 }
 
-function step0() {
+function step1_famille() {
   const saves = loadSaves();
   const savesHtml = saves.length ? `
     <div class="section-div">Personnages sauvegardés</div>
@@ -7487,24 +7785,9 @@ function step0() {
         <button class="save-delete" data-action="deletesave" data-id="${s.id}">✕</button>
       </div>
     `).join('')}
+    <div class="section-div">Nouveau personnage</div>
   ` : '';
 
-  return `
-    <div style="text-align:center; padding-top:18px;">
-      <div class="rune-ornament">
-        <svg viewBox="0 0 64 64" fill="none" stroke="#c9a227" stroke-width="1.4"><circle cx="32" cy="32" r="30"/><circle cx="32" cy="32" r="22"/><path d="M32 2v12M32 50v12M2 32h12M50 32h12M10 10l8 8M46 46l-8-8M54 10l-8 8M10 54l8-8"/><circle cx="32" cy="32" r="4" fill="#c9a227" stroke="none"/></svg>
-      </div>
-      <h1 class="scene-title">Chroniques Oubliées<br>Fantasy</h1>
-      <p class="lede">Un assistant pas-à-pas pour créer un personnage, fidèle aux règles de création classique. Le nom et l'histoire de votre héros se choisissent à la toute fin, à l'étape « Touche finale ».</p>
-    </div>
-
-    <button class="settings-cta" data-action="settings-open">${GEAR_ICON}<span>Réglages</span></button>
-
-    ${savesHtml}
-  `;
-}
-
-function step1_famille() {
   let cards = DATA.families.map((f,i) => {
     const key = FAMKEY(f.famille);
     const sel = state.familleIdx===i ? 'selected' : '';
@@ -7525,7 +7808,8 @@ function step1_famille() {
       </div>
     </div>`;
   }).join('');
-  return `<div class="eyebrow">Choisir une famille</div>
+  return `${savesHtml}
+    <div class="eyebrow">Choisir une famille</div>
     <h1 class="scene-title">Quelle voie suivra votre héros ?</h1>
     <p class="lede">Chaque famille de profils partage une vigueur, une maîtrise d'armes et une caractéristique commune.</p>
     ${cards}`;
@@ -7634,9 +7918,16 @@ function step3_peuple() {
     const ageR = peupleAgeRange(pe), tR = peupleTailleRange(pe), pR = peuplePoidsRange(pe);
     const ageVar = state.settings && state.settings.ageVariable;
     physique = `
-      <div class="section-div">Apparence physique</div>
+      <div class="section-div" id="physiqueSection">Apparence physique</div>
       <p class="hint">Fourchettes typiques pour un(e) ${pe.nom} — libre à vous de sortir un peu du cadre.</p>
       <div class="carac-grid">
+        <div class="carac-row">
+          <div class="carac-id"><span class="carac-name">Genre</span></div>
+          <select class="val-select" style="width:130px;" data-action-select="genre">
+            <option value="" ${!state.genre?'selected':''}>—</option>
+            ${['Masculin','Féminin','Autre'].map(g => `<option value="${g}" ${state.genre===g?'selected':''}>${g}</option>`).join('')}
+          </select>
+        </div>
         <div class="carac-row">
           <div class="carac-id"><span class="carac-name">Âge (ans)</span></div>
           <input class="name-input" style="margin:0; width:110px; text-align:right;" type="number"
@@ -7946,11 +8237,13 @@ function step6_voies() {
   const voies = p.voies;
   const isMage = famille().famille.includes('mages');
   const chosen = state.voiesChoisies;
+  const showSuppVoies = state.settings && state.settings.voiesSupplementaires;
   let cards = voies.map((v,i) => {
+    if (v.supplementaire && !showSuppVoies) return ''; // hidden unless the setting is on, index stays true to p.voies
     const sel = chosen.includes(i) ? 'selected' : '';
     const r1 = v.ranks[0];
     return `<div class="card ${sel}" data-action="voie" data-idx="${i}">
-      <div class="card-head"><div class="card-name">${titleCase(v.nom)}</div></div>
+      <div class="card-head"><div class="card-name">${titleCase(v.nom)}</div>${v.supplementaire ? settingBadgeHtml('Voie supplémentaire') : ''}</div>
       ${v.intro ? `<p class="card-desc" style="margin-top:-4px;">${v.intro}</p>` : ''}
       <div class="rank-item" style="border-top:none;">
         <div class="rank-num">1</div>
@@ -8087,6 +8380,107 @@ function equipmentChosenText(p) {
   return [p.equipement_depart, ...parts].filter(Boolean).join(' ');
 }
 
+function roll2d6() { return (1+Math.floor(Math.random()*6)) + (1+Math.floor(Math.random()*6)); }
+
+function monnaieSectionHtml() {
+  if (!state.monnaie) state.monnaie = {pp: 0, po: 0, pa: roll2d6()};
+  return `<div class="dcard">
+    <div class="dcard-title">Bourse</div>
+    <p class="hint" style="margin:0 0 8px;">À la création, un personnage dispose de 2d6 PA.</p>
+    <div class="carac-grid">
+      <div class="carac-row">
+        <div class="carac-id"><span class="carac-name">Pièces de platine (PP)</span></div>
+        <input class="name-input" style="margin:0; width:90px; text-align:right;" type="number" min="0" data-action-input="monnaie-pp" value="${state.monnaie.pp}">
+      </div>
+      <div class="carac-row">
+        <div class="carac-id"><span class="carac-name">Pièces d'or (PO)</span></div>
+        <input class="name-input" style="margin:0; width:90px; text-align:right;" type="number" min="0" data-action-input="monnaie-po" value="${state.monnaie.po}">
+      </div>
+      <div class="carac-row">
+        <div class="carac-id"><span class="carac-name">Pièces d'argent (PA)</span></div>
+        <input class="name-input" style="margin:0; width:90px; text-align:right;" type="number" min="0" data-action-input="monnaie-pa" value="${state.monnaie.pa}">
+      </div>
+    </div>
+    <button class="chip" data-action="monnaie-reroll" style="margin-top:8px;">🎲 Relancer 2d6 PA</button>
+  </div>`;
+}
+
+const ARME_TYPE_LABELS = {contact: 'Contact', distance: 'Distance', magique: 'Magique'};
+function ensureArmes() {
+  if (!Array.isArray(state.armes) || state.armes.length !== 5) {
+    const prev = Array.isArray(state.armes) ? state.armes : [];
+    state.armes = Array.from({length: 5}, (_, i) => prev[i] || {nom: '', type: 'contact', bonusVoie: 0, dm: '', notes: ''});
+  }
+}
+function armeAttaqueTotale(s, slot) {
+  const base = slot.type === 'distance' ? s.atkDistance : slot.type === 'magique' ? s.atkMagique : s.atkContact;
+  return base + (Number(slot.bonusVoie) || 0);
+}
+function armesSectionHtml() {
+  ensureArmes();
+  const s = computeSheet();
+  const rows = state.armes.map((slot, i) => {
+    const total = armeAttaqueTotale(s, slot);
+    return `<div class="dcard">
+      <div class="dcard-title">Arme / sort ${i+1}</div>
+      <input class="name-input" style="margin:0 0 8px;" data-action-input="arme-nom" data-idx="${i}" value="${escapeHtml(slot.nom)}" placeholder="Nom de l'arme ou du sort">
+      <div class="choice-btns">
+        ${Object.entries(ARME_TYPE_LABELS).map(([key,label]) => `<button class="chip ${slot.type===key?'on':''}" data-action="arme-type" data-idx="${i}" data-type="${key}">${label}</button>`).join('')}
+      </div>
+      <div class="carac-row" style="margin-top:8px;">
+        <div class="carac-id"><span class="carac-name">Bonus des voies</span></div>
+        <input class="name-input" style="margin:0; width:70px; text-align:right;" type="number" step="1" data-action-input="arme-bonus" data-idx="${i}" value="${slot.bonusVoie}">
+      </div>
+      <div class="carac-row">
+        <div class="carac-id"><span class="carac-name">Dégâts (DM)</span></div>
+        <input class="name-input" style="margin:0; width:130px;" data-action-input="arme-dm" data-idx="${i}" value="${escapeHtml(slot.dm)}" placeholder="ex. 1d8 + FOR">
+      </div>
+      <div class="carac-row">
+        <div class="carac-id"><span class="carac-name">Spécial / portée</span></div>
+        <input class="name-input" style="margin:0; width:170px;" data-action-input="arme-notes" data-idx="${i}" value="${escapeHtml(slot.notes)}" placeholder="ex. portée 30 m, crit 19-20">
+      </div>
+      <p class="hint" style="margin:8px 0 0; text-align:center;">Attaque : 1d20 + ${total} (${ARME_TYPE_LABELS[slot.type]}${Number(slot.bonusVoie)?`, dont ${slot.bonusVoie>0?'+':''}${slot.bonusVoie} des voies`:''})</p>
+    </div>`;
+  }).join('');
+  return `<div class="section-div">Armes &amp; sorts (5 emplacements)</div>
+    <p class="hint">Comme pour l'armure, le bonus des voies n'est pas calculé automatiquement — indiquez-le si une capacité augmente votre attaque avec cette arme ou ce sort.</p>
+    ${rows}`;
+}
+
+function armureSectionHtml() {
+  if (state.armureIdx === null || state.armureIdx === undefined) state.armureIdx = 0;
+  if (state.bouclierIdx === null || state.bouclierIdx === undefined) state.bouclierIdx = 0;
+  if (state.defBonusManuel === null || state.defBonusManuel === undefined) state.defBonusManuel = 0;
+  const armures = DATA.armures, boucliers = DATA.boucliers;
+  const s = computeSheet();
+  return `<div class="dcard">
+    <div class="dcard-title">Armure &amp; bouclier portés</div>
+    <p class="hint" style="margin:0 0 8px;">Le bonus de DEF de l'armure s'ajoute au total, mais elle peut aussi plafonner le bonus d'AGI qui compte pour la DEF. Choisissez ce que votre personnage porte réellement (à ajuster librement).</p>
+    <div class="carac-row">
+      <div class="carac-id"><span class="carac-name">Armure</span></div>
+      <select class="val-select" style="width:190px;" data-action-select="armure">
+        ${armures.map((a,i) => `<option value="${i}" ${state.armureIdx===i?'selected':''}>${a.nom}${a.agi_max!=null?` (DEF +${a.def}, AGI max +${a.agi_max})`:''}</option>`).join('')}
+      </select>
+    </div>
+    <div class="carac-row">
+      <div class="carac-id"><span class="carac-name">Bouclier</span></div>
+      <select class="val-select" style="width:190px;" data-action-select="bouclier">
+        ${boucliers.map((b,i) => `<option value="${i}" ${state.bouclierIdx===i?'selected':''}>${b.nom}${b.def?` (DEF +${b.def})`:''}</option>`).join('')}
+      </select>
+    </div>
+    <div class="carac-row">
+      <div class="carac-id"><span class="carac-name">Autres modificateurs</span></div>
+      <input class="name-input" style="margin:0; width:90px; text-align:right;" type="number" step="1"
+        data-action-input="def-bonus-manuel" value="${state.defBonusManuel}">
+    </div>
+    <p class="hint" style="margin:-2px 0 0;">Certaines voies accordent un bonus brut à la DEF ou permettent d'utiliser une autre caractéristique que l'AGI (ex. Peau de pierre, voie du pagne). Ce champ n'est pas calculé automatiquement — ajoutez ici la différence par rapport à 10 + AGI que ces capacités représentent.</p>
+    <div class="level-stepper" style="margin-top:12px;">
+      <div class="stepper-points" style="flex:1; align-items:center;"><span class="n">${s.def}</span><span class="lbl">Défense totale</span></div>
+    </div>
+    <p class="hint" style="margin:8px 0 0; text-align:center;">${defFormula(s)}</p>
+  </div>`;
+}
+
 function step9_equipement() {
   const p = profil();
   const choix = p.equipement_choix || [];
@@ -8115,7 +8509,10 @@ function step9_equipement() {
     <div class="dcard"><div class="dcard-title">Équipement de ${p.nom}</div><p>${p.equipement_depart}</p></div>
     ${choixHtml}
     ${dieu ? `<div class="dcard"><div class="dcard-title">Arme sacrée de ${dieu.nom}</div><p>${dieu.arme_sacree}</p></div>` : ''}
-    <div class="dcard"><div class="dcard-title">Armes &amp; armures maîtrisées</div><p>${p.armes_armures}</p></div>`;
+    <div class="dcard"><div class="dcard-title">Armes &amp; armures maîtrisées</div><p>${p.armes_armures}</p></div>
+    ${armureSectionHtml()}
+    ${armesSectionHtml()}
+    ${monnaieSectionHtml()}`;
 }
 
 // ===== Progression beyond level 1 (from "Progression & niveau") =====
@@ -8259,6 +8656,24 @@ function hybridPvBase() {
   return Math.floor(weightedSum / totalPts);
 }
 
+// A readable, self-documenting breakdown of the DEF total — 10 + AGI (capped
+// by the worn armor's "AGI max", if any) + the armor's own DEF bonus + the
+// shield's DEF bonus — so the player always understands where their DEF
+// value comes from, not just the final number.
+function defFormula(s) {
+  const parts = ['10'];
+  parts.push(`${s.agiForDef>=0?'+':''}${s.agiForDef} AGI${s.defAgiCapped?` (plafonnée à +${s.armure.agi_max} par l'armure)`:''}`);
+  if (s.armure.def) parts.push(`+${s.armure.def} (${s.armure.nom})`);
+  if (s.bouclier.def) parts.push(`+${s.bouclier.def} (${s.bouclier.nom})`);
+  if (s.defBonusManuel) parts.push(`${s.defBonusManuel>=0?'+':''}${s.defBonusManuel} (autres modificateurs)`);
+  return `${parts.join(' ')} = ${s.def}`;
+}
+function initFormula(s) {
+  const parts = ['10', `${s.PER>=0?'+':''}${s.PER} PER`];
+  if (s.initBonusManuel) parts.push(`${s.initBonusManuel>=0?'+':''}${s.initBonusManuel} (voies)`);
+  return `${parts.join(' ')} = ${s.initiative}`;
+}
+
 function computeSheet() {
   ensureProgression();
   const fam = famille(); const p = profil(); const pe = peuple();
@@ -8278,8 +8693,16 @@ function computeSheet() {
   const pv = (2*pvBase + CON) + (niveau - 1) * (pvBase + CON);
   const drCount = (fam.stats.dr_bonus ? 3 : 2) + CON + (ageBonusIsDR() ? 1 : 0);
   const pc = 2 + CHA + (fam.stats.pc_bonus || 0) + (ageBonusIsPC() ? 1 : 0);
-  const initiative = 10 + PER;
-  const def = 10 + AGI;
+  const initBonusManuel = Number(state.initBonusManuel) || 0;
+  const initiative = 10 + PER + initBonusManuel;
+  const armureIdx = state.armureIdx || 0;
+  const bouclierIdx = state.bouclierIdx || 0;
+  const armure = DATA.armures[armureIdx] || DATA.armures[0];
+  const bouclier = DATA.boucliers[bouclierIdx] || DATA.boucliers[0];
+  const agiForDef = armure.agi_max != null ? Math.min(AGI, armure.agi_max) : AGI;
+  const defBonusManuel = Number(state.defBonusManuel) || 0;
+  const def = 10 + agiForDef + armure.def + bouclier.def + defBonusManuel;
+  const defAgiCapped = armure.agi_max != null && AGI > armure.agi_max;
   // Attack values start at +1 and gain +1 per level, capping at level 10.
   const atkBase = Math.min(niveau, 10);
   const atkContact = atkBase + FOR;
@@ -8337,7 +8760,7 @@ function computeSheet() {
   }
   const pm = spellCount>0 ? (VOL + spellCount) : 0;
 
-  return {fam,p,pe,CON,AGI,PER,VOL,CHA,FOR,INT,niveau,pv,drCount,pc,initiative,def,atkBase,atkContact,atkDistance,atkMagique,pm,spellCount,peupleVoieNom,peupleVoieRank1,peupleVoieObj};
+  return {fam,p,pe,CON,AGI,PER,VOL,CHA,FOR,INT,niveau,pv,drCount,pc,initiative,initBonusManuel,def,armure,bouclier,agiForDef,defAgiCapped,defBonusManuel,atkBase,atkContact,atkDistance,atkMagique,pm,spellCount,peupleVoieNom,peupleVoieRank1,peupleVoieObj};
 }
 
 function traitPickerHtml(label, options, key, current) {
@@ -8389,6 +8812,9 @@ function step10_touchefinale() {
        }).join('')}
        <p class="hint">${escapeHtml(DATA.langues.talent_secondaire)}</p>`;
 
+  const sInit = computeSheet();
+  const initBonusManuel = Number(state.initBonusManuel) || 0;
+
   return `
     <div class="eyebrow">Dernière étape</div>
     <h1 class="scene-title">Touche finale</h1>
@@ -8411,6 +8837,20 @@ function step10_touchefinale() {
 
     <div class="section-div">Description &amp; historique</div>
     <textarea class="textarea-histoire" id="histoireInput" placeholder="Apparence, personnalité, passé, motivations, liens avec d'autres personnages… Écrivez ici l'histoire de votre héros.">${escapeHtml(state.histoire)}</textarea>
+
+    <div class="section-div">Initiative</div>
+    <div class="dcard">
+      <div class="carac-row">
+        <div class="carac-id"><span class="carac-name">Bonus des voies</span></div>
+        <input class="name-input" style="margin:0; width:90px; text-align:right;" type="number" step="1"
+          data-action-input="init-bonus-manuel" value="${initBonusManuel}">
+      </div>
+      <p class="hint" style="margin:-2px 0 0;">Comme pour l'armure et les armes, ce bonus n'est pas calculé automatiquement — ajoutez-le ici si une capacité de vos voies augmente votre Initiative.</p>
+      <div class="level-stepper" style="margin-top:12px;">
+        <div class="stepper-points" style="flex:1; align-items:center;"><span class="n">${sInit.initiative}</span><span class="lbl">Initiative totale</span></div>
+      </div>
+      <p class="hint" style="margin:8px 0 0; text-align:center;">${initFormula(sInit)}</p>
+    </div>
   `;
 }
 
@@ -8427,8 +8867,8 @@ function step11_fiche() {
     ['Dé de récupération', s.drCount + ' × ' + s.fam.stats.de_recup],
     ['Points de chance', s.pc + ' PC'],
     ['Points de mana', s.pm + ' PM'],
-    ['Initiative', '10 + PER = ' + s.initiative],
-    ['Défense (DEF)', '10 + AGI = ' + s.def],
+    ['Initiative', initFormula(s)],
+    ['Défense (DEF)', defFormula(s)],
     ['Attaque au contact', s.atkContact + ' (base ' + s.atkBase + ' + FOR)'],
     ['Attaque à distance', s.atkDistance + ' (base ' + s.atkBase + ' + AGI)'],
     ['Attaque magique', s.atkMagique + ' (base ' + s.atkBase + ' + VOL)'],
@@ -8475,6 +8915,7 @@ function step11_fiche() {
 
     <div class="section-div">Équipement</div>
     <div class="dcard"><p>${DATA.equipement_generique}</p><p>${equipmentChosenText(s.p)}</p><p>${s.p.armes_armures}</p></div>
+    ${state.monnaie ? `<div class="dcard"><div class="dcard-title">Bourse</div><p>${state.monnaie.pp} PP · ${state.monnaie.po} PO · ${state.monnaie.pa} PA</p></div>` : ''}
 
     <a class="restart-link" data-action="restart">✦ Créer un nouveau héros</a>
   `;
@@ -8603,13 +9044,14 @@ function slotsSectionHtml(s) {
 
 function slotPickerHtml(slotIdx) {
   const used = usedVoieKeys();
+  const showSuppVoiesTop = state.settings && state.settings.voiesSupplementaires;
   if (!state.pickingSlotProfile) {
     let html = `<div class="dcard">
       <div class="dcard-title" style="margin-bottom:8px;">Emplacement ${slotIdx+1} — quel profil ?</div>`;
     DATA.families.forEach((fam, fi) => {
       html += `<div class="eyebrow" style="margin-top:8px;">${fam.famille}</div><div class="choice-btns">`;
       fam.profils.forEach((pr, pi) => {
-        const anyLeft = pr.voies.some((v,vi) => !used.has(`${fi}-${pi}-${vi}`));
+        const anyLeft = pr.voies.some((v,vi) => (!v.supplementaire || showSuppVoiesTop) && !used.has(`${fi}-${pi}-${vi}`));
         if (!anyLeft) return;
         const isPrimary = fi===state.familleIdx && pi===state.profilIdx;
         html += `<button class="chip" data-action="slot-pick-profile" data-slot="${slotIdx}" data-fam="${fi}" data-prof="${pi}">${pr.nom}${isPrimary?' (le vôtre)':''}</button>`;
@@ -8621,13 +9063,15 @@ function slotPickerHtml(slotIdx) {
   }
   const {familleIdx, profilIdx} = state.pickingSlotProfile;
   const pr = DATA.families[familleIdx].profils[profilIdx];
+  const showSuppVoies = state.settings && state.settings.voiesSupplementaires;
   let html = `<div class="dcard">
     <div class="dcard-title" style="margin-bottom:8px;">${pr.nom} — quelle voie ?</div>
     ${state.slotPickError ? `<p class="warn" style="margin:0 0 8px;">${state.slotPickError}</p>` : ''}
     <div class="choice-btns">`;
   pr.voies.forEach((v, vi) => {
+    if (v.supplementaire && !showSuppVoies) return;
     if (used.has(`${familleIdx}-${profilIdx}-${vi}`)) return;
-    html += `<button class="chip" data-action="slot-pick-voie" data-slot="${slotIdx}" data-voie="${vi}">${titleCase(v.nom)}</button>`;
+    html += `<button class="chip" data-action="slot-pick-voie" data-slot="${slotIdx}" data-voie="${vi}">${titleCase(v.nom)}${v.supplementaire ? ' ⚙' : ''}</button>`;
   });
   html += `</div>
     <button class="chip" style="margin-top:10px;" data-action="slot-pick-back">← Changer de profil</button>
@@ -8901,6 +9345,13 @@ function confirmCrop() {
   render();
 }
 
+// Fit-to-width scale computed when the preview opens (the "Ajuster" target)
+// and the scale currently applied — kept apart so zoom in/out can move
+// away from fit and "Ajuster" can always bring it back.
+const PREVIEW_DESIGN_WIDTH_PX = 718; // 190mm at the CSS-standard 96dpi reference
+let previewFitScale = 1;
+let previewScale = 1;
+
 function openPreview() {
   renderPrintSheet();
   const src = document.getElementById('printSheet');
@@ -8909,7 +9360,8 @@ function openPreview() {
   if (overlay) overlay.classList.add('open'); // must be visible before measuring below
   // The sheet is shown at true scale (matching print exactly), which reads
   // small on a phone — temporarily allow pinch-zoom (normally locked) so
-  // the person can zoom in on any part of it.
+  // the person can zoom in on any part of it, in addition to the explicit
+  // +/− zoom controls below.
   const vp = document.querySelector('meta[name="viewport"]');
   if (vp) { vp.dataset.prevContent = vp.getAttribute('content'); vp.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=4.0'); }
   if (src && dst) {
@@ -8924,22 +9376,37 @@ function openPreview() {
     // the scroll area sizes correctly.
     const sheet = dst.querySelector('.ps-sheet');
     if (sheet) {
-      const DESIGN_WIDTH_PX = 718; // 190mm at the CSS-standard 96dpi reference
       const available = dst.clientWidth - 16; // minus the overlay's own padding
-      const scale = Math.max(0.35, Math.min(1.4, available / DESIGN_WIDTH_PX));
-      sheet.style.width = DESIGN_WIDTH_PX + 'px';
-      const naturalHeight = sheet.scrollHeight;
-      sheet.style.transformOrigin = 'top left';
-      sheet.style.transform = `scale(${scale})`;
+      previewFitScale = Math.max(0.35, Math.min(1.4, available / PREVIEW_DESIGN_WIDTH_PX));
+      previewScale = previewFitScale;
+      sheet.style.width = PREVIEW_DESIGN_WIDTH_PX + 'px';
       const wrapper = document.createElement('div');
-      wrapper.style.width = Math.round(DESIGN_WIDTH_PX * scale) + 'px';
-      wrapper.style.height = Math.round(naturalHeight * scale) + 'px';
       wrapper.style.margin = '0 auto';
       dst.innerHTML = '';
       wrapper.appendChild(sheet);
       dst.appendChild(wrapper);
+      applyPreviewScale(previewScale);
     }
   }
+}
+// Re-applies the current zoom level to the already-rendered sheet, without
+// re-cloning its content — used by openPreview (initial fit) and by the
+// zoom in/out/fit controls (adjusting afterward).
+function applyPreviewScale(scale) {
+  const dst = document.getElementById('previewScroll');
+  const sheet = dst && dst.querySelector('.ps-sheet');
+  const wrapper = sheet && sheet.parentElement;
+  if (!sheet || !wrapper) return;
+  previewScale = Math.max(0.25, Math.min(3, scale));
+  // transform:scale() is purely visual — it never changes scrollHeight, so
+  // this is always the sheet's true (unscaled) height, transform or not.
+  const naturalHeight = sheet.scrollHeight;
+  sheet.style.transformOrigin = 'top left';
+  sheet.style.transform = `scale(${previewScale})`;
+  wrapper.style.width = Math.round(PREVIEW_DESIGN_WIDTH_PX * previewScale) + 'px';
+  wrapper.style.height = Math.round(naturalHeight * previewScale) + 'px';
+  const label = document.getElementById('previewZoomLevel');
+  if (label) label.textContent = Math.round(previewScale * 100) + '%';
 }
 function closePreview() {
   const overlay = document.getElementById('previewOverlay');
@@ -8954,6 +9421,7 @@ function renderPrintSheet() {
   if (state.step !== 12) { container.innerHTML = ''; return; }
 
   const s = computeSheet();
+  ensureArmes();
   const p = s.p, pe = s.pe, fam = s.fam;
 
   // Voie du peuple box (or Voie du Mage if chosen as mage bonus)
@@ -9038,6 +9506,7 @@ function renderPrintSheet() {
             <div class="row"><label>Famille</label><span class="v">${fam.famille}</span></div>
             <div class="row"><label>Profil</label><span class="v">${p.nom}</span></div>
             <div class="row"><label>Âge / Taille / Poids</label><span class="v">${state.age||'—'} ans · ${state.taille||'—'} m · ${state.poids||'—'} kg</span></div>
+            ${state.genre ? `<div class="row"><label>Genre</label><span class="v">${escapeHtml(state.genre)}</span></div>` : ''}
             <div class="row ${state.ideal?'':'noline'}"><label>Idéal héroïque</label>${state.ideal ? `<span class="v">${escapeHtml(state.ideal)}</span>` : `<div class="ps-hline sm"></div>`}</div>
             <div class="row ${state.travers?'':'noline'}"><label>Travers</label>${state.travers ? `<span class="v">${escapeHtml(state.travers)}</span>` : `<div class="ps-hline sm"></div>`}</div>
           </div>
@@ -9061,14 +9530,13 @@ function renderPrintSheet() {
       </table>
       <table class="ps-armes">
         <tr><th style="width:34%;">Armes</th><th style="width:16%;">Attaque</th><th style="width:12%;">DM</th><th>Spécial / Portée</th></tr>
-        <tr><td></td><td>1d20 +</td><td></td><td></td></tr>
-        <tr><td></td><td>1d20 +</td><td></td><td></td></tr>
-        <tr><td></td><td>1d20 +</td><td></td><td></td></tr>
+        ${(state.armes||[]).map(slot => `<tr><td style="text-align:left;">${escapeHtml(slot.nom)}</td><td>1d20 + ${armeAttaqueTotale(s, slot)}</td><td>${escapeHtml(slot.dm)}</td><td style="text-align:left;">${escapeHtml(slot.notes)}</td></tr>`).join('')}
       </table>
       <div class="ps-equipbox">
         <div class="lab">Équipement</div>
         <p>${equipText}</p>
       </div>
+      ${state.monnaie ? `<div class="ps-langbox" style="margin-top:8px;"><div class="lab">Bourse</div><p>${state.monnaie.pp} PP · ${state.monnaie.po} PO · ${state.monnaie.pa} PA</p></div>` : ''}
       ${(p.nom==='Prêtre' && state.pretreType==='specialiste' && state.pretreDieuNom) ? (() => {
         const dieu = DATA.pantheon_osgild.find(d => d.nom === state.pretreDieuNom);
         if (!dieu) return '';
@@ -9122,7 +9590,7 @@ function footerHtml() {
   const canNext = validateStep(state.step);
   const nextLabel = state.step===10 ? 'Voir la fiche ✦' : 'Suivant →';
   return `<div class="footer"><div class="footer-inner">
-    ${state.step>0 ? `<button class="btn btn-prev" data-action="prev">←</button>` : ''}
+    ${state.step>1 ? `<button class="btn btn-prev" data-action="prev">←</button>` : ''}
     <button class="btn btn-next ${state.step===10?'gold':''}" data-action="next" ${canNext?'':'disabled'}>${nextLabel}</button>
   </div></div>`;
 }
@@ -9211,6 +9679,13 @@ function bindEvents() {
     const el = document.querySelector(`[data-action-input="${key}"]`);
     if (el) el.addEventListener('input', e => { state[key] = e.target.value; });
   });
+  ['pp','po','pa'].forEach(field => {
+    const el = document.querySelector(`[data-action-input="monnaie-${field}"]`);
+    if (el) el.addEventListener('input', e => {
+      if (!state.monnaie) state.monnaie = {pp:0, po:0, pa:0};
+      state.monnaie[field] = Number(e.target.value) || 0;
+    });
+  });
   // The age category box (variable starting age variant) depends on the
   // typed age, so re-render once the person finishes editing it (blur / the
   // number input's up-down arrows) rather than on every keystroke, which
@@ -9254,6 +9729,35 @@ function bindEvents() {
       render();
     });
   });
+  const genreEl = document.querySelector('[data-action-select="genre"]');
+  if (genreEl) genreEl.addEventListener('change', e => { state.genre = e.target.value || null; });
+  const armureEl = document.querySelector('[data-action-select="armure"]');
+  if (armureEl) armureEl.addEventListener('change', e => { state.armureIdx = Number(e.target.value); render(); });
+  const bouclierEl = document.querySelector('[data-action-select="bouclier"]');
+  if (bouclierEl) bouclierEl.addEventListener('change', e => { state.bouclierIdx = Number(e.target.value); render(); });
+  const defBonusEl = document.querySelector('[data-action-input="def-bonus-manuel"]');
+  if (defBonusEl) {
+    defBonusEl.addEventListener('input', e => { state.defBonusManuel = Number(e.target.value) || 0; });
+    defBonusEl.addEventListener('change', () => render());
+  }
+  document.querySelectorAll('[data-action-input="arme-nom"]').forEach(el => {
+    el.addEventListener('input', e => { ensureArmes(); state.armes[Number(e.target.dataset.idx)].nom = e.target.value; });
+  });
+  document.querySelectorAll('[data-action-input="arme-dm"]').forEach(el => {
+    el.addEventListener('input', e => { ensureArmes(); state.armes[Number(e.target.dataset.idx)].dm = e.target.value; });
+  });
+  document.querySelectorAll('[data-action-input="arme-notes"]').forEach(el => {
+    el.addEventListener('input', e => { ensureArmes(); state.armes[Number(e.target.dataset.idx)].notes = e.target.value; });
+  });
+  document.querySelectorAll('[data-action-input="arme-bonus"]').forEach(el => {
+    el.addEventListener('input', e => { ensureArmes(); state.armes[Number(e.target.dataset.idx)].bonusVoie = Number(e.target.value) || 0; });
+    el.addEventListener('change', () => render());
+  });
+  const initBonusEl = document.querySelector('[data-action-input="init-bonus-manuel"]');
+  if (initBonusEl) {
+    initBonusEl.addEventListener('input', e => { state.initBonusManuel = Number(e.target.value) || 0; });
+    initBonusEl.addEventListener('change', () => render());
+  }
 }
 
 function updateFooterOnly() {
@@ -9276,12 +9780,20 @@ function onAction(e) {
       state.niveau = 1; state.peupleRank = null; state.mageVoieRank = null; state.profilVoieRanks = null;
       state.extraSlots = null; state.pickingSlot = null; state.pickingSlotProfile = null;
       state.prestigeChoice = null; state.prestigeRank = 0; state.prestigePicking = false;
+      state.step = 2; window.scrollTo(0,0); // auto-advance once a family is chosen
       break;
-    case 'profil':
+    case 'profil': {
       state.profilIdx = Number(el.dataset.idx);
       state.equipChoix = null; state.equipCustomText = {};
       state.pretreType = null; state.pretreDieuNom = null;
+      // Auto-advance once a profil is chosen — skip straight past the
+      // Prêtre-only religion step for everyone else, same as "Suivant".
+      let nextStep = 3;
+      if (nextStep === 3 && !isPretre()) nextStep = 4;
+      state.step = nextStep;
+      window.scrollTo(0,0);
       break;
+    }
     case 'pretre-type':
       state.pretreType = el.dataset.type;
       if (state.pretreType === 'generaliste') state.pretreDieuNom = null;
@@ -9301,6 +9813,7 @@ function onAction(e) {
       state.taille = (tR.min != null && tR.max != null) ? Math.round((tR.min + tR.max) / 2 * 100) / 100 : '';
       state.poids = (pR.min != null && pR.max != null) ? Math.round((pR.min + pR.max) / 2) : '';
       state.ageBonusChoice = null;
+      pendingScrollTarget = 'physiqueSection';
       break;
     }
     case 'serie':
@@ -9330,6 +9843,16 @@ function onAction(e) {
     case 'age-bonus-choice':
       state.ageBonusChoice = el.dataset.choice;
       break;
+    case 'monnaie-reroll':
+      if (!state.monnaie) state.monnaie = {pp:0, po:0, pa:0};
+      state.monnaie.pa = roll2d6();
+      break;
+    case 'arme-type': {
+      ensureArmes();
+      const i = Number(el.dataset.idx);
+      state.armes[i].type = el.dataset.type;
+      break;
+    }
     case 'equip-choice': {
       const gi = Number(el.dataset.group);
       const oi = Number(el.dataset.opt);
@@ -9394,7 +9917,7 @@ function onAction(e) {
     }
     case 'restart': {
       const keepSettings = state.settings; // app-wide preference, survives creating a new hero
-      state = {step:0, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', ageBonusChoice:null, equipChoix:null, equipCustomText:{}, pretreType:null, pretreDieuNom:null, pretreDivineVoieIdx:null, pretreDivineTarget:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
+      state = {step:1, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', genre:null, monnaie:null, armureIdx:0, bouclierIdx:0, defBonusManuel:0, armes:null, initBonusManuel:0, ageBonusChoice:null, equipChoix:null, equipCustomText:{}, pretreType:null, pretreDieuNom:null, pretreDivineVoieIdx:null, pretreDivineTarget:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
       window.scrollTo(0,0);
       break;
     }
@@ -9577,6 +10100,15 @@ function onAction(e) {
       return; // overlay handles its own display, no re-render needed
     case 'closepreview':
       closePreview();
+      return;
+    case 'preview-zoom-in':
+      applyPreviewScale(previewScale + 0.15);
+      return;
+    case 'preview-zoom-out':
+      applyPreviewScale(previewScale - 0.15);
+      return;
+    case 'preview-zoom-fit':
+      applyPreviewScale(previewFitScale);
       return;
     case 'settings-open':
       openSettings();

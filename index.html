@@ -491,6 +491,11 @@ select.val-select{
   padding:8px 12px; border-radius:6px; border:none;
   background:var(--gold); color:#241a10; cursor:pointer; flex:0 0 auto;
 }
+.save-export{
+  width:30px; height:30px; border-radius:50%; flex:0 0 auto;
+  background:transparent; border:1px solid var(--steel-bright); color:var(--parchment);
+  font-size:14px; cursor:pointer;
+}
 .save-delete{
   width:30px; height:30px; border-radius:50%; flex:0 0 auto;
   background:transparent; border:1px solid var(--steel-bright); color:var(--parchment);
@@ -890,6 +895,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
 <div class="app" id="app"></div>
 <div id="printSheet"></div>
 <input type="file" id="portraitFileInput" accept="image/*" style="display:none;">
+<input type="file" id="importFileInput" accept="application/json,.json" style="display:none;">
 
 <div id="previewOverlay" class="preview-overlay">
   <div class="preview-topbar">
@@ -7615,6 +7621,7 @@ let state = {
   defBonusManuel: 0, // free-form DEF adjustment for capacities not otherwise tracked (e.g. Peau de pierre)
   armes: null, // [{nom,type,bonusVoie,dm,notes}] × 5 — lazily initialised by ensureArmes()
   initBonusManuel: 0, // free-form Initiative adjustment for capacities not otherwise tracked
+  pvBonusManuel: 0, drBonusManuel: 0, pcBonusManuel: 0, pmBonusManuel: 0, // same idea, for PV/DR/PC/PM — all centralised in the "Bonus des voies" section at Touche finale
   ageBonusChoice: null, // 'PC' | 'DR' — only relevant for the "très jeune" age category
   equipChoix: null, // [choiceGroupIdx]: chosen option index, for the current profil's equipement_choix
   equipCustomText: {}, // {choiceGroupIdx: string} — free text for "(à préciser)" options
@@ -7706,6 +7713,12 @@ function loadSave(id) {
   state = JSON.parse(JSON.stringify(entry.state));
   state.savedId = id;
   state.step = 12; // saves are only offered once a fiche exists, so resume there
+  applyStateCompat();
+}
+// Backfills fields that didn't exist yet when an older save/export was
+// created, so loading it never crashes on a missing property. Shared by
+// loadSave and importCharacterFile.
+function applyStateCompat() {
   if (!state.languesChoisies) state.languesChoisies = []; // older saves predate this field
   if (!state.langueSlotIsTalent) state.langueSlotIsTalent = [];
   if (state.ideal === undefined) state.ideal = '';
@@ -7719,6 +7732,10 @@ function loadSave(id) {
   if (state.bouclierIdx === undefined || state.bouclierIdx === null) state.bouclierIdx = 0;
   if (state.defBonusManuel === undefined || state.defBonusManuel === null) state.defBonusManuel = 0;
   if (state.initBonusManuel === undefined || state.initBonusManuel === null) state.initBonusManuel = 0;
+  if (state.pvBonusManuel === undefined || state.pvBonusManuel === null) state.pvBonusManuel = 0;
+  if (state.drBonusManuel === undefined || state.drBonusManuel === null) state.drBonusManuel = 0;
+  if (state.pcBonusManuel === undefined || state.pcBonusManuel === null) state.pcBonusManuel = 0;
+  if (state.pmBonusManuel === undefined || state.pmBonusManuel === null) state.pmBonusManuel = 0;
   if (!state.rankBorrow) state.rankBorrow = {};
   if (state.rankBorrowPicking === undefined) state.rankBorrowPicking = null;
   if (state.rankBorrowPickingProfil === undefined) state.rankBorrowPickingProfil = null;
@@ -7739,6 +7756,75 @@ function formatSaveDate(iso) {
     return d.toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit'}) + ' à ' +
            d.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'});
   } catch (e) { return ''; }
+}
+
+// ===== Export / import a character as a standalone .json file =====
+// Lets a character travel between browsers/devices without a server —
+// just a downloadable file the person can keep or send to someone else.
+function slugify(str) {
+  const s = (str || 'Heros').normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  return s || 'Heros';
+}
+function exportStateAsFile(charState, nom) {
+  const payload = {
+    app: 'fiche-personnage-cof2',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    nom: nom || charState.nom || 'Héros sans nom',
+    state: charState,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${slugify(payload.nom)}.cof2.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+function exportSave(id) {
+  const entry = loadSaves().find(s => s.id === id);
+  if (entry) exportStateAsFile(entry.state, entry.nom);
+}
+function exportCurrentCharacter() {
+  exportStateAsFile(state, state.nom);
+}
+// Adds an imported file as a brand-new saved character (never overwrites
+// anything already in progress) — the person then opens it from the saves
+// list on the Famille step like any other save.
+function importCharacterFile(file) {
+  const reader = new FileReader();
+  reader.onload = () => {
+    let imported;
+    try {
+      const payload = JSON.parse(reader.result);
+      imported = (payload && typeof payload === 'object' && payload.state) ? payload.state : payload;
+      if (!imported || typeof imported !== 'object' || imported.familleIdx === undefined || imported.profilIdx === undefined) {
+        throw new Error('missing fields');
+      }
+    } catch (e) {
+      alert("Ce fichier ne ressemble pas à un export de personnage valide.");
+      return;
+    }
+    imported = JSON.parse(JSON.stringify(imported)); // defensive clone
+    const id = 'char_' + Date.now();
+    imported.savedId = id;
+    let profilNom = '', peupleNom = '';
+    try { profilNom = DATA.families[imported.familleIdx].profils[imported.profilIdx].nom; } catch (e) {}
+    try { peupleNom = imported.peupleIdx != null ? DATA.peoples[imported.peupleIdx].nom : ''; } catch (e) {}
+    const saves = loadSaves();
+    saves.push({
+      id,
+      nom: imported.nom || 'Héros importé',
+      profilNom, peupleNom,
+      updatedAt: new Date().toISOString(),
+      state: imported,
+    });
+    writeSaves(saves);
+    render();
+  };
+  reader.readAsText(file);
 }
 
 function famille() { return state.familleIdx!=null ? DATA.families[state.familleIdx] : null; }
@@ -7910,12 +7996,16 @@ function step1_famille() {
           <div class="save-name">${escapeHtml(s.nom)}</div>
           <div class="save-sub">${escapeHtml(s.profilNom)} · ${escapeHtml(s.peupleNom)} · ${formatSaveDate(s.updatedAt)}</div>
         </div>
+        <button class="save-export" data-action="exportsave" data-id="${s.id}" aria-label="Exporter">⭳</button>
         <button class="save-resume" data-action="loadsave" data-id="${s.id}">Reprendre</button>
         <button class="save-delete" data-action="deletesave" data-id="${s.id}">✕</button>
       </div>
     `).join('')}
+    <button class="chip" data-action="import-open" style="margin-top:8px;">⭱ Importer un personnage (fichier .json)</button>
     <div class="section-div">Nouveau personnage</div>
-  ` : '';
+  ` : `
+    <button class="chip" data-action="import-open" style="margin-bottom:16px;">⭱ Importer un personnage (fichier .json)</button>
+  `;
 
   let cards = DATA.families.map((f,i) => {
     const key = FAMKEY(f.famille);
@@ -8598,16 +8688,11 @@ function armureSectionHtml() {
         ${boucliers.map((b,i) => `<option value="${i}" ${state.bouclierIdx===i?'selected':''}>${b.nom}${b.def?` (DEF +${b.def})`:''}</option>`).join('')}
       </select>
     </div>
-    <div class="carac-row">
-      <div class="carac-id"><span class="carac-name">Autres modificateurs</span></div>
-      <input class="name-input" style="margin:0; width:90px; text-align:right;" type="number" step="1"
-        data-action-input="def-bonus-manuel" value="${state.defBonusManuel}">
-    </div>
-    <p class="hint" style="margin:-2px 0 0;">Certaines voies accordent un bonus brut à la DEF ou permettent d'utiliser une autre caractéristique que l'AGI (ex. Peau de pierre, voie du pagne). Ce champ n'est pas calculé automatiquement — ajoutez ici la différence par rapport à 10 + AGI que ces capacités représentent.</p>
     <div class="level-stepper" style="margin-top:12px;">
       <div class="stepper-points" style="flex:1; align-items:center;"><span class="n">${s.def}</span><span class="lbl">Défense totale</span></div>
     </div>
     <p class="hint" style="margin:8px 0 0; text-align:center;">${defFormula(s)}</p>
+    <p class="hint" style="margin:8px 0 0;">Le bonus de DEF issu des voies (ex. Peau de pierre) se règle à l'étape « Touche finale », avec les autres bonus de ce type.</p>
   </div>`;
 }
 
@@ -8837,9 +8922,12 @@ function computeSheet() {
   // Level 1 baseline is 2× the family base + CON; each level beyond that
   // adds (family base + CON), per "Progression & niveau". pvBase reflects
   // the hybrid blend above once any hybrid capacity points are spent.
-  const pv = (2*pvBase + CON) + (niveau - 1) * (pvBase + CON);
-  const drCount = (fam.stats.dr_bonus ? 3 : 2) + CON + (ageBonusIsDR() ? 1 : 0);
-  const pc = 2 + CHA + (fam.stats.pc_bonus || 0) + (ageBonusIsPC() ? 1 : 0);
+  const pvBonusManuel = Number(state.pvBonusManuel) || 0;
+  const drBonusManuel = Number(state.drBonusManuel) || 0;
+  const pcBonusManuel = Number(state.pcBonusManuel) || 0;
+  const pv = (2*pvBase + CON) + (niveau - 1) * (pvBase + CON) + pvBonusManuel;
+  const drCount = (fam.stats.dr_bonus ? 3 : 2) + CON + (ageBonusIsDR() ? 1 : 0) + drBonusManuel;
+  const pc = 2 + CHA + (fam.stats.pc_bonus || 0) + (ageBonusIsPC() ? 1 : 0) + pcBonusManuel;
   const initBonusManuel = Number(state.initBonusManuel) || 0;
   const initiative = 10 + PER + initBonusManuel;
   const armureIdx = state.armureIdx || 0;
@@ -8905,9 +8993,10 @@ function computeSheet() {
     const dieu = DATA.pantheon_osgild.find(d => d.nom === state.pretreDieuNom);
     if (dieu && dieu.capacite_rang !== 1 && isSpell(dieu.capacite_titre)) spellCount++;
   }
-  const pm = spellCount>0 ? (VOL + spellCount) : 0;
+  const pmBonusManuel = Number(state.pmBonusManuel) || 0;
+  const pm = (spellCount>0 ? (VOL + spellCount) : 0) + pmBonusManuel;
 
-  return {fam,p,pe,CON,AGI,PER,VOL,CHA,FOR,INT,niveau,pv,drCount,pc,initiative,initBonusManuel,def,armure,bouclier,agiForDef,defAgiCapped,defBonusManuel,atkBase,atkContact,atkDistance,atkMagique,pm,spellCount,peupleVoieNom,peupleVoieRank1,peupleVoieObj};
+  return {fam,p,pe,CON,AGI,PER,VOL,CHA,FOR,INT,niveau,pv,pvBonusManuel,drCount,drBonusManuel,pc,pcBonusManuel,initiative,initBonusManuel,def,armure,bouclier,agiForDef,defAgiCapped,defBonusManuel,atkBase,atkContact,atkDistance,atkMagique,pm,pmBonusManuel,spellCount,peupleVoieNom,peupleVoieRank1,peupleVoieObj};
 }
 
 function traitPickerHtml(label, options, key, current) {
@@ -8959,8 +9048,13 @@ function step10_touchefinale() {
        }).join('')}
        <p class="hint">${escapeHtml(DATA.langues.talent_secondaire)}</p>`;
 
-  const sInit = computeSheet();
-  const initBonusManuel = Number(state.initBonusManuel) || 0;
+  const sBonus = computeSheet();
+  const bonusRow = (label, field, value, formula) => `<div class="carac-row">
+      <div class="carac-id"><span class="carac-name">${label}</span></div>
+      <input class="name-input" style="margin:0; width:70px; text-align:right;" type="number" step="1"
+        data-action-input="${field}" value="${value}">
+    </div>
+    <p class="hint" style="margin:-2px 0 8px; text-align:right;">${formula}</p>`;
 
   return `
     <div class="eyebrow">Dernière étape</div>
@@ -8985,18 +9079,15 @@ function step10_touchefinale() {
     <div class="section-div">Description &amp; historique</div>
     <textarea class="textarea-histoire" id="histoireInput" placeholder="Apparence, personnalité, passé, motivations, liens avec d'autres personnages… Écrivez ici l'histoire de votre héros.">${escapeHtml(state.histoire)}</textarea>
 
-    <div class="section-div">Initiative</div>
+    <div class="section-div">Bonus des voies</div>
+    <p class="hint">Certaines capacités accordent un bonus brut à une statistique (Peau de pierre, Volonté héroïque, etc.), sans qu'il soit possible de le calculer automatiquement à partir du texte des voies. Centralisez-les ici — les totaux ci-dessous les intègrent déjà.</p>
     <div class="dcard">
-      <div class="carac-row">
-        <div class="carac-id"><span class="carac-name">Bonus des voies</span></div>
-        <input class="name-input" style="margin:0; width:90px; text-align:right;" type="number" step="1"
-          data-action-input="init-bonus-manuel" value="${initBonusManuel}">
-      </div>
-      <p class="hint" style="margin:-2px 0 0;">Comme pour l'armure et les armes, ce bonus n'est pas calculé automatiquement — ajoutez-le ici si une capacité de vos voies augmente votre Initiative.</p>
-      <div class="level-stepper" style="margin-top:12px;">
-        <div class="stepper-points" style="flex:1; align-items:center;"><span class="n">${sInit.initiative}</span><span class="lbl">Initiative totale</span></div>
-      </div>
-      <p class="hint" style="margin:8px 0 0; text-align:center;">${initFormula(sInit)}</p>
+      ${bonusRow('Points de vigueur (PV)', 'pv-bonus-manuel', sBonus.pvBonusManuel, `${sBonus.pv} PV au total`)}
+      ${bonusRow('Dé de récupération', 'dr-bonus-manuel', sBonus.drBonusManuel, `${sBonus.drCount} × ${sBonus.fam.stats.de_recup} au total`)}
+      ${bonusRow('Points de chance (PC)', 'pc-bonus-manuel', sBonus.pcBonusManuel, `${sBonus.pc} PC au total`)}
+      ${bonusRow('Points de mana (PM)', 'pm-bonus-manuel', sBonus.pmBonusManuel, `${sBonus.pm} PM au total`)}
+      ${bonusRow('Défense (DEF)', 'def-bonus-manuel', sBonus.defBonusManuel, defFormula(sBonus))}
+      ${bonusRow('Initiative', 'init-bonus-manuel', sBonus.initBonusManuel, initFormula(sBonus))}
     </div>
   `;
 }
@@ -9010,10 +9101,10 @@ function step11_fiche() {
   }).join('');
 
   const derived = [
-    ['Points de vigueur', s.pv + ' PV'],
-    ['Dé de récupération', s.drCount + ' × ' + s.fam.stats.de_recup],
-    ['Points de chance', s.pc + ' PC'],
-    ['Points de mana', s.pm + ' PM'],
+    ['Points de vigueur', s.pv + ' PV' + (s.pvBonusManuel ? ` (dont ${s.pvBonusManuel>0?'+':''}${s.pvBonusManuel} des voies)` : '')],
+    ['Dé de récupération', s.drCount + ' × ' + s.fam.stats.de_recup + (s.drBonusManuel ? ` (dont ${s.drBonusManuel>0?'+':''}${s.drBonusManuel} des voies)` : '')],
+    ['Points de chance', s.pc + ' PC' + (s.pcBonusManuel ? ` (dont ${s.pcBonusManuel>0?'+':''}${s.pcBonusManuel} des voies)` : '')],
+    ['Points de mana', s.pm + ' PM' + (s.pmBonusManuel ? ` (dont ${s.pmBonusManuel>0?'+':''}${s.pmBonusManuel} des voies)` : '')],
     ['Initiative', initFormula(s)],
     ['Défense (DEF)', defFormula(s)],
     ['Attaque au contact', s.atkContact + ' (base ' + s.atkBase + ' + FOR)'],
@@ -9048,6 +9139,9 @@ function step11_fiche() {
             ? `Dernière sauvegarde : ${formatSaveDate(loadSaves().find(sv=>sv.id===state.savedId).updatedAt)}. Retrouvez ce personnage depuis l'écran d'accueil.`
             : "Sauvegardé dans ce navigateur, sans avoir besoin d'imprimer — retrouvable depuis l'écran d'accueil.")
     }</p>
+
+    <button class="btn btn-next steel print-btn" data-action="export-current">⭳ Exporter en fichier (.json)</button>
+    <p class="hint" style="margin-top:-10px;">Télécharge ce personnage dans un fichier que vous pouvez garder en sauvegarde, transférer sur un autre appareil ou partager — à réimporter depuis l'écran d'accueil.</p>
 
     <button class="btn btn-next gold print-btn" data-action="preview">👁️ Prévisualiser &amp; exporter en PDF</button>
     <p class="hint" style="margin-top:-10px;">Astuce : si la fenêtre d'impression ne s'ouvre pas, c'est probablement que ce fichier est affiché dans un aperçu intégré (ex. celui de Claude). Ouvrez-le d'abord dans votre navigateur (Safari, Chrome…) via le bouton de partage/téléchargement, puis réessayez.</p>
@@ -10045,6 +10139,12 @@ function bindEvents() {
     initBonusEl.addEventListener('input', e => { state.initBonusManuel = Number(e.target.value) || 0; });
     initBonusEl.addEventListener('change', () => render());
   }
+  [['pv-bonus-manuel','pvBonusManuel'], ['dr-bonus-manuel','drBonusManuel'], ['pc-bonus-manuel','pcBonusManuel'], ['pm-bonus-manuel','pmBonusManuel']].forEach(([attr, field]) => {
+    const el = document.querySelector(`[data-action-input="${attr}"]`);
+    if (!el) return;
+    el.addEventListener('input', e => { state[field] = Number(e.target.value) || 0; });
+    el.addEventListener('change', () => render());
+  });
 }
 
 function updateFooterOnly() {
@@ -10224,7 +10324,7 @@ function onAction(e) {
     }
     case 'restart': {
       const keepSettings = state.settings; // app-wide preference, survives creating a new hero
-      state = {step:1, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', genre:null, monnaie:null, armureIdx:0, bouclierIdx:0, defBonusManuel:0, armes:null, initBonusManuel:0, ageBonusChoice:null, equipChoix:null, equipCustomText:{}, pretreType:null, pretreDieuNom:null, pretreDivineVoieIdx:null, pretreDivineTarget:null, rankBorrow:{}, rankBorrowPicking:null, rankBorrowPickingProfil:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
+      state = {step:1, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', genre:null, monnaie:null, armureIdx:0, bouclierIdx:0, defBonusManuel:0, armes:null, initBonusManuel:0, pvBonusManuel:0, drBonusManuel:0, pcBonusManuel:0, pmBonusManuel:0, ageBonusChoice:null, equipChoix:null, equipCustomText:{}, pretreType:null, pretreDieuNom:null, pretreDivineVoieIdx:null, pretreDivineTarget:null, rankBorrow:{}, rankBorrowPicking:null, rankBorrowPickingProfil:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
       window.scrollTo(0,0);
       break;
     }
@@ -10384,6 +10484,15 @@ function onAction(e) {
         deleteSave(el.dataset.id);
       }
       break;
+    case 'exportsave':
+      exportSave(el.dataset.id);
+      return;
+    case 'export-current':
+      exportCurrentCharacter();
+      return;
+    case 'import-open':
+      { const el2 = document.getElementById('importFileInput'); if (el2) el2.click(); }
+      return;
     case 'trait-random': {
       const key = el.dataset.key;
       const tables = {ideal: DATA.traits.ideaux, travers: DATA.traits.travers, secret: DATA.secrets_intimes};
@@ -10519,6 +10628,18 @@ function initApp() {
     });
   }
   bindPortraitInput();
+
+  function bindImportInput() {
+    const input = document.getElementById('importFileInput');
+    if (!input) return;
+    input.addEventListener('change', e => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      importCharacterFile(file);
+      input.value = '';
+    });
+  }
+  bindImportInput();
 
   function bindCropOverlay() {
     document.querySelectorAll('#cropOverlay [data-action]').forEach(el => {

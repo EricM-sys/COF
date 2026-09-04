@@ -662,6 +662,8 @@ table.ps-carac td.code{ font-family:'Cinzel', serif; font-weight:700; background
 .ps-idfields{ margin-top:8px; }
 .ps-idfields .row{ border-bottom:1px solid #c9b989; padding:4px 0 3px; }
 .ps-idfields .row.noline{ border-bottom:none; padding-bottom:0; }
+.ps-idfields .row.split{ display:flex; gap:12px; }
+.ps-idfields .row.split .half{ flex:1; min-width:0; }
 .ps-idfields label{ display:block; font-family:'Cinzel', serif; font-size:7px; letter-spacing:1px; color:#6b5730; text-transform:uppercase; }
 .ps-idfields .v{ font-size:10px; }
 .ps-portrait{
@@ -697,7 +699,7 @@ table.ps-atk td{ border:1px solid #d8c99a; padding:3px 2px; text-align:center; f
 
 table.ps-armes{ width:100%; border-collapse:collapse; margin-top:9px; }
 table.ps-armes th{ background:#a9852f; color:#fff; font-family:'Cinzel', serif; font-size:7px; padding:3px; text-transform:uppercase; font-weight:600; }
-table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
+table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; line-height:1.2; }
 
 .ps-equipbox{ border:1px solid #c9b989; margin-top:8px; break-inside:avoid; page-break-inside:avoid; }
 .ps-equipbox .lab{ background:#a9852f; color:#fff; font-family:'Cinzel', serif; font-size:8px; padding:3px 6px; text-transform:uppercase; }
@@ -864,6 +866,12 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:9px 4px; font-size:8.5px; }
 .crop-zoom-row input[type=range]{
   flex:1 1 auto; accent-color:var(--gold);
 }
+
+/* Best-effort hide for Netlify's free-tier "Powered by Netlify" badge, in
+   case it's DOM-injected on this deployment — see chat for why this isn't
+   guaranteed and what the reliable fix is. */
+#netlify-badge, .netlify-badge, a[href*="netlify.com"][class*="badge"],
+[id*="netlify-badge"], [class*="netlify-badge"] { display:none !important; }
 </style>
 </head>
 <body>
@@ -8444,6 +8452,7 @@ function armesSectionHtml() {
   }).join('');
   return `<div class="section-div">Armes &amp; sorts (5 emplacements)</div>
     <p class="hint">Comme pour l'armure, le bonus des voies n'est pas calculé automatiquement — indiquez-le si une capacité augmente votre attaque avec cette arme ou ce sort.</p>
+    <p class="hint">Rappel : utiliser une arme sans la maîtriser impose un dé malus en attaque (voir la maîtrise des voies hybrides dans l'onglet Progression, et les armes &amp; armures maîtrisées de votre profil ci-dessus).</p>
     ${rows}`;
 }
 
@@ -8660,6 +8669,23 @@ function hybridPvBase() {
 // by the worn armor's "AGI max", if any) + the armor's own DEF bonus + the
 // shield's DEF bonus — so the player always understands where their DEF
 // value comes from, not just the final number.
+// For the print sheet's "Profil" field: lists every profil actually
+// contributing capacities (the primary one, plus any hybrid slot's source
+// profil), so a hybrid character's sheet doesn't just show their primary
+// profil as if the character were pure.
+function profilDisplayText(p) {
+  const names = [p.nom];
+  (state.extraSlots||[]).forEach(slot => {
+    if (!slot) return;
+    const isHybrid = !(slot.familleIdx===state.familleIdx && slot.profilIdx===state.profilIdx);
+    if (!isHybrid) return;
+    const srcFam = DATA.families[slot.familleIdx];
+    const srcProfil = srcFam && srcFam.profils[slot.profilIdx];
+    if (srcProfil && !names.includes(srcProfil.nom)) names.push(srcProfil.nom);
+  });
+  return names.join(' / ');
+}
+
 function defFormula(s) {
   const parts = ['10'];
   parts.push(`${s.agiForDef>=0?'+':''}${s.agiForDef} AGI${s.defAgiCapped?` (plafonnée à +${s.armure.agi_max} par l'armure)`:''}`);
@@ -9006,6 +9032,9 @@ function slotsSectionHtml(s) {
       const masteryNote = (isHybrid && slot.rank >= 2)
         ? `<p class="hint" style="margin:8px 0 0; color:#e8c65a;">Rang 2 atteint : vous maîtrisez désormais les armes et l'armure de ${srcProfil.nom} — « ${srcProfil.armes_armures || 'voir le profil correspondant'} »</p>`
         : '';
+      const armorRestrictionNote = isHybrid
+        ? `<p class="hint" style="margin:8px 0 0;">Attention : quelle que soit la maîtrise acquise, chaque capacité de cette voie impose la restriction d'armure propre à ${srcProfil.nom} lorsqu'elle est utilisée (${srcProfil.armes_armures || 'voir le profil correspondant'}).</p>`
+        : '';
       const spellArmorNote = (isHybrid && hasSpells && srcProfil.nom !== 'Prêtre')
         ? `<p class="hint" style="margin:8px 0 0;">Sorts de cette voie : s'ils sont lancés avec une armure non autorisée pour ${srcProfil.nom}, ils coûtent des PM supplémentaires (égal au bonus de DEF de l'armure portée) — voir Livre des règles.</p>`
         : '';
@@ -9023,6 +9052,7 @@ function slotsSectionHtml(s) {
           </div>`;
         }).join('')}
         ${masteryNote}
+        ${armorRestrictionNote}
         ${spellArmorNote}
         ${extra}
       </div>`;
@@ -9504,11 +9534,19 @@ function renderPrintSheet() {
           <div class="ps-line"><label>Niv.</label><span class="v">${s.niveau}</span></div>
           <div class="ps-idfields">
             <div class="row"><label>Famille</label><span class="v">${fam.famille}</span></div>
-            <div class="row"><label>Profil</label><span class="v">${p.nom}</span></div>
+            <div class="row"><label>Profil</label><span class="v">${profilDisplayText(p)}</span></div>
             <div class="row"><label>Âge / Taille / Poids</label><span class="v">${state.age||'—'} ans · ${state.taille||'—'} m · ${state.poids||'—'} kg</span></div>
             ${state.genre ? `<div class="row"><label>Genre</label><span class="v">${escapeHtml(state.genre)}</span></div>` : ''}
-            <div class="row ${state.ideal?'':'noline'}"><label>Idéal héroïque</label>${state.ideal ? `<span class="v">${escapeHtml(state.ideal)}</span>` : `<div class="ps-hline sm"></div>`}</div>
-            <div class="row ${state.travers?'':'noline'}"><label>Travers</label>${state.travers ? `<span class="v">${escapeHtml(state.travers)}</span>` : `<div class="ps-hline sm"></div>`}</div>
+            <div class="row split noline">
+              <div class="half">
+                <label>Idéal héroïque</label>
+                ${state.ideal ? `<span class="v">${escapeHtml(state.ideal)}</span>` : `<div class="ps-hline sm"></div>`}
+              </div>
+              <div class="half">
+                <label>Travers</label>
+                ${state.travers ? `<span class="v">${escapeHtml(state.travers)}</span>` : `<div class="ps-hline sm"></div>`}
+              </div>
+            </div>
           </div>
         </div>
         <div class="ps-colB">
@@ -9536,7 +9574,10 @@ function renderPrintSheet() {
         <div class="lab">Équipement</div>
         <p>${equipText}</p>
       </div>
-      ${state.monnaie ? `<div class="ps-langbox" style="margin-top:8px;"><div class="lab">Bourse</div><p>${state.monnaie.pp} PP · ${state.monnaie.po} PO · ${state.monnaie.pa} PA</p></div>` : ''}
+      ${state.monnaie ? `<div style="display:flex; gap:8px; margin-top:8px;">
+        <div class="ps-langbox" style="flex:1; margin-top:0;"><div class="lab">Bourse</div><p>${state.monnaie.pp} PP · ${state.monnaie.po} PO · ${state.monnaie.pa} PA</p></div>
+        <div class="ps-langbox" style="flex:1; margin-top:0; min-height:32px;"><div class="lab">Autres trésors</div></div>
+      </div>` : ''}
       ${(p.nom==='Prêtre' && state.pretreType==='specialiste' && state.pretreDieuNom) ? (() => {
         const dieu = DATA.pantheon_osgild.find(d => d.nom === state.pretreDieuNom);
         if (!dieu) return '';

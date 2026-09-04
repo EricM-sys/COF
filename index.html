@@ -1719,7 +1719,27 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
         {
          "rang": 5,
          "titre": "Talent personnel",
-         "texte": "Choisissez une capacité de rang 4 (ou moins) de n'importe quel profil de combattant ou d'aventurier, ou choisissez une capacité de rang 3 (ou moins) d'un profil de mage ou de mystique. Si le choix se porte sur une capacité de rang 1 ou 2, le caravanier augmente aussi ses PV maximaux de sa valeur de CHA. Si la capacité retenue est un sort, elle est soumise aux limitations d'armure et nécessite l'utilisation de PM (le sort en fait gagner un suivant les règles habituelles)."
+         "texte": "Choisissez une capacité de rang 4 (ou moins) de n'importe quel profil de combattant ou d'aventurier, ou choisissez une capacité de rang 3 (ou moins) d'un profil de mage ou de mystique. Si le choix se porte sur une capacité de rang 1 ou 2, le caravanier augmente aussi ses PV maximaux de sa valeur de CHA. Si la capacité retenue est un sort, elle est soumise aux limitations d'armure et nécessite l'utilisation de PM (le sort en fait gagner un suivant les règles habituelles).",
+         "borrow": {
+          "alternatives": [
+           {
+            "familles": [
+             "Famille des combattants",
+             "Famille des aventuriers"
+            ],
+            "rankMin": 1,
+            "rankMax": 4
+           },
+           {
+            "familles": [
+             "Famille des mages",
+             "Famille des mystiques"
+            ],
+            "rankMin": 1,
+            "rankMax": 3
+           }
+          ]
+         }
         }
        ]
       },
@@ -2200,7 +2220,18 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
         {
          "rang": 5,
          "titre": "Formation d’élite",
-         "texte": "Le chevalier possède les moyens et la culture nécessaires pour obtenir une formation dans n’importe quel domaine qui lui sied. Choisissez une capacité de rang 1 à 3 dans n’importe quel profil issu de la famille des combattants ou des aventuriers (voir page 78). De plus, le chevalier choisit une caractéristique ; désormais, il obtient un dé bonus lors des tests en rapport avec celle‑ci."
+         "texte": "Le chevalier possède les moyens et la culture nécessaires pour obtenir une formation dans n’importe quel domaine qui lui sied. Choisissez une capacité de rang 1 à 3 dans n’importe quel profil issu de la famille des combattants ou des aventuriers (voir page 78). De plus, le chevalier choisit une caractéristique ; désormais, il obtient un dé bonus lors des tests en rapport avec celle‑ci.",
+         "borrow": {
+          "alternatives": [
+           {
+            "familles": [
+             "Famille des combattants"
+            ],
+            "rankMin": 1,
+            "rankMax": 3
+           }
+          ]
+         }
         }
        ],
        "intro": ""
@@ -2568,7 +2599,18 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
         {
          "rang": 5,
          "titre": "Tradition familiale",
-         "texte": "Le parangon effectue une sorte de retour aux sources et apprend une capacité issue de la tradition familiale. Il peut choisir une capacité de rang 1 à 3 de n'importe quelle voie sauf celles de la famille des combattants. Il doit respecter les limitations d'armure lorsqu'il veut utiliser cette capacité en plein combat (mais pas autrement). Il bénéficie aussi de +3 PV pour une capacité de rang 1 ou de +2 PV pour une capacité de rang 2 (pas de PV supplémentaires pour une capacité de rang 3). Si c'est un sort, il doit en payer le coût en points de mana (il gagne le PM associé à l'acquisition de ce sort, selon la règle habituelle)."
+         "texte": "Le parangon effectue une sorte de retour aux sources et apprend une capacité issue de la tradition familiale. Il peut choisir une capacité de rang 1 à 3 de n'importe quelle voie sauf celles de la famille des combattants. Il doit respecter les limitations d'armure lorsqu'il veut utiliser cette capacité en plein combat (mais pas autrement). Il bénéficie aussi de +3 PV pour une capacité de rang 1 ou de +2 PV pour une capacité de rang 2 (pas de PV supplémentaires pour une capacité de rang 3). Si c'est un sort, il doit en payer le coût en points de mana (il gagne le PM associé à l'acquisition de ce sort, selon la règle habituelle).",
+         "borrow": {
+          "alternatives": [
+           {
+            "excludeFamilles": [
+             "Famille des combattants"
+            ],
+            "rankMin": 1,
+            "rankMax": 3
+           }
+          ]
+         }
         }
        ]
       }
@@ -4413,7 +4455,19 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
       {
        "rang": 2,
        "titre": "Talent pour la violence",
-       "texte": "Le joueur choisit une capacité de rang 1 de n’importe quelle voie de barbare ou de guerrier."
+       "texte": "Le joueur choisit une capacité de rang 1 de n’importe quelle voie de barbare ou de guerrier.",
+       "borrow": {
+        "alternatives": [
+         {
+          "profils": [
+           "Barbare",
+           "Guerrier"
+          ],
+          "rankMin": 1,
+          "rankMax": 1
+         }
+        ]
+       }
       },
       {
        "rang": 3,
@@ -4471,7 +4525,19 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
       {
        "rang": 3,
        "titre": "Talent pour la magie",
-       "texte": "Le joueur choisit une capacité de rang 1 de n’importe quelle voie de magicien ou d’ensorceleur. Il peut utiliser cette capacité en armure sans pénalité (mais pas une capacité qui offre un bonus de DEF). À la place, il peut choisir une capacité de rang 2, mais ne doit alors pas porter d’armure pour lancer le sort."
+       "texte": "Le joueur choisit une capacité de rang 1 de n’importe quelle voie de magicien ou d’ensorceleur. Il peut utiliser cette capacité en armure sans pénalité (mais pas une capacité qui offre un bonus de DEF). À la place, il peut choisir une capacité de rang 2, mais ne doit alors pas porter d’armure pour lancer le sort.",
+       "borrow": {
+        "alternatives": [
+         {
+          "profils": [
+           "Magicien",
+           "Ensorceleur"
+          ],
+          "rankMin": 1,
+          "rankMax": 1
+         }
+        ]
+       }
       },
       {
        "rang": 4,
@@ -4518,7 +4584,19 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
       {
        "rang": 2,
        "titre": "Enfant de la forêt",
-       "texte": "Le joueur choisit une capacité de rang 1 de n’importe quelle voie de druide ou de rôdeur. Il peut utiliser cette capacité en armure jusqu’à l’armure de cuir renforcé sans pénalité."
+       "texte": "Le joueur choisit une capacité de rang 1 de n’importe quelle voie de druide ou de rôdeur. Il peut utiliser cette capacité en armure jusqu’à l’armure de cuir renforcé sans pénalité.",
+       "borrow": {
+        "alternatives": [
+         {
+          "profils": [
+           "Druide",
+           "Rôdeur"
+          ],
+          "rankMin": 1,
+          "rankMax": 1
+         }
+        ]
+       }
       },
       {
        "rang": 3,
@@ -4565,7 +4643,18 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
       {
        "rang": 1,
        "titre": "Don étrange",
-       "texte": "Le gnome possède un talent inné pour les sciences, qu’elles soient occultes ou plus ordinaires. Il gagne un bonus de +3 à tous les tests scientifiques (INT) et il choisit une capacité de rang 1 d’ensorceleur. S’il porte une armure, il ne peut pas utiliser ce sort plus d’une fois par jour (il doit payer le coût en PM de façon normale). Dans le noir total, le gnome voit comme dans la pénombre jusqu’à 10m."
+       "texte": "Le gnome possède un talent inné pour les sciences, qu’elles soient occultes ou plus ordinaires. Il gagne un bonus de +3 à tous les tests scientifiques (INT) et il choisit une capacité de rang 1 d’ensorceleur. S’il porte une armure, il ne peut pas utiliser ce sort plus d’une fois par jour (il doit payer le coût en PM de façon normale). Dans le noir total, le gnome voit comme dans la pénombre jusqu’à 10m.",
+       "borrow": {
+        "alternatives": [
+         {
+          "profils": [
+           "Ensorceleur"
+          ],
+          "rankMin": 1,
+          "rankMax": 1
+         }
+        ]
+       }
       },
       {
        "rang": 2,
@@ -4674,7 +4763,15 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
       {
        "rang": 3,
        "titre": "Touche‑à‑tout",
-       "texte": "Le personnage obtient une capacité de rang 1 ou 2 de n’importe quel profil au choix du joueur. Si la capacité est de rang 2 ou accorde un bonus de DEF, il doit respecter les limitations d’armure."
+       "texte": "Le personnage obtient une capacité de rang 1 ou 2 de n’importe quel profil au choix du joueur. Si la capacité est de rang 2 ou accorde un bonus de DEF, il doit respecter les limitations d’armure.",
+       "borrow": {
+        "alternatives": [
+         {
+          "rankMin": 1,
+          "rankMax": 2
+         }
+        ]
+       }
       },
       {
        "rang": 4,
@@ -6270,7 +6367,16 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
      {
       "rang": 5,
       "titre": "Pouvoir unique (L)",
-      "texte": "Le personnage associe à son armure un sort de son choix de rang 1 à 4 de n’importe quelle voie. Il peut utiliser ce sort plus souvent s’il est moins puissant : Rang 1, 4 fois par combat ; Rang 2, 3 fois par combat ; Rang 3, 2 fois par combat ; Rang 4, 1 fois par combat."
+      "texte": "Le personnage associe à son armure un sort de son choix de rang 1 à 4 de n’importe quelle voie. Il peut utiliser ce sort plus souvent s’il est moins puissant : Rang 1, 4 fois par combat ; Rang 2, 3 fois par combat ; Rang 3, 2 fois par combat ; Rang 4, 1 fois par combat.",
+      "borrow": {
+       "alternatives": [
+        {
+         "rankMin": 1,
+         "rankMax": 4,
+         "spellOnly": true
+        }
+       ]
+      }
      },
      {
       "rang": 6,
@@ -6280,7 +6386,16 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
      {
       "rang": 7,
       "titre": "Pouvoir puissant (L)",
-      "texte": "Le personnage associe à son armure un sort de son choix de rang 5 à 7 de n’importe quelle voie. Il peut utiliser ce sort plus souvent s’il est moins puissant, mais dans tous les cas pas plus d’une fois par combat : Rang 5, 3 fois par jour ; Rang 6, 2 fois par jour ; Rang 7, 1 fois par jour. ======"
+      "texte": "Le personnage associe à son armure un sort de son choix de rang 5 à 7 de n’importe quelle voie. Il peut utiliser ce sort plus souvent s’il est moins puissant, mais dans tous les cas pas plus d’une fois par combat : Rang 5, 3 fois par jour ; Rang 6, 2 fois par jour ; Rang 7, 1 fois par jour. ======",
+      "borrow": {
+       "alternatives": [
+        {
+         "rankMin": 5,
+         "rankMax": 7,
+         "spellOnly": true
+        }
+       ]
+      }
      },
      {
       "rang": 8,
@@ -7533,6 +7648,9 @@ let state = {
   pretreDieuNom: null, // chosen deity's name, when pretreType==='specialiste'
   pretreDivineVoieIdx: null, // 0 or 1 — which of the 2 chosen creation voies has its rank 1 replaced by the divine capacity (only when the capacity's own rank is 1)
   pretreDivineTarget: null, // {kind:'peuple'|'mage'|'profil'|'slot', idx} — auto-bound to the first voie that reaches the divine capacity's rank, when that rank is > 1
+  rankBorrow: {}, // {borrowKey: {familleIdx, profilIdx, voieIdx, rang}} — chosen capacity for ranks like "Talent personnel" that let you borrow from another profil
+  rankBorrowPicking: null, // borrowKey currently being picked, or null
+  rankBorrowPickingProfil: null, // {familleIdx, profilIdx} chosen in step 1 of the picker, pending step 2 (which capacity)
   peupleChoice: {}, // for +1/-1 choices: {plus: 'PER', minus:'FOR'} etc, or humain: {plus:'INT'}
   demiElfeVoie: null, // 'Humain' | 'Elfe haut' | 'Elfe sylvain'
   voiesChoisies: [], // array of voie objects (2 of them) from profil
@@ -7601,6 +7719,9 @@ function loadSave(id) {
   if (state.bouclierIdx === undefined || state.bouclierIdx === null) state.bouclierIdx = 0;
   if (state.defBonusManuel === undefined || state.defBonusManuel === null) state.defBonusManuel = 0;
   if (state.initBonusManuel === undefined || state.initBonusManuel === null) state.initBonusManuel = 0;
+  if (!state.rankBorrow) state.rankBorrow = {};
+  if (state.rankBorrowPicking === undefined) state.rankBorrowPicking = null;
+  if (state.rankBorrowPickingProfil === undefined) state.rankBorrowPickingProfil = null;
   if (state.poids === undefined) state.poids = '';
   if (state.methodeCarac === undefined) state.methodeCarac = null;
   if (!state.caracFaibles) state.caracFaibles = [];
@@ -8747,7 +8868,7 @@ function computeSheet() {
     peupleVoieObj = pe.voies[0];
   }
   if (peupleVoieObj) {
-    peupleVoieObj = voieWithDivineOverride(peupleVoieObj, 'peuple');
+    peupleVoieObj = voieWithBorrowOverride(voieWithDivineOverride(peupleVoieObj, 'peuple'), borrowKeyFor('peuple', null));
     peupleVoieNom = peupleVoieObj.nom;
     peupleVoieRank1 = peupleVoieObj.ranks[0];
     peupleVoieObj.ranks.slice(0, state.peupleRank).forEach(r => { if (isSpell(r.titre)) spellCount++; });
@@ -8760,7 +8881,7 @@ function computeSheet() {
   // always from the primary profile).
   state.voiesChoisies.forEach(i => {
     const owned = state.profilVoieRanks[i] || 0;
-    const v = voieWithDivineOverride(p.voies[i], 'profil', i);
+    const v = voieWithBorrowOverride(voieWithDivineOverride(p.voies[i], 'profil', i), borrowKeyFor('profil', i));
     v.ranks.slice(0, owned).forEach(r => { if (isSpell(r.titre)) spellCount++; });
   });
   // The 3 extra slots, each possibly from a different profile.
@@ -8775,7 +8896,7 @@ function computeSheet() {
   // The prestige voie, if any (ranks 4-8, so filtered by rank number rather
   // than sliced by count).
   if (state.prestigeChoice) {
-    const pv = DATA.prestige_voies[state.prestigeChoice.famille][state.prestigeChoice.idx];
+    const pv = voieWithBorrowOverride(DATA.prestige_voies[state.prestigeChoice.famille][state.prestigeChoice.idx], borrowKeyFor('prestige', null));
     (pv.ranks||[]).filter(r => r.rang <= state.prestigeRank).forEach(r => { if (isSpell(r.titre)) spellCount++; });
   }
   // The prêtre spécialiste's divine capacity, when its rank is > 1 (rank-1
@@ -8987,7 +9108,10 @@ function progressionSectionHtml(s) {
   if (s.peupleVoieObj) {
     const canGrow = !(state.mageBonus && state.mageBonus.type==='mage');
     const extra = canGrow ? acquireButtonHtml(state.peupleRank, false, 'acquire-peuple', null, false, 1) : '';
-    html += voieFullHtml(s.peupleVoieObj, state.peupleRank, extra);
+    const peupleKey = borrowKeyFor('peuple', null);
+    const peupleVoie = voieWithBorrowOverride(s.peupleVoieObj, peupleKey);
+    html += voieFullHtml(peupleVoie, state.peupleRank, extra);
+    html += borrowPickerHtml(s.peupleVoieObj, peupleKey, state.peupleRank);
     if (!canGrow) {
       html += `<p class="hint" style="margin-top:-8px;">La Voie du Mage remplace la progression de cette voie de peuple : son rang 1 reste acquis, mais les rangs suivants ne sont plus accessibles.</p>`;
     }
@@ -9000,10 +9124,12 @@ function progressionSectionHtml(s) {
 
   // The 2 voies chosen at creation — always from the primary profile.
   state.voiesChoisies.forEach(i => {
-    const v = voieWithDivineOverride(p.voies[i], 'profil', i);
+    const key = borrowKeyFor('profil', i);
+    const v = voieWithBorrowOverride(voieWithDivineOverride(p.voies[i], 'profil', i), key);
     const owned = state.profilVoieRanks[i] || 0;
     const baseline = (state.mageBonus && state.mageBonus.type==='voie' && state.mageBonus.index===i) ? 2 : 1;
     html += voieFullHtml(v, owned, acquireButtonHtml(owned, false, 'acquire-profil', i, false, baseline));
+    html += borrowPickerHtml(p.voies[i], key, owned);
   });
 
   html += slotsSectionHtml(s);
@@ -9150,10 +9276,12 @@ function prestigeSectionHtml(s) {
   // A prestige voie is chosen.
   const pv = DATA.prestige_voies[state.prestigeChoice.famille][state.prestigeChoice.idx];
   const hasRanks = pv.ranks && pv.ranks.length > 0;
+  const prestigeKey = borrowKeyFor('prestige', null);
   let body;
   if (hasRanks) {
     const extra = acquireButtonHtml(state.prestigeRank, false, 'acquire-prestige', null, true);
-    const ranks = pv.ranks.map(r => {
+    const pvDisplay = voieWithBorrowOverride(pv, prestigeKey);
+    const ranks = pvDisplay.ranks.map(r => {
       const locked = r.rang > state.prestigeRank;
       return `<div class="rank-item" style="${locked?'opacity:0.4;':''}">
         <div class="rank-num">${r.rang}</div>
@@ -9173,6 +9301,7 @@ function prestigeSectionHtml(s) {
     <button class="portrait-remove" style="position:absolute; top:12px; right:12px;" data-action="prestige-remove">✕</button>
     ${body}
   </div>`;
+  if (hasRanks) html += borrowPickerHtml(pv, prestigeKey, state.prestigeRank);
   return html;
 }
 
@@ -9240,6 +9369,123 @@ function pretreDivinePendingHtml() {
     <div class="dcard-title">Capacité divine en attente — ${dieu.nom}</div>
     <p class="hint" style="margin:0;">« ${dieu.capacite_titre} » (rang ${dieu.capacite_rang}) remplacera automatiquement la première capacité de rang ${dieu.capacite_rang} que vous débloquerez, dans n'importe laquelle de vos voies.</p>
   </div>`;
+}
+
+// ===== "Borrowed capacity" ranks (Talent personnel, Touche-à-tout, etc.) =====
+// Some voie ranks let the player pick a specific capacity from another
+// profil (constrained by family/profil/rank) and weave it into that rank,
+// instead of a fixed capacity — reuses the same "override a rank's
+// content" approach as the prêtre's divine capacity.
+function findBorrowRank(v) {
+  return (v.ranks || []).find(r => r.borrow) || null;
+}
+function borrowKeyFor(kind, idx) {
+  return `${kind}-${idx==null?'x':idx}`;
+}
+// Flat list of {familleIdx, profilIdx, profilNom} allowed by a constraint's
+// family/profil filters (picker step 1) — a profil qualifies if ANY of its
+// alternative constraint sets could match it.
+function borrowAllowedProfils(borrowData) {
+  const out = [];
+  DATA.families.forEach((fam, fi) => {
+    fam.profils.forEach((p, pi) => {
+      const ok = borrowData.alternatives.some(alt => {
+        if (alt.familles && !alt.familles.includes(fam.famille)) return false;
+        if (alt.excludeFamilles && alt.excludeFamilles.includes(fam.famille)) return false;
+        if (alt.profils && !alt.profils.includes(p.nom)) return false;
+        return true;
+      });
+      if (ok) out.push({familleIdx: fi, profilIdx: pi, profilNom: p.nom});
+    });
+  });
+  return out;
+}
+// Flat list of candidate capacities within a given profil, matching ANY of
+// the borrow rank's alternative constraints (picker step 2).
+function borrowCapacitiesInProfil(borrowData, familleIdx, profilIdx) {
+  const fam = DATA.families[familleIdx];
+  const p = fam.profils[profilIdx];
+  const out = [];
+  p.voies.forEach((v, vi) => {
+    v.ranks.forEach(r => {
+      const matches = borrowData.alternatives.some(alt => {
+        if (alt.familles && !alt.familles.includes(fam.famille)) return false;
+        if (alt.excludeFamilles && alt.excludeFamilles.includes(fam.famille)) return false;
+        if (alt.profils && !alt.profils.includes(p.nom)) return false;
+        if (r.rang < alt.rankMin || r.rang > alt.rankMax) return false;
+        if (alt.spellOnly && !isSpell(r.titre)) return false;
+        return true;
+      });
+      if (matches) out.push({voieIdx: vi, voieNom: v.nom, rang: r.rang, titre: r.titre, texte: r.texte});
+    });
+  });
+  return out;
+}
+function borrowChoice(key) { return state.rankBorrow[key] || null; }
+// Applies the chosen borrowed capacity to a voie's ranks, swapping the
+// borrow-rank's own titre/texte for the chosen capacity's — mirrors
+// voieWithDivineOverride.
+function voieWithBorrowOverride(v, key) {
+  const br = findBorrowRank(v);
+  const choice = br && borrowChoice(key);
+  if (!br || !choice) return v;
+  const srcFam = DATA.families[choice.familleIdx];
+  const srcP = srcFam && srcFam.profils[choice.profilIdx];
+  const srcV = srcP && srcP.voies[choice.voieIdx];
+  const srcR = srcV && srcV.ranks.find(r => r.rang === choice.rang);
+  if (!srcR) return v;
+  // The rank's own text often carries effects beyond just "pick a capacity"
+  // (e.g. the Gnome's Don étrange also grants +3 aux tests scientifiques
+  // and vision dans le noir; Tradition familiale grants bonus PV depending
+  // on the chosen rank). So the original text is always kept in full, and
+  // the chosen capacity is appended as a clearly labelled addition —
+  // never a wholesale replacement.
+  const becomesSpell = isSpell(srcR.titre) && !isSpell(br.titre);
+  const ranks = v.ranks.map(r => r.rang === br.rang
+    ? {
+        rang: r.rang,
+        titre: becomesSpell ? `${r.titre} *` : r.titre,
+        texte: `${r.texte}<br><br><strong>Capacité choisie — ${escapeHtml(srcR.titre)}</strong> (${escapeHtml(srcP.nom)}, ${escapeHtml(titleCase(srcV.nom))}, rang ${srcR.rang}) : ${srcR.texte}`,
+      }
+    : r);
+  return Object.assign({}, v, {ranks});
+}
+// Renders the picker UI (or the chosen result) for a borrow-rank, appended
+// after a voie's own rank list. `key` identifies which voie instance this
+// is (see borrowKeyFor) so the picker state doesn't clash across voies.
+function borrowPickerHtml(v, key, ownedRank) {
+  const br = findBorrowRank(v);
+  if (!br || ownedRank < br.rang) return '';
+  const choice = borrowChoice(key);
+  const active = state.rankBorrowPicking === key;
+  const shortTitre = br.titre.replace(/\s*\([^)]*\)\s*$/,'');
+  let html = `<div class="dcard" style="margin-top:8px;">
+    <div class="dcard-title">Capacité empruntée — ${shortTitre}</div>`;
+  if (active && state.rankBorrowPickingProfil) {
+    const {familleIdx, profilIdx} = state.rankBorrowPickingProfil;
+    const p = DATA.families[familleIdx].profils[profilIdx];
+    const caps = borrowCapacitiesInProfil(br.borrow, familleIdx, profilIdx);
+    html += `<p class="hint" style="margin:0 0 8px;">${p.nom} — choisissez une capacité :</p>
+      <div class="choice-btns">
+        ${caps.map(c => `<button class="chip" data-action="borrow-pick-capacite" data-key="${key}" data-voie="${c.voieIdx}" data-rang="${c.rang}">${titleCase(c.voieNom)} · Rang ${c.rang} : ${c.titre}</button>`).join('')}
+      </div>
+      <button class="chip" style="margin-top:8px;" data-action="borrow-back" data-key="${key}">← Changer de profil</button>`;
+  } else if (active) {
+    const allowed = borrowAllowedProfils(br.borrow);
+    html += `<p class="hint" style="margin:0 0 8px;">Choisissez un profil :</p>
+      <div class="choice-btns">
+        ${allowed.map(a => `<button class="chip" data-action="borrow-pick-profil" data-key="${key}" data-fam="${a.familleIdx}" data-prof="${a.profilIdx}">${a.profilNom}</button>`).join('')}
+      </div>`;
+  } else if (choice) {
+    const srcP = DATA.families[choice.familleIdx].profils[choice.profilIdx];
+    html += `<p class="hint" style="margin:0 0 8px;">${srcP.nom} — rang ${choice.rang} (voir ci-dessus, déjà intégré au rang ${br.rang})</p>
+      <button class="chip" data-action="borrow-start" data-key="${key}">Changer</button>`;
+  } else {
+    html += `<p class="hint" style="margin:0 0 8px;">${br.texte}</p>
+      <button class="chip" data-action="borrow-start" data-key="${key}">Choisir une capacité</button>`;
+  }
+  html += `</div>`;
+  return html;
 }
 
 function voieFullHtml(v, maxRank, extraHtml) {
@@ -9463,10 +9709,10 @@ function renderPrintSheet() {
     voiePeupleHtml = psVoieBox(mv.nom, mv.ranks, state.mageVoieRank);
   } else if (isDemiElfe && state.demiElfeVoie) {
     const src = DATA.peoples.find(p2 => p2.nom.startsWith(state.demiElfeVoie));
-    const pv = voieWithDivineOverride(src.voies[0], 'peuple');
+    const pv = voieWithBorrowOverride(voieWithDivineOverride(src.voies[0], 'peuple'), borrowKeyFor('peuple', null));
     voiePeupleHtml = psVoieBox(pv.nom, pv.ranks, state.peupleRank);
   } else if (!isDemiElfe) {
-    const pv = voieWithDivineOverride(pe.voies[0], 'peuple');
+    const pv = voieWithBorrowOverride(voieWithDivineOverride(pe.voies[0], 'peuple'), borrowKeyFor('peuple', null));
     voiePeupleHtml = psVoieBox(pv.nom, pv.ranks, state.peupleRank);
   } else {
     voiePeupleHtml = psEmptyVoieBox('VOIE DU PEUPLE');
@@ -9478,7 +9724,7 @@ function renderPrintSheet() {
   // (yet) opened only show a generic placeholder, not their name, so the
   // sheet doesn't spoil/clutter with capacities the player hasn't picked.
   const voieSlots = state.voiesChoisies.map(i => {
-    const v = voieWithDivineOverride(p.voies[i], 'profil', i);
+    const v = voieWithBorrowOverride(voieWithDivineOverride(p.voies[i], 'profil', i), borrowKeyFor('profil', i));
     const owned = state.profilVoieRanks[i] || 0;
     return psVoieBox(v.nom, v.ranks, owned);
   });
@@ -9491,7 +9737,7 @@ function renderPrintSheet() {
     voieSlots.push(psVoieBox(v.nom, v.ranks, slot.rank, isHybrid ? srcProfil.nom : null));
   });
   if (state.prestigeChoice) {
-    const pv = DATA.prestige_voies[state.prestigeChoice.famille][state.prestigeChoice.idx];
+    const pv = voieWithBorrowOverride(DATA.prestige_voies[state.prestigeChoice.famille][state.prestigeChoice.idx], borrowKeyFor('prestige', null));
     if (pv.ranks && pv.ranks.length) {
       voieSlots.push(psVoieBox(pv.nom, pv.ranks, state.prestigeRank, 'Prestige'));
     } else {
@@ -9821,12 +10067,14 @@ function onAction(e) {
       state.niveau = 1; state.peupleRank = null; state.mageVoieRank = null; state.profilVoieRanks = null;
       state.extraSlots = null; state.pickingSlot = null; state.pickingSlotProfile = null;
       state.prestigeChoice = null; state.prestigeRank = 0; state.prestigePicking = false;
+      state.rankBorrow = {}; state.rankBorrowPicking = null; state.rankBorrowPickingProfil = null;
       state.step = 2; window.scrollTo(0,0); // auto-advance once a family is chosen
       break;
     case 'profil': {
       state.profilIdx = Number(el.dataset.idx);
       state.equipChoix = null; state.equipCustomText = {};
       state.pretreType = null; state.pretreDieuNom = null;
+      state.rankBorrow = {}; state.rankBorrowPicking = null; state.rankBorrowPickingProfil = null;
       // Auto-advance once a profil is chosen — skip straight past the
       // Prêtre-only religion step for everyone else, same as "Suivant".
       let nextStep = 3;
@@ -9928,6 +10176,24 @@ function onAction(e) {
       state.pretreDivineVoieIdx = Number(el.dataset.pos);
       state.profilVoieRanks = null; // re-derive so the substituted voie's rank1 is picked up fresh
       break;
+    case 'borrow-start':
+      state.rankBorrowPicking = el.dataset.key;
+      state.rankBorrowPickingProfil = null;
+      break;
+    case 'borrow-back':
+      state.rankBorrowPickingProfil = null;
+      break;
+    case 'borrow-pick-profil':
+      state.rankBorrowPickingProfil = {familleIdx: Number(el.dataset.fam), profilIdx: Number(el.dataset.prof)};
+      break;
+    case 'borrow-pick-capacite': {
+      const key = el.dataset.key;
+      const {familleIdx, profilIdx} = state.rankBorrowPickingProfil;
+      state.rankBorrow[key] = {familleIdx, profilIdx, voieIdx: Number(el.dataset.voie), rang: Number(el.dataset.rang)};
+      state.rankBorrowPicking = null;
+      state.rankBorrowPickingProfil = null;
+      break;
+    }
     case 'magebonus-mage':
       state.mageBonus = {type:'mage'};
       state.profilVoieRanks = null; state.peupleRank = null; state.mageVoieRank = null; state.extraSlots = null; state.pickingSlot = null; state.pickingSlotProfile = null;
@@ -9958,7 +10224,7 @@ function onAction(e) {
     }
     case 'restart': {
       const keepSettings = state.settings; // app-wide preference, survives creating a new hero
-      state = {step:1, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', genre:null, monnaie:null, armureIdx:0, bouclierIdx:0, defBonusManuel:0, armes:null, initBonusManuel:0, ageBonusChoice:null, equipChoix:null, equipCustomText:{}, pretreType:null, pretreDieuNom:null, pretreDivineVoieIdx:null, pretreDivineTarget:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
+      state = {step:1, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', genre:null, monnaie:null, armureIdx:0, bouclierIdx:0, defBonusManuel:0, armes:null, initBonusManuel:0, ageBonusChoice:null, equipChoix:null, equipCustomText:{}, pretreType:null, pretreDieuNom:null, pretreDivineVoieIdx:null, pretreDivineTarget:null, rankBorrow:{}, rankBorrowPicking:null, rankBorrowPickingProfil:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
       window.scrollTo(0,0);
       break;
     }

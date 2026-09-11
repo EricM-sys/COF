@@ -51,6 +51,70 @@ body{
 }
 .title-row{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:10px;}
 .header-right{ display:flex; align-items:center; gap:10px; }
+.mini-summary{
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  margin-top:8px; padding-top:8px;
+  border-top:1px solid rgba(201,162,39,0.18);
+  font-family:'Cinzel', serif; font-size:10.5px; color:var(--steel-bright);
+}
+.mini-summary .ms-name{ color:var(--gold-bright); font-weight:700; letter-spacing:0.3px; }
+.mini-summary .ms-stat{ white-space:nowrap; }
+.mini-summary .ms-stat::before{ content:"·"; margin-right:8px; color:rgba(201,162,39,0.4); }
+
+.roll-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+.roll-btn{
+  display:flex; align-items:center; justify-content:space-between;
+  background:rgba(201,162,39,0.1); border:1.5px solid rgba(201,162,39,0.55);
+  border-radius:8px; padding:12px 14px; cursor:pointer; width:100%;
+  font-family:'Cinzel', serif; color:var(--parchment); margin-bottom:8px;
+  box-shadow:0 1px 4px rgba(0,0,0,0.35);
+}
+.roll-btn.wide{ grid-column:1 / -1; }
+.roll-grid .roll-btn{ margin-bottom:0; }
+.roll-btn:active{ background:rgba(201,162,39,0.28); border-color:var(--gold-bright); }
+.roll-btn .rb-name{ font-size:13px; letter-spacing:0.3px; }
+.roll-btn .rb-bonus{ font-size:15px; font-weight:700; color:var(--gold-bright); }
+.resource-row{
+  display:flex; align-items:center; gap:8px; margin-bottom:8px;
+}
+.resource-label{
+  font-family:'Cinzel', serif; font-weight:700; font-size:13px; color:var(--gold-bright);
+  width:32px; flex:0 0 auto;
+}
+.resource-box{
+  flex:1 1 0; display:flex; flex-direction:column; align-items:center; gap:2px;
+  background:rgba(255,255,255,0.03); border:1px solid rgba(201,162,39,0.25);
+  border-radius:8px; padding:6px 8px;
+}
+.resource-box.actuel{ border-color:rgba(201,162,39,0.55); background:rgba(201,162,39,0.08); }
+.resource-box .rbox-lbl{ font-size:9px; letter-spacing:0.5px; text-transform:uppercase; color:var(--steel-bright); }
+.resource-box .rbox-val{ font-size:18px; font-weight:700; color:var(--parchment); }
+.resource-box .rbox-input{
+  width:100%; text-align:center; font-size:18px; font-weight:700;
+  background:transparent; border:none; color:var(--gold-bright);
+  font-family:'Cinzel', serif;
+}
+.resource-box .rbox-input:focus{ outline:none; }
+.roll-log{
+  max-height:220px; overflow-y:auto; border:1px solid rgba(201,162,39,0.25);
+  border-radius:8px; padding:10px; margin-bottom:14px; background:rgba(0,0,0,0.15);
+}
+.roll-entry{ padding:6px 0; border-bottom:1px solid rgba(201,162,39,0.12); }
+.roll-entry:last-child{ border-bottom:none; }
+.roll-entry-head{ display:flex; justify-content:space-between; align-items:baseline; }
+.roll-entry .roll-label{ font-family:'Cinzel', serif; font-size:12.5px; color:var(--parchment); }
+.roll-entry .roll-total{ font-size:18px; font-weight:700; color:var(--gold-bright); }
+.roll-entry .roll-detail{ font-size:11px; color:var(--steel-bright); margin-top:1px; }
+.roll-entry.crit-success{ background:rgba(94,196,110,0.1); border:1px solid rgba(94,196,110,0.4); border-radius:6px; padding:6px 8px; }
+.roll-entry.crit-success .roll-total{ color:#7de08c; }
+.roll-entry.crit-fail{ background:rgba(178,58,58,0.1); border:1px solid rgba(178,58,58,0.4); border-radius:6px; padding:6px 8px; }
+.roll-entry.crit-fail .roll-total{ color:#e07d7d; }
+.crit-badge{
+  display:inline-block; font-family:'Cinzel', serif; font-size:9px; letter-spacing:0.5px; text-transform:uppercase;
+  padding:1px 7px; border-radius:8px; margin-left:6px; vertical-align:middle;
+}
+.crit-badge.success{ background:rgba(94,196,110,0.18); color:#7de08c; border:1px solid rgba(94,196,110,0.4); }
+.crit-badge.fail{ background:rgba(178,58,58,0.18); color:#e07d7d; border:1px solid rgba(178,58,58,0.4); }
 .settings-btn{
   width:26px; height:26px; padding:0; flex:0 0 auto;
   background:transparent; border:none; color:var(--steel-bright); cursor:pointer;
@@ -620,6 +684,10 @@ select.val-select{
   .app, .preview-overlay{ display:none !important; }
   #printSheet{ display:block !important; }
   .ps-voies-section{ break-before:page; page-break-before:always; }
+  .ps-competences-section{ break-before:page; page-break-before:always; }
+  table.ps-competences-table{ width:100%; border-collapse:collapse; margin-top:8px; }
+  table.ps-competences-table th{ background:#a9852f; color:#fff; font-family:'Cinzel', serif; font-size:7px; padding:3px; text-transform:uppercase; font-weight:600; }
+  table.ps-competences-table td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; text-align:center; }
 }
 .ps-sheet{
   font-family:'EB Garamond', serif;
@@ -4427,6 +4495,39 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
      "nom": "VOIE DU DEMI‑ELFE",
      "ranks": [],
      "intro": "Le demi‑elfe ne possède pas de voie de peuple dédiée, selon l’héritage culturel et le lieu de l’éducation de son personnage, le joueur devra choisir entre la voie de l’humain ou une des voies de peuple d’elfe (elfe sylvain ou elfe haut)."
+    },
+    {
+     "nom": "VOIE DU DEMI‑ELFE",
+     "intro": "",
+     "prerequis": "",
+     "supplementaire": true,
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Héritages",
+       "texte": "Pour un demi-elfe, l'obscurité de la nuit sous la lumière des étoiles est considérée comme de la pénombre jusqu'à une distance de 20 m. De plus, le demi-elfe choisit deux domaines associés à son origine (voir les humains) et bénéficie de +3 sur les tests en rapport avec cette origine."
+      },
+      {
+       "rang": 2,
+       "titre": "Nomade",
+       "texte": "Le demi-elfe n'est jamais vraiment chez lui, ni chez les humains ni chez les elfes, aussi développe-t-il le sens du voyage. Il obtient au choix la capacité Survie (rôdeur, voie de la survie) ou la capacité Éclectique (barde, voie du vagabond ; le bonus passe à +2 au rang 4 de cette voie)."
+      },
+      {
+       "rang": 3,
+       "titre": "Capacité d'apprentissage",
+       "texte": "Confronté dès son enfance à un héritage multiple et à de grandes différences culturelles, le demi-elfe devient capable de s'adapter et d'apprendre plus vite que les autres. Il augmente la valeur de son dé évolutif d'une catégorie : ainsi jusqu'au niveau 5, il obtient le d6 au lieu du d4 ; et il obtient le d8 en atteignant le niveau 6. Lorsqu'il doit obtenir le d12 (au niveau 15), il passe à 2d6."
+      },
+      {
+       "rang": 4,
+       "titre": "Sang féerique",
+       "texte": "Selon son ascendance, le demi-elfe peut choisir un sort d'ensorceleur (ascendance elfe haut) ou de druide (ascendance elfe sylvain) de rang 1 à 3. Il peut le lancer en armure sans pénalité, mais il ne reçoit pas de PM pour ce sort. Il peut le lancer 3 fois par jour s'il est de rang 1, 2 fois par jour s'il est de rang 2 et une seule fois par jour s'il est de rang 3. Si le personnage est lanceur de sorts, il peut aussi le lancer en dépensant des PM (en plus des incantations gratuites) s'il respecte la limitation d'armure."
+      },
+      {
+       "rang": 5,
+       "titre": "Empathie fantastique",
+       "texte": "La nature multiculturelle du demi-elfe le rend incroyablement sensible à son environnement : il augmente ses valeurs de PER et de CHA de +1."
+      }
+     ]
     }
    ],
    "modificateurs": {
@@ -4853,7 +4954,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
   {
    "nom": "Âme forgée",
    "alternatif": true,
-   "description": "Créées pour la guerre par une magie oubliée, les âmes forgées sont des créatures mécaniques de tailles et de métaux variés (acier, bronze, etc.) dotées d'yeux de cristal clair. Éveillées au milieu de ruines sans connaître leurs créateurs, elles façonnent leur personnalité au contact de leur premier mentor. Curieuses et incapables de rester en place, elles ne forment aucune communauté et préfèrent voyager parmi les autres peuples. Avec le temps, la rouille finit par les ronger irrémédiablement, un mal contre lequel elles cherchent encore un remède.\n\nCréature non vivante : une âme forgée n'a pas besoin de boire, ni de se nourrir, ni même de respirer. Elle a toutefois besoin de rêver quatre heures par jour (sans quoi elle subit -1 à ses tests ; ce malus est cumulatif). Elle est naturellement immunisée aux poisons et aux maladies. Les âmes forgées sont incapables de nager, mais elles peuvent marcher au fond de l'eau (considéré comme un terrain difficile). L'âme forgée possède une âme et une essence qui lui permettent de bénéficier de la magie des soins, mais son corps artificiel en réduit l'efficacité. Elle divise par deux tous les PV récupérés par des soins magiques (sorts, potions, etc.). En revanche, un forgesort capable de réparer un golem peut réparer une âme forgée, bien que deux fois plus lentement.",
+   "description": "Créature inanimée façonnée par magie ou artisanat et animée d'une conscience propre, l'âme forgée découvre le monde avec un regard neuf, sans passé ni préjugés. Corps de métal, de bois ou de pierre, elle apprend à devenir quelqu'un, entre fascination et incompréhension face aux émotions humaines.",
    "age_depart": "0 à 5 ans",
    "esperance_vie": "150 ans",
    "taille": "1,30 m à 2,10 m",
@@ -4906,7 +5007,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
   {
    "nom": "Satyre",
    "alternatif": true,
-   "description": "Les satyres sont de paisibles créatures sylvestres à l'apparence caprine (sabots, cornes, barbichette), vivant très discrètement près des forêts. Végétariens, peu exigeants et rejetant le métal au profit d'outils et armures en bois ou en écorce, ils s'émerveillent de la nature et préfèrent la fuite au conflit. Hédonistes et épicuriens, ils sont passionnés de musique, de danse et de plaisirs de la chair. Grands amateurs de vin, c'est principalement cette recherche d'alcool qui les pousse à interagir avec les communautés humaines.",
+   "description": "Mi-homme, mi-bouc, le satyre incarne la joie de vivre, la musique et les plaisirs simples. Bondissant et rieur, il préfère la fête et la nature sauvage aux contraintes de la civilisation, et cache derrière son insouciance une redoutable agilité.",
    "age_depart": "15+",
    "esperance_vie": "120 ans",
    "taille": "1,60 m à 1,75 m",
@@ -4959,7 +5060,7 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
   {
    "nom": "Wolfer",
    "alternatif": true,
-   "description": "Les wolfers sont des êtres robustes d'apparence quasi humaine, reconnaissables à leur forte pilosité (monosourcil, rouflaquettes). Chasseurs nomades organisés en clans, ils vivent dans les zones sauvages et entrent souvent en conflit avec l'expansion humaine. Rendus nerveux par la proximité des chevaux, ceux élevés parmi les hommes s'intègrent difficilement en raison de leur tempérament vif et combatif. Profondément loyaux et respectueux de la hiérarchie envers leur groupe ou des alliés de confiance, ils n'obéissent toutefois à aucun idéal supérieur en dehors de leur clan.",
+   "description": "Chasseurs nomades à la carrure lupine, les wolfers vivent en clans loyaux, unis par un code d'honneur strict. Robustes et méfiants envers les étrangers, ils s'intègrent difficilement parmi les humains mais restent des alliés indéfectibles une fois leur confiance gagnée.",
    "age_depart": "15+",
    "esperance_vie": "60 ans",
    "taille": "1,60 m à 1,85 m",
@@ -5004,6 +5105,804 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
        "rang": 5,
        "titre": "Esprit du loup",
        "texte": "Le wolfer augmente ses valeurs de PER et de VOL de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Cambion",
+   "alternatif": true,
+   "description": "Descendant lointain d'un démon et d'un humain, le cambion porte des traces physiques de son ascendance infernale (cornes, queue, yeux jaunes) qu'il cherche généralement à dissimuler. Résistant et volontaire, il lutte contre sa mauvaise réputation plus que contre sa propre nature.",
+   "age_depart": "15 à 18 ans",
+   "esperance_vie": "200 ans",
+   "taille": "1,5 m à 2 m",
+   "poids": "40 à 120 kg",
+   "traits": "tache de naissance, yeux rouges ou jaunes, petites cornes, queue atrophiée ou fourchue, langue fourchue, odeur de soufre, etc. (une ou plusieurs, au choix).",
+   "caracteristiques_mod": "+1 VOL ou CON, ‑1 CHA",
+   "modificateurs": {
+    "plus": [
+     "VOL",
+     "CON"
+    ],
+    "minus": [
+     "CHA"
+    ]
+   },
+   "voies": [
+    {
+     "nom": "VOIE DU CAMBION",
+     "intro": "",
+     "voies_ranks_note": null,
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Ami des ombres",
+       "texte": "Le cambion est habitué à cacher sa véritable nature et bénéficie de +3 à tous les tests pour mentir et se déguiser. De plus, dans le noir total, le cambion voit comme dans la pénombre jusqu'à 30 m."
+      },
+      {
+       "rang": 2,
+       "titre": "Enfant des ténèbres",
+       "texte": "Le cambion obtient le sort Ténèbres (sorcier, voie de la sombre magie). Il gagne le point de mana correspondant et peut lancer le sort sans pénalité s'il porte une armure ; il n'obtient pas le bonus de compétence associé à la capacité Ténèbres. Si le personnage a déjà cette capacité, il lui suffit désormais d'une action gratuite pour lancer le sort."
+      },
+      {
+       "rang": 3,
+       "titre": "Résistances",
+       "texte": "Le cambion bénéficie d'une RD 5 à tous les DM de feu, de froid et d'électricité."
+      },
+      {
+       "rang": 4,
+       "titre": "La belle et la bête",
+       "texte": "Le cambion peut utiliser le sort Beauté de la succube (rang 2 de la voie du démon) une fois par jour sans dépenser de mana (il n'en obtient pas non plus lorsqu'il acquiert cette capacité) et peut lancer ce sort sans limitation d'armure. De plus, à partir du niveau 10, il peut utiliser le sort Aspect du démon une fois par jour (là aussi sans limitation d'armure)."
+      },
+      {
+       "rang": 5,
+       "titre": "Forgé par les ténèbres",
+       "texte": "Le cambion a appris à faire de sa marque d'infamie une force qui lui donne la volonté de surmonter les obstacles et de résister aux pires traitements. Il augmente ses valeurs de CON et de VOL de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Demi-ogre",
+   "alternatif": true,
+   "description": "Colosse de plus de deux mètres à la mâchoire proéminente, le demi-ogre livre un combat intérieur permanent contre son tempérament bestial. Souvent très policé par peur de sombrer, il soigne ses manières et sa diction avec un sérieux parfois involontairement comique.",
+   "age_depart": "15+",
+   "esperance_vie": "60 ans",
+   "taille": "2 m à 2,50 m",
+   "poids": "200 à 350 kg",
+   "traits": "peu de pilosité, énorme, puissant, mâchoire prognathe, front bas, grandes mains. Taille grande : peut manier d'une seule main les épées bâtardes et à deux mains (1d12 DM) ; arme à deux mains adaptée à sa taille (2d8 DM). Subit -1 en FOR, AGI et attaque dans les constructions à taille humaine, et un malus égal à sa FOR dans les espaces exigus (pas d'arme à deux mains).",
+   "caracteristiques_mod": "+2 FOR, +1 CON, ‑1 AGI, INT, CHA et VOL",
+   "modificateurs": {},
+   "modificateurs_fixes": [
+    {
+     "code": "FOR",
+     "delta": 2
+    },
+    {
+     "code": "CON",
+     "delta": 1
+    },
+    {
+     "code": "AGI",
+     "delta": -1
+    },
+    {
+     "code": "INT",
+     "delta": -1
+    },
+    {
+     "code": "CHA",
+     "delta": -1
+    },
+    {
+     "code": "VOL",
+     "delta": -1
+    }
+   ],
+   "voies": [
+    {
+     "nom": "VOIE DU DEMI-OGRE",
+     "intro": "",
+     "voies_ranks_note": null,
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Réaction violente",
+       "texte": "Si une créature se moque du personnage ou le provoque sur son origine ou son apparence, il doit réussir un test de VOL difficulté [10 - rang atteint dans la voie] ou être pris d'une crise de folie passagère. Dans cet état, le PJ bénéficie de +2 en attaque et aux DM, et attaque sa cible et tous ceux qui s'interposent pendant 1d6 rounds. Le demi-ogre peut stopper la crise à tout moment en prenant sur lui. Il subit alors immédiatement 1d4° DM par tour restant. Il n'est pas rare de voir un jeune demi-ogre perdre conscience en essayant de se contrôler. De plus, dans le noir total, le demi-ogre voit comme dans la pénombre jusqu'à 30 m."
+      },
+      {
+       "rang": 2,
+       "titre": "Violence ciblée",
+       "texte": "Chaque fois qu'il résiste à une crise de Réaction violente, le demi-ogre gagne un point de violence. Il peut le dépenser par une action gratuite au moment de son choix dans la même journée pour obtenir les effets d'une Réaction violente (durée : 1d4 rounds) contre une cible de son choix. Il ne gagne aucun point de violence si un allié le provoque délibérément."
+      },
+      {
+       "rang": 3,
+       "titre": "Vorace",
+       "texte": "Le demi-ogre peut manger des quantités astronomiques. Une fois par jour, lors d'un repas, s'il avale à lui seul un sanglier ou l'équivalent (un chevreuil, un demi-bœuf, etc.), il récupère 3d4° PV. Cela correspond à un repas d'auberge d'une valeur de [nombre de PV récupérés] pièces d'argent."
+      },
+      {
+       "rang": 4,
+       "titre": "Toujours plus lourd",
+       "texte": "Désormais, le demi-ogre inflige 2d6 DM avec une arme à deux mains tenue à une main, 1d10 DM avec la vivelame, et 3d6 DM avec une arme à deux mains adaptée à sa taille. Lorsqu'il utilise une arme de cette façon, il ignore la RD imposée par les créatures de grande taille (voir la voie des créatures colossales, Bestiaire, p. 206)."
+      },
+      {
+       "rang": 5,
+       "titre": "Monumental",
+       "texte": "Le demi-ogre est une montagne de muscles : il augmente ses valeurs de CON et de FOR de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Drakonide",
+   "alternatif": true,
+   "description": "Humanoïde mi-homme mi-dragon aux écailles dorées ou écarlates, le drakonide hérite d'un sang puissant mais d'une anatomie parfois maladroite. Loyal et perfectionniste, émancipé de ses créateurs originels, il excelle comme garde du corps, bien que la politique lui échappe.",
+   "age_depart": "30+",
+   "esperance_vie": "300 ans",
+   "taille": "1,80 m à 2 m",
+   "poids": "100 à 160 kg",
+   "traits": "yeux de reptiles, langue bifide, écailles, ailes atrophiées, pieds griffus.",
+   "caracteristiques_mod": "+1 FOR et +1 VOL, ‑1 AGI et ‑1 PER",
+   "modificateurs": {},
+   "modificateurs_fixes": [
+    {
+     "code": "FOR",
+     "delta": 1
+    },
+    {
+     "code": "VOL",
+     "delta": 1
+    },
+    {
+     "code": "AGI",
+     "delta": -1
+    },
+    {
+     "code": "PER",
+     "delta": -1
+    }
+   ],
+   "voies": [
+    {
+     "nom": "VOIE DU DRAKONIDE",
+     "intro": "",
+     "voies_ranks_note": null,
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Sang dragon",
+       "texte": "Dans le noir total, le drakonide voit comme dans la pénombre jusqu'à 30 m. De plus, il bénéficie de +3 à tous ses tests d'intimidation."
+      },
+      {
+       "rang": 2,
+       "titre": "Souffle (L)",
+       "texte": "Le joueur choisit un type de souffle pour son personnage parmi feu, froid, électricité ou acide. Une fois par combat, ce souffle inflige 3d4° DM + 1d4° DM par rang (donc 5d4° au rang 2) dans une zone conique de 10 m de long sur 5 m de large. Toutes les créatures affectées peuvent diviser les DM par 2 si elles réussissent un test d'AGI difficulté 10."
+      },
+      {
+       "rang": 3,
+       "titre": "Écailles robustes",
+       "texte": "Le drakonide bénéficie de +1 en DEF et d'une RD égale au rang atteint dans la voie contre l'élément correspondant à son souffle."
+      },
+      {
+       "rang": 4,
+       "titre": "Fureur drakonide / Ailes puissantes",
+       "texte": "Le joueur doit choisir l'une des deux capacités proposées. Fureur drakonide : lorsqu'un adversaire lui inflige une réussite critique en attaque ou lorsqu'il passe sous la moitié de sa valeur de PV max, le drakonide bénéficie de +1 en attaque et aux DM pour le reste du combat. Ailes puissantes : le drakonide peut voler de 10 m par action de mouvement. Il ne peut parcourir plus de 30 m en vol (dans n'importe quelle direction) avant de devoir se poser pour récupérer. Il peut à nouveau voler dès le round suivant."
+      },
+      {
+       "rang": 5,
+       "titre": "Héritage draconique",
+       "texte": "De son ascendance draconique, le drakonide révèle une aura naturelle et une résistance exceptionnelle. Il augmente ses valeurs de CON et de CHA de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Elfe pâle",
+   "alternatif": true,
+   "description": "Natif de la Forêt sombre, l'elfe pâle descend des elfes ayant refusé le joug d'une déesse tyrannique. Habitué à une nature hostile, il voue un culte aux anciennes Puissances élémentaires et reste l'un des rares peuples fidèles aux druides plutôt qu'aux nouveaux dieux.",
+   "age_depart": "50+",
+   "esperance_vie": "400 ans",
+   "taille": "1,50 m à 1,70 m",
+   "poids": "40 à 70 kg",
+   "traits": "peau pâle, élancé, svelte, oreilles pointues, yeux en amandes (verts, violets), cheveux blancs ou argent, pilosité corporelle absente.",
+   "caracteristiques_mod": "+1 PER ou VOL, ‑1 FOR",
+   "modificateurs": {
+    "plus": [
+     "PER",
+     "VOL"
+    ],
+    "minus": [
+     "FOR"
+    ]
+   },
+   "voies": [
+    {
+     "nom": "VOIE DE L'ELFE PÂLE",
+     "intro": "",
+     "voies_ranks_note": null,
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Natif de la Forêt sombre",
+       "texte": "Dans l'obscurité, les elfes pâles voient comme un humain dans la pénombre à une distance de 20 m. Dans la pénombre et le brouillard léger, ils ne souffrent d'aucun malus jusqu'à 20 m. De plus, habitués des dangers de la Forêt sombre, ils bénéficient de +3 à tous leurs tests de vigilance pour échapper à une embuscade."
+      },
+      {
+       "rang": 2,
+       "titre": "Résistance au poison",
+       "texte": "Les elfes pâles obtiennent un dé bonus pour résister aux poisons et divisent par deux tous les effets des poisons (DM ou durée des effets)."
+      },
+      {
+       "rang": 3,
+       "titre": "Fléau des morts",
+       "texte": "Les elfes pâles ont l'habitude de combattre les guerriers maudits de la Forêt sombre et de défendre leurs refuges contre leurs attaques. Un elfe pâle inflige +1d4° DM par attaque contre tous les morts-vivants. Ce bonus s'applique aux DM initiaux d'une attaque, pas aux DM sur la durée."
+      },
+      {
+       "rang": 4,
+       "titre": "Provoquer la chance",
+       "texte": "L'elfe pâle a fait sienne la maxime « la chance, ça se provoque », soit en s'attachant à saisir le moindre détail utile, soit par une volonté de fer. Il ajoute sa PER ou sa VOL (au choix) à son nombre de PC."
+      },
+      {
+       "rang": 5,
+       "titre": "Supériorité elfique",
+       "texte": "L'elfe pâle augmente ses valeurs de PER et de VOL de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Elfe des profondeurs",
+   "alternatif": true,
+   "description": "Issu d'une société elfique souterraine tyrannique et cruelle, l'elfe des profondeurs considère les autres peuples comme inférieurs. Craint et détesté à la surface, il peine à passer inaperçu avec sa peau très pâle et doit composer avec la méfiance générale.",
+   "age_depart": "50+",
+   "esperance_vie": "400 ans",
+   "taille": "1,50 m à 1,70 m",
+   "poids": "40 à 70 kg",
+   "traits": "peau très pâle, presque translucide, élancé, svelte, oreilles pointues, yeux en amandes (verts, violets), cheveux blancs ou argent, pilosité corporelle absente.",
+   "caracteristiques_mod": "+1 AGI ou VOL, ‑1 FOR",
+   "modificateurs": {
+    "plus": [
+     "AGI",
+     "VOL"
+    ],
+    "minus": [
+     "FOR"
+    ]
+   },
+   "voies": [
+    {
+     "nom": "VOIE DE L'ELFE DES PROFONDEURS",
+     "intro": "",
+     "voies_ranks_note": null,
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Enfant des ténèbres",
+       "texte": "L'elfe des profondeurs ne subit aucune pénalité dans le noir total ou la pénombre jusqu'à 30 m. De plus, il bénéficie de +3 en Init. dans le noir complet ou la pénombre."
+      },
+      {
+       "rang": 2,
+       "titre": "Lames et sorcellerie",
+       "texte": "Le joueur choisit une capacité de rang 1 d'une voie de sorcier ou de guerrier (si c'est un sort, il gagne 1 PM et peut utiliser cette capacité en armure sans pénalité). Au rang 4 de la voie, il peut choisir une capacité supplémentaire de rang 2 issue d'un de ces deux profils (au choix). En revanche, il n'est pas capable d'utiliser ces capacités en plein soleil (peu importe ses vêtements, il doit au moins trouver un coin d'ombre)."
+      },
+      {
+       "rang": 3,
+       "titre": "Combat à deux armes",
+       "texte": "Les elfes des profondeurs sont passés maîtres dans l'art du combat à deux armes. Le personnage obtient la capacité de rôdeur Droite - gauche. S'il la possède déjà, il ne subit plus de dé malus lorsqu'il attaque une cible différente de chaque main."
+      },
+      {
+       "rang": 4,
+       "titre": "Maîtrise des arbalètes",
+       "texte": "Lorsqu'il utilise une arbalète de poing ou légère, l'elfe des profondeurs obtient une réussite critique sur un résultat de 19-20. Il sait manier ces arbalètes, quel que soit son profil."
+      },
+      {
+       "rang": 5,
+       "titre": "Supériorité elfique",
+       "texte": "L'elfe des profondeurs augmente ses valeurs d'AGI et de VOL de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Félis",
+   "alternatif": true,
+   "description": "Humanoïde agile aux traits félins, queue et pelage inclus, le félis chasse en solitaire dans les jungles ou voyage en bande nomade parmi les humains. Vif, curieux et indépendant, il excelle dans l'acrobatie, la discrétion et la survie.",
+   "age_depart": "15+",
+   "esperance_vie": "60 ans",
+   "taille": "1,50 m à 1,80 m",
+   "poids": "40 à 80 kg",
+   "traits": "propre, musclé, griffes rétractables, queue féline, petites moustaches, pelage fin, yeux de chat de toutes les couleurs.",
+   "caracteristiques_mod": "+1 AGI ou PER, ‑1 FOR ou INT",
+   "modificateurs": {
+    "plus": [
+     "AGI",
+     "PER"
+    ],
+    "minus": [
+     "FOR",
+     "INT"
+    ]
+   },
+   "voies": [
+    {
+     "nom": "VOIE DU FÉLIS",
+     "intro": "",
+     "voies_ranks_note": null,
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Âme féline",
+       "texte": "Pour un félis, l'obscurité de la nuit, sous la lumière des étoiles, est considérée comme de la pénombre. De plus, il gagne +3 à tous les tests d'AGI en rapport avec l'escalade, les sauts et la course (sprint, mais pas endurance)."
+      },
+      {
+       "rang": 2,
+       "titre": "Armes naturelles",
+       "texte": "Le félis inflige [1d4 + FOR] DM létaux lorsqu'il utilise ses armes naturelles. S'il utilise une action limitée pour attaquer, il peut remplacer sa valeur de FOR par celle d'AGI à la fois en attaque et aux DM. Si le félis possède la capacité Attaque éclair (rôdeur, voie du traqueur), il bénéficie de +1d4° DM lorsqu'il l'utilise. Si le félis possède la voie du poing (moine), il peut remplacer la FOR par l'AGI pour déterminer les DM sur toutes ses attaques (mais pas sur les tests d'attaque)."
+      },
+      {
+       "rang": 3,
+       "titre": "Vif et discret",
+       "texte": "Le félis bénéficie de +3 en Init. et à tous ses tests de discrétion. Dans les Terres d'Osgild, il bénéficie aussi de, au choix, +3 en jonglerie et acrobaties (félis saltimbanque) ou en survie en forêt (félis des forêts)."
+      },
+      {
+       "rang": 4,
+       "titre": "Métamorphose féline (L)",
+       "texte": "Le félis peut prendre la forme d'une panthère pendant une durée maximale de 1 h par niveau du PJ. Chaque jour, la première transformation est gratuite, mais chaque transformation suivante avant de prendre une récupération complète coûte 1 DR. Si les PV du félis métamorphosé sont réduits à 0, il reprend forme humaine ; sinon, il peut le faire à tout moment au titre d'une action de mouvement. Sous forme de panthère, il se déplace de 15 m par action de mouvement et augmente sa vitesse de voyage de 3 km par période."
+      },
+      {
+       "rang": 5,
+       "titre": "Nature féline",
+       "texte": "La nature féline du personnage transparaît dans chacun de ses mouvements : il augmente ses valeurs d'AGI et de PER de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Frouïn",
+   "alternatif": true,
+   "description": "Rat humanoïde d'un mètre de haut, le frouïn vit dans les tunnels et égouts des cités humaines. Charognard sans prétention mais généreux, il survit avec presque rien et partage volontiers ses maigres trouvailles, malgré la méfiance injuste que lui portent les autres peuples.",
+   "age_depart": "10+",
+   "esperance_vie": "30 ans",
+   "taille": "1 m à 1,10 m",
+   "poids": "30 à 40 kg",
+   "traits": "odeur nauséabonde, pelage miteux, incisives proéminentes, queue de rat, truffe humide, petits yeux noirs. Taille petite : à une main, arme limitée à 1d6 DM max (pas de rapière). Arme 1d8-1d10 DM (épée longue, etc.) : deux mains obligatoires. Armes de plus de 1d10 DM, arc long et arbalète lourde interdits.",
+   "caracteristiques_mod": "+1 AGI ou PER, +1 CON, ‑1 FOR et ‑1 CHA",
+   "modificateurs": {
+    "plus": [
+     "AGI",
+     "PER"
+    ]
+   },
+   "modificateurs_fixes": [
+    {
+     "code": "CON",
+     "delta": 1
+    },
+    {
+     "code": "FOR",
+     "delta": -1
+    },
+    {
+     "code": "CHA",
+     "delta": -1
+    }
+   ],
+   "voies": [
+    {
+     "nom": "VOIE DU FROUÏN",
+     "intro": "",
+     "voies_ranks_note": null,
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Avarié",
+       "texte": "Les frouïns ont besoin de trois fois moins de nourriture qu'un humain, bien qu'ils soient capables de se bâfrer dès que cela est possible. Ils peuvent aussi manger des aliments avariés sans tomber malades et bénéficient de +3 pour résister aux maladies et aux poisons. À cause, entre autres, de l'odeur, la seule présence du frouïn impose -1 à tous les tests d'interaction sociale de ses compagnons (CHA). Enfin, dans le noir total, le frouïn voit comme dans la pénombre jusqu'à 30 m."
+      },
+      {
+       "rang": 2,
+       "titre": "Minus",
+       "texte": "Grâce à sa petite taille et sa discrétion naturelle, le frouïn bénéficie de +3 à tous ses tests de discrétion et +1 en DEF. Ce bonus passe à +2 au rang 4 de la voie."
+      },
+      {
+       "rang": 3,
+       "titre": "Parano",
+       "texte": "Un frouïn est toujours sur ses gardes : il bénéficie de +3 en Init. et à tous ses tests pour éviter d'être surpris. De plus, il ne subit que la moitié des DM des attaques sournoises (ou autres bonus de DM dus à la surprise)."
+      },
+      {
+       "rang": 4,
+       "titre": "Attaque simultanée",
+       "texte": "Les frouïns sont trop timorés pour attaquer seuls, mais ils ont développé des tactiques très efficaces de combat en groupe. Si le frouïn décale son Init. pour attaquer en même temps qu'un allié (au contact ou à distance), il obtient, au choix, un dé bonus en attaque ou +1d4° DM. Ce bonus peut se cumuler à une Attaque sournoise."
+      },
+      {
+       "rang": 5,
+       "titre": "Champion de la survie",
+       "texte": "Le frouïn est expert de la survie : il augmente sa valeur d'AGI ou de PER (au choix) et de CON de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Gobelin",
+   "alternatif": true,
+   "description": "Petit être vif et paradoxal, à la fois discret et braillard, malin et crédule, le gobelin solitaire qui s'aventure hors de son clan est toujours une exception. Sensible, fugitif ou simplement ambitieux, il tranche avec la réputation violente de son peuple.",
+   "age_depart": "8+",
+   "esperance_vie": "30 ans",
+   "taille": "80 cm à 1 m",
+   "poids": "15 à 30 kg",
+   "traits": "peau verte, traits du visage disproportionnés (bouche, yeux, oreilles). Taille petite : à une main, arme limitée à 1d6 DM max (pas de rapière). Arme 1d8-1d10 DM (épée longue, etc.) : deux mains obligatoires. Armes de plus de 1d10 DM, arc long et arbalète lourde interdits.",
+   "caracteristiques_mod": "+1 AGI, +1 PER, ‑1 FOR et ‑1 VOL",
+   "modificateurs": {},
+   "modificateurs_fixes": [
+    {
+     "code": "AGI",
+     "delta": 1
+    },
+    {
+     "code": "PER",
+     "delta": 1
+    },
+    {
+     "code": "FOR",
+     "delta": -1
+    },
+    {
+     "code": "VOL",
+     "delta": -1
+    }
+   ],
+   "voies": [
+    {
+     "nom": "VOIE DU GOBELIN",
+     "intro": "",
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Vivacité gobeline",
+       "texte": "Le gobelin bénéficie de +3 en Init. et à tous ses tests de discrétion. De plus, dans le noir total, il voit comme dans la pénombre jusqu'à 30 m."
+      },
+      {
+       "rang": 2,
+       "titre": "Attaque groupée",
+       "texte": "Le gobelin bénéficie de +2 en attaque au contact s'il vise la même cible qu'un allié (ou la même cible que sa monture au rang 4)."
+      },
+      {
+       "rang": 3,
+       "titre": "Kafouiller",
+       "texte": "Le kafouillage est un sport gobelin populaire où l'on peut battre les adversaires à terre. Un gobelin bénéficie d'un dé bonus et de +1d4° DM lorsqu'il attaque au contact ou à distance une créature renversée."
+      },
+      {
+       "rang": 4,
+       "titre": "Worg",
+       "texte": "Le gobelin est à présent suffisamment auréolé de prestige (du moins parmi les siens) pour attirer un worg à son service. Il peut le chevaucher comme s'il s'agissait d'un cheval. Lorsqu'il est juché sur sa monture, il peut lui ordonner de faire une attaque de morsure gratuite (G) une fois par round (à son propre tour) en plus des autres actions qu'il peut habituellement effectuer. S'il ordonne au worg de se déplacer, le gobelin doit utiliser ses propres actions de mouvement."
+      },
+      {
+       "rang": 5,
+       "titre": "Vif et alerte",
+       "texte": "Le gobelin augmente ses valeurs d'AGI et de PER de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Kobold",
+   "alternatif": true,
+   "description": "Petit humanoïde reptilien aux écailles variables, biologiquement proche des dragons, le kobold compense sa taille chétive par le nombre, la ruse et une maîtrise redoutable des pièges et embuscades.",
+   "age_depart": "10+",
+   "esperance_vie": "60 ans",
+   "taille": "0,70 m à 0,90 m",
+   "poids": "18 à 25 kg",
+   "traits": "écailles colorées (au choix), mâchoire proéminente, crocs et griffes, queue, grands yeux. Créature petite : à une main, arme limitée à 1d6 DM max (pas de rapière). Arme 1d8-1d10 DM (épée longue, etc.) : deux mains obligatoires. Armes de plus de 1d10 DM, arc long et arbalète lourde interdits.",
+   "caracteristiques_mod": "+1 AGI et PER, ‑1 FOR et CON",
+   "modificateurs": {},
+   "modificateurs_fixes": [
+    {
+     "code": "AGI",
+     "delta": 1
+    },
+    {
+     "code": "PER",
+     "delta": 1
+    },
+    {
+     "code": "FOR",
+     "delta": -1
+    },
+    {
+     "code": "CON",
+     "delta": -1
+    }
+   ],
+   "voies": [
+    {
+     "nom": "VOIE DU KOBOLD",
+     "intro": "",
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Ruse kobold",
+       "texte": "Le kobold bénéficie de +3 à ses tests pour concevoir, fabriquer ou détecter les pièges. De plus, dans le noir total, il voit comme dans la pénombre jusqu'à 30 m. Enfin, le kobold peut remplacer une attaque à mains nues par une morsure qui inflige [1d4 + FOR] DM létaux."
+      },
+      {
+       "rang": 2,
+       "titre": "Chétif",
+       "texte": "La petite taille et les écailles du kobold lui confèrent +1 en DEF et +3 aux tests de discrétion."
+      },
+      {
+       "rang": 3,
+       "titre": "Piège improvisé (L)",
+       "texte": "Le kobold est capable de construire des pièges en un instant. Il peut en installer un au prix d'une action limitée en réussissant un test d'AGI difficulté 10 (bonus de Ruse kobold déjà inclus). S'il prend 10 min, le succès est automatique. Le piège affecte une surface de 2 m de côté. Lorsqu'une créature pénètre dans la zone piégée, elle doit réussir un test PER ou d'AGI (au choix) difficulté [10 + rangs dans la voie] pour l'éviter. En cas d'échec, elle est victime d'un effet parmi les trois suivants (à indiquer lorsque le piège est posé) : elle subit 2d4° DM ; elle est immobilisée pendant 1 round ; ou elle est ralentie pendant 1d4 rounds. Si une créature a vu le kobold installer le dispositif, elle évite automatiquement le piège."
+      },
+      {
+       "rang": 4,
+       "titre": "Attaque vicieuse",
+       "texte": "Lorsque le kobold attaque par surprise ou s'il combat le même ennemi que d'autres alliés à son contact, il bénéficie de +2 en attaque et +1d4° DM. Cette capacité peut être cumulée avec une Attaque sournoise."
+      },
+      {
+       "rang": 5,
+       "titre": "Ruse instinctive",
+       "texte": "Le kobold est plus rapide et rusé que jamais. Il augmente son AGI et sa PER de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Fée",
+   "alternatif": true,
+   "description": "Née de l'éclosion d'une fleur, la fée est l'un des deux sexes du peuple des lutins. Facétieuse, bruyante et attachée à la nature, minuscule mais redoutable, elle défend sans hésiter son environnement contre quiconque le menace.",
+   "age_depart": "3+",
+   "esperance_vie": "150 ans",
+   "taille": "20 cm",
+   "poids": "1 à 3 kg",
+   "traits": "mystérieuse, diaphane, magique, rapide, lumineuse, gracieuse, élégante, irrésistible. Créature très petite : FOR plafonnée à -2. Arme à une main : 1d4 DM ; à deux mains (épée courte, arc) : 1d6 DM. Sur un d4° au résultat maximal en attaque physique, celui-ci compte comme un 1. En échange : +2 DEF, +5 aux tests de discrétion.",
+   "caracteristiques_mod": "+1 AGI, +1 CHA, ‑1 CON, ‑2 FOR",
+   "modificateurs": {},
+   "modificateurs_fixes": [
+    {
+     "code": "AGI",
+     "delta": 1
+    },
+    {
+     "code": "CHA",
+     "delta": 1
+    },
+    {
+     "code": "CON",
+     "delta": -1
+    },
+    {
+     "code": "FOR",
+     "delta": -2
+    }
+   ],
+   "voies": [
+    {
+     "nom": "VOIE DE LA FÉE",
+     "intro": "",
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Née d'une fleur",
+       "texte": "Les fées volent à une vitesse de 10 m par action de mouvement. Dans le noir total, elles voient comme dans la pénombre jusqu'à 20 m. De plus, les fées obtiennent une RD aux armes qui ne sont pas en fer froid, égale à 1 par rang dans la voie."
+      },
+      {
+       "rang": 2,
+       "titre": "Pirouette",
+       "texte": "Une fois par combat, après avoir été touchée par une attaque, une fée peut simplement ignorer les DM qui lui sont infligés. De plus, la fée devient capable de produire sa propre lumière à volonté : tout son corps éclaire dans un rayon de 2 m autour d'elle."
+      },
+      {
+       "rang": 3,
+       "titre": "Poudre de fée",
+       "texte": "Le joueur choisit une capacité de rang 1 de n'importe quelle voie de magicien ou d'ensorceleur (mais pas une capacité qui offre un bonus de DEF) que le PJ peut utiliser 3 fois par jour, en armure, sans pénalité. À la place, il peut choisir une capacité de rang 2, mais ne doit alors pas porter d'armure pour lancer le sort. Ce sort ne lui rapporte aucun point de mana (mais ne lui en coûte pas non plus). Il peut l'utiliser, quelle que soit l'armure portée."
+      },
+      {
+       "rang": 4,
+       "titre": "Fée révérée",
+       "texte": "La fée est capable de prendre une taille humaine pendant [1d4° + CHA] minutes, trois fois par jour. Sous cette forme, elle bénéficie de +3 en FOR (et donc en attaque et aux DM) et peut infliger des DM normalement selon l'arme utilisée."
+      },
+      {
+       "rang": 5,
+       "titre": "Lady fée",
+       "texte": "Le personnage devient plus sage et charismatique. Il est considéré parmi les siens comme un individu de haut rang. Il augmente ses valeurs de PER et de CHA de +1."
+      }
+     ]
+    }
+   ],
+   "caracteristiques_cap": [
+    {
+     "code": "FOR",
+     "max_final": -2
+    }
+   ]
+  },
+  {
+   "nom": "Farfadet",
+   "alternatif": true,
+   "description": "Né d'un chou, le farfadet est le pendant masculin du peuple des lutins. Facétieux et chamailleur, profondément attaché à la nature, il dissimule sous son apparence débraillée un tempérament joueur capable de devenir mortel si la forêt est menacée.",
+   "age_depart": "3+",
+   "esperance_vie": "150 ans",
+   "taille": "30 cm",
+   "poids": "1 à 3 kg",
+   "traits": "grand nez et grands pieds, chapeau en champignon, coiffure ébouriffée, vêtements d'écorce. Créature très petite : FOR plafonnée à -2. Arme à une main : 1d4 DM ; à deux mains (épée courte, arc) : 1d6 DM. Sur un d4° au résultat maximal en attaque physique, celui-ci compte comme un 1. En échange : +2 DEF, +5 aux tests de discrétion.",
+   "caracteristiques_mod": "+1 AGI, +1 PER, ‑1 CON, ‑2 FOR",
+   "modificateurs": {},
+   "modificateurs_fixes": [
+    {
+     "code": "AGI",
+     "delta": 1
+    },
+    {
+     "code": "PER",
+     "delta": 1
+    },
+    {
+     "code": "CON",
+     "delta": -1
+    },
+    {
+     "code": "FOR",
+     "delta": -2
+    }
+   ],
+   "voies": [
+    {
+     "nom": "VOIE DU FARFADET",
+     "intro": "",
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Né d'un chou",
+       "texte": "Dans le noir total, les farfadets voient comme dans la pénombre jusqu'à 20 m. De plus, ils peuvent se téléporter de 10 m par action de mouvement, mais ils doivent être en mesure de voir leur lieu d'arrivée au début de la téléportation. Enfin, ils obtiennent une RD aux armes qui ne sont pas en fer froid, égale à 1 par rang dans la voie."
+      },
+      {
+       "rang": 2,
+       "titre": "Langage des animaux",
+       "texte": "Le farfadet obtient la capacité Langage des animaux (druide, voie des animaux). S'il possède déjà cette capacité, il obtient une capacité de rôdeur ou de druide de rang 1 de son choix (si c'est un sort, il peut l'utiliser en armure)."
+      },
+      {
+       "rang": 3,
+       "titre": "Invisibilité (L)*",
+       "texte": "Le farfadet peut se rendre invisible comme s'il utilisait la capacité de magicien du même nom (voie de la magie universelle) jusqu'à 3 fois par jour. Ce sort ne lui rapporte aucun point de mana (mais ne lui en coûte pas non plus). Il peut l'utiliser, quelle que soit l'armure portée. S'il possède déjà cette capacité, il obtient à la place au choix : Télékinésie (ensorceleur, voie de l'air) ou Confusion (ensorceleur, voie de l'envoûteur), qu'il peut utiliser dans les mêmes conditions."
+      },
+      {
+       "rang": 4,
+       "titre": "Monture féerique",
+       "texte": "Le personnage apprivoise un animal (parfois volant, comme un aigle) qui lui sert de monture. Le lutin peut communiquer avec la créature par télépathie à une portée de 50 m."
+      },
+      {
+       "rang": 5,
+       "titre": "Seigneur féerique",
+       "texte": "Le personnage devient plus décidé et charismatique, il est considéré parmi les siens comme un individu de haut rang. Il augmente ses valeurs de CHA et de VOL de +1."
+      }
+     ]
+    }
+   ],
+   "caracteristiques_cap": [
+    {
+     "code": "FOR",
+     "max_final": -2
+    }
+   ]
+  },
+  {
+   "nom": "Minotaure",
+   "alternatif": true,
+   "description": "Créature colossale au corps d'homme surpuissant et à la tête de taureau, le minotaure allie force brute et sens de l'orientation infaillible. Il ne quitte guère son sanctuaire, sauf poussé par le destin : jeune en quête d'un domaine, ou guerrier endeuillé animé par la vengeance.",
+   "age_depart": "15+",
+   "esperance_vie": "60 ans",
+   "taille": "1,90 à 2,30 m",
+   "poids": "150 à 250 kg",
+   "traits": "pelage, cornes d'auroch, pagne, colifichets (minotaures du Nord) ; peau glabre sur le buste, piercings aux naseaux et aux oreilles, tatouages (minotaures du Sud). Taille presque grande : considéré comme de taille grande pour résister aux capacités des créatures (saisie et autres), mais subit -1 à tous ses tests de FOR et AGI, et en attaque, dans la plupart des constructions à taille humaine.",
+   "caracteristiques_mod": "+2 FOR, +1 VOL, ‑2 INT, ‑2 CHA",
+   "modificateurs": {},
+   "modificateurs_fixes": [
+    {
+     "code": "FOR",
+     "delta": 2
+    },
+    {
+     "code": "VOL",
+     "delta": 1
+    },
+    {
+     "code": "INT",
+     "delta": -2
+    },
+    {
+     "code": "CHA",
+     "delta": -2
+    }
+   ],
+   "voies": [
+    {
+     "nom": "VOIE DU MINOTAURE",
+     "intro": "",
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Coup de corne",
+       "texte": "Un minotaure peut réaliser une attaque de corne qui inflige [1d4° + FOR] DM à la place d'une attaque normale. Au prix d'une action limitée, il peut faire une attaque normale avec une arme de contact plus une attaque de corne. De plus, le minotaure bénéficie de +3 à tous ses tests d'orientation."
+      },
+      {
+       "rang": 2,
+       "titre": "Charge puissante",
+       "texte": "Lorsque le minotaure parcourt au moins 10 m en ligne droite avant d'effectuer une attaque de corne, celle-ci inflige [2d4° + FOR] DM. Si la cible est de taille moyenne ou inférieure, elle doit réussir un test de FOR difficulté [10 + rangs dans la voie] ou être renversée. La charge puissante ne peut pas être effectuée contre une cible déjà au contact d'un autre adversaire."
+      },
+      {
+       "rang": 3,
+       "titre": "Frénésie",
+       "texte": "Après avoir reçu une blessure, le minotaure peut entrer en frénésie (action gratuite) : il bénéficie de +2 en attaque et d'une RD 3 contre tous les DM, mais subit -3 en DEF."
+      },
+      {
+       "rang": 4,
+       "titre": "Encorner",
+       "texte": "Le minotaure peut désormais réaliser une attaque de corne en action gratuite une fois par round. Il ne peut pas effectuer plus d'une attaque de corne par round."
+      },
+      {
+       "rang": 5,
+       "titre": "Colosse",
+       "texte": "Le minotaure est une montagne de muscles : il augmente ses valeurs de CON et de FOR de +1."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "nom": "Nephilim",
+   "alternatif": true,
+   "description": "Humains à l'ascendance angélique, les nephilims se distinguent par des traits lumineux ou métalliques, ainsi qu'une beauté et une endurance supérieures. Leur nature rêveuse et décalée les rend souvent inadaptés à la vie en société, compliquant leur intégration et leur stabilité personnelle.",
+   "age_depart": "25 à 30 ans",
+   "esperance_vie": "300 ans",
+   "taille": "1,5 m à 2 m",
+   "poids": "40 à 120 kg",
+   "traits": "traits réguliers, cheveux blonds ou dorés, yeux bleus ou acier, beauté surnaturelle, silhouette harmonieuse, pilosité faible, genre peu marqué.",
+   "caracteristiques_mod": "+1 CHA ou CON, ‑1 PER",
+   "modificateurs": {
+    "plus": [
+     "CHA",
+     "CON"
+    ],
+    "minus": [
+     "PER"
+    ]
+   },
+   "voies": [
+    {
+     "nom": "VOIE DU NEPHILIM",
+     "intro": "",
+     "ranks": [
+      {
+       "rang": 1,
+       "titre": "Photosensible",
+       "texte": "Les yeux du nephilim sont capables de percevoir la moindre trace de lumière. La nuit, sous la lumière des étoiles, il voit comme en plein jour, et le rayon d'effet de toutes les sources de lumière est doublé (par exemple, 20 m au lieu de 10 pour une torche ou une lanterne). De plus, il bénéficie de +3 aux tests de deux domaines associés à son origine géographique ou sociale, comme le ferait un humain."
+      },
+      {
+       "rang": 2,
+       "titre": "Enfant de la lumière",
+       "texte": "Le nephilim obtient le sort Lumière (magicien, voie de la magie universelle) et gagne le point de mana correspondant. Il peut l'utiliser sans pénalité s'il porte une armure. Si le personnage possède déjà cette capacité, il lui suffit désormais d'une action gratuite pour lancer le sort."
+      },
+      {
+       "rang": 3,
+       "titre": "Résistances",
+       "texte": "Le sang céleste qui coule dans les veines du personnage se renforce et lui accorde une RD 5 contre les DM d'acide, de froid ou d'électricité."
+      },
+      {
+       "rang": 4,
+       "titre": "La plume et l'acier",
+       "texte": "Le nephilim peut utiliser le sort Ailes célestes (prêtre, voie de la foi) une fois par jour. Ce sort ne lui rapporte aucun point de mana (mais ne lui en coûte pas non plus). Il peut l'utiliser, quelle que soit l'armure portée. À partir du niveau 10, il peut l'utiliser 2 fois par jour. De plus, il bénéficie de +3 pour résister à tous les pouvoirs de corruption mentale (charme, suggestion, etc.) et aux effets d'affaiblissement (drain, vampirisme, énergie négative, etc.)."
+      },
+      {
+       "rang": 5,
+       "titre": "Forgé par la lumière",
+       "texte": "La nature céleste du personnage le transcende et le rend éblouissant et résistant. Il augmente ses valeurs de CON et CHA de +1."
       }
      ]
     }
@@ -7519,7 +8418,298 @@ table.ps-armes td{ border:1px solid #d8c99a; padding:2px 4px; font-size:8.5px; l
    "def": 2,
    "prix": "4 pa"
   }
- ]
+ ],
+ "competences": [
+  {
+   "nom": "Acrobaties",
+   "carac": "AGI",
+   "desc": "Esquiver, garder son équilibre, chuter sans danger, échapper à des liens."
+  },
+  {
+   "nom": "Artisanat",
+   "carac": "INT",
+   "desc": "Concevoir et fabriquer des objets dans une profession choisie (forgeron, armurier, cuisinier, etc.). Dé malus pour les autres artisanats.",
+   "specialisation": true
+  },
+  {
+   "nom": "Athlétisme",
+   "carac": "Variable",
+   "desc": "Courir et sauter (AGI ou FOR), lancer loin, soulever un objet lourd (FOR), endurance (CON)."
+  },
+  {
+   "nom": "Commerce",
+   "carac": "CHA",
+   "desc": "Estimer la valeur d'un objet ou d'un trésor, trouver un article rare, négocier son prix."
+  },
+  {
+   "nom": "Connaissances",
+   "carac": "INT",
+   "desc": "Géographie, histoire, ou savoir qui est la tête couronnée locale."
+  },
+  {
+   "nom": "Discrétion",
+   "carac": "AGI",
+   "desc": "Se cacher en forêt, se fondre dans la foule, marcher discrètement."
+  },
+  {
+   "nom": "Divertissement",
+   "carac": "CHA",
+   "desc": "Danse, chant, poésie, théâtre. Permet de gagner de l'argent en spectacle."
+  },
+  {
+   "nom": "Équitation",
+   "carac": "AGI ou CHA",
+   "desc": "Monter à cheval ou une autre créature (AGI), la maîtriser et la calmer (CHA)."
+  },
+  {
+   "nom": "Escalade",
+   "carac": "AGI",
+   "desc": "Grimper à la corde, dans un arbre, le long d'une façade ou sur une falaise."
+  },
+  {
+   "nom": "Effraction",
+   "carac": "AGI",
+   "desc": "Crocheter une serrure, désamorcer un piège, pickpocket."
+  },
+  {
+   "nom": "Empathie",
+   "carac": "PER",
+   "desc": "Jauger l'état émotionnel d'un interlocuteur, discerner un mensonge, cerner une attente."
+  },
+  {
+   "nom": "Intimidation",
+   "carac": "CHA",
+   "desc": "Impressionner pour obéissance, évitement ou information. Commander des troupes."
+  },
+  {
+   "nom": "Médecine",
+   "carac": "PER",
+   "desc": "Premiers soins, diagnostiquer ou soigner un empoisonnement."
+  },
+  {
+   "nom": "Natation",
+   "carac": "CON",
+   "desc": "Ne pas se noyer, lutter contre les flots, retenir sa respiration, manœuvrer à bord d'un navire."
+  },
+  {
+   "nom": "Occultisme",
+   "carac": "INT",
+   "desc": "Connaissances liées à la magie, aux arts occultes ou aux créatures magiques."
+  },
+  {
+   "nom": "Persuasion",
+   "carac": "CHA",
+   "desc": "Négociation, commandement ou interaction sociale non couverte par tromperie/intimidation."
+  },
+  {
+   "nom": "Religion",
+   "carac": "INT",
+   "desc": "Dieux et théologie. Peut remplacer persuasion auprès d'un prêtre."
+  },
+  {
+   "nom": "Renseignement",
+   "carac": "CHA",
+   "desc": "Obtenir une information/rumeur, écouter une conversation, interroger un témoin."
+  },
+  {
+   "nom": "Sciences",
+   "carac": "INT",
+   "desc": "Mathématiques, sciences physiques, plan d'un labyrinthe, résoudre une énigme."
+  },
+  {
+   "nom": "Tromperie",
+   "carac": "CHA",
+   "desc": "Se déguiser, imiter une voix, mentir, se faire passer pour quelqu'un d'autre."
+  },
+  {
+   "nom": "Survie",
+   "carac": "PER",
+   "desc": "Progresser, pister, s'orienter, prédire la météo, connaissances des créatures sauvages."
+  },
+  {
+   "nom": "Vigilance",
+   "carac": "PER",
+   "desc": "Monter la garde, détecter une embuscade, trouver un passage secret ou un piège."
+  }
+ ],
+ "competences_profil": {
+  "Barbare": [
+   "Artisanat",
+   "Athlétisme",
+   "Équitation",
+   "Escalade",
+   "Intimidation",
+   "Natation",
+   "Survie",
+   "Vigilance"
+  ],
+  "Chevalier": [
+   "Athlétisme",
+   "Connaissances",
+   "Équitation",
+   "Intimidation",
+   "Natation",
+   "Persuasion",
+   "Religion"
+  ],
+  "Guerrier": [
+   "Artisanat",
+   "Athlétisme",
+   "Équitation",
+   "Intimidation",
+   "Natation"
+  ],
+  "Arquebusier": [
+   "Artisanat",
+   "Athlétisme",
+   "Équitation",
+   "Intimidation",
+   "Natation",
+   "Sciences",
+   "Vigilance"
+  ],
+  "Barde": [
+   "Acrobaties",
+   "Artisanat",
+   "Athlétisme",
+   "Commerce",
+   "Connaissances",
+   "Divertissement",
+   "Empathie",
+   "Équitation",
+   "Intimidation",
+   "Natation",
+   "Persuasion",
+   "Religion",
+   "Renseignement",
+   "Tromperie"
+  ],
+  "Voleur": [
+   "Acrobaties",
+   "Artisanat",
+   "Athlétisme",
+   "Commerce",
+   "Discrétion",
+   "Escalade",
+   "Effraction",
+   "Intimidation",
+   "Natation",
+   "Persuasion",
+   "Renseignement",
+   "Tromperie",
+   "Vigilance"
+  ],
+  "Rôdeur": [
+   "Acrobaties",
+   "Artisanat",
+   "Athlétisme",
+   "Discrétion",
+   "Équitation",
+   "Escalade",
+   "Médecine",
+   "Natation",
+   "Survie",
+   "Vigilance"
+  ],
+  "Ensorceleur": [
+   "Artisanat",
+   "Connaissances",
+   "Occultisme",
+   "Sciences"
+  ],
+  "Forgesort": [
+   "Artisanat",
+   "Connaissances",
+   "Occultisme",
+   "Sciences"
+  ],
+  "Magicien": [
+   "Artisanat",
+   "Connaissances",
+   "Occultisme",
+   "Sciences"
+  ],
+  "Sorcier": [
+   "Artisanat",
+   "Connaissances",
+   "Occultisme",
+   "Sciences"
+  ],
+  "Primaliste": [
+   "Artisanat",
+   "Connaissances",
+   "Occultisme",
+   "Sciences"
+  ],
+  "Druide": [
+   "Artisanat",
+   "Athlétisme",
+   "Connaissances",
+   "Discrétion",
+   "Équitation",
+   "Empathie",
+   "Médecine",
+   "Natation",
+   "Religion",
+   "Survie",
+   "Vigilance"
+  ],
+  "Moine": [
+   "Acrobaties",
+   "Artisanat",
+   "Athlétisme",
+   "Connaissances",
+   "Discrétion",
+   "Empathie",
+   "Escalade",
+   "Médecine",
+   "Natation",
+   "Religion",
+   "Survie",
+   "Vigilance"
+  ],
+  "Prêtre": [
+   "Artisanat",
+   "Athlétisme",
+   "Connaissances",
+   "Empathie",
+   "Équitation",
+   "Intimidation",
+   "Médecine",
+   "Persuasion",
+   "Religion",
+   "Survie"
+  ]
+ },
+ "competences_peuple": {
+  "Demi‑orc": [
+   "Athlétisme",
+   "Intimidation"
+  ],
+  "Elfe haut": [
+   "Connaissances",
+   "Divertissement"
+  ],
+  "Elfe sylvain": [
+   "Discrétion",
+   "Survie"
+  ],
+  "Gnome": [
+   "Sciences",
+   "Occultisme"
+  ],
+  "Halfelin": [
+   "Discrétion",
+   "Effraction"
+  ],
+  "Humain": [
+   "Artisanat"
+  ],
+  "Nain": [
+   "Artisanat",
+   "Vigilance"
+  ]
+ }
 }</script>
 <script>
 const DATA = JSON.parse(document.getElementById('cof2-data').textContent);
@@ -7544,6 +8734,7 @@ const DEFAULT_SETTINGS = {
   ageVariable: false,
   profilsSupplementaires: false,
   voiesSupplementaires: false,
+  systemeCompetences: false,
 };
 function ensureSettings() {
   if (!state.settings) state.settings = Object.assign({}, DEFAULT_SETTINGS);
@@ -7586,6 +8777,15 @@ function settingsScreenHtml() {
 
       <div class="setting-row" style="margin-top:12px;">
         <div class="setting-info">
+          <div class="setting-name">Système de compétences</div>
+          <div class="setting-desc">Ajoute une étape « Compétences » avec les 22 compétences officielles, leur maîtrise (profil, peuple, voies hybrides) et leurs points à répartir à chaque niveau.</div>
+        </div>
+        <button class="switch ${state.settings.systemeCompetences?'on':''}" data-action="setting-toggle" data-key="systemeCompetences" role="switch" aria-checked="${state.settings.systemeCompetences}"><span class="knob"></span></button>
+      </div>
+      <p class="hint" style="margin-top:6px;">Règle optionnelle officielle. Une fois activée, une étape supplémentaire apparaît avant la fiche finale, qui gagne aussi une 3<sup>e</sup> page listant les compétences.</p>
+
+      <div class="setting-row" style="margin-top:12px;">
+        <div class="setting-info">
           <div class="setting-name">Méthode par achat</div>
           <div class="setting-desc">Répartir les caractéristiques en dépensant des points selon un barème de coûts, plutôt qu'en choisissant une série fixe (Polyvalent/Expert/Spécialiste).</div>
         </div>
@@ -7622,6 +8822,13 @@ let state = {
   armes: null, // [{nom,type,bonusVoie,dm,notes}] × 5 — lazily initialised by ensureArmes()
   initBonusManuel: 0, // free-form Initiative adjustment for capacities not otherwise tracked
   pvBonusManuel: 0, drBonusManuel: 0, pcBonusManuel: 0, pmBonusManuel: 0, // same idea, for PV/DR/PC/PM — all centralised in the "Bonus des voies" section at Touche finale
+  caracBonusManuel: {}, // {FOR,AGI,CON,PER,CHA,INT,VOL: number} — same idea, for characteristics themselves (e.g. Charisme héroïque)
+  competencePoints: {}, // {competenceNom: pointsInvested} — optional "Système de compétences" rule
+  competenceBonusManuel: {}, // {competenceNom: number} — manual voie bonus per skill, same idea as elsewhere
+  competenceMaitriseChoices: {}, // {slotKey: [skill1, skill2]} — the 2 skills chosen per opened hybrid voie
+  humainCompetenceChoice: null, // Humain's "une compétence au choix" mastery
+  playMode: false, // whether the Mode Jeu dice-roller screen is showing instead of the wizard
+  pvActuel: null, pmActuel: null, pcActuel: null, drActuel: null, // current (vs. max) resource tracking in Mode Jeu — null means "not yet touched, follow the max"
   ageBonusChoice: null, // 'PC' | 'DR' — only relevant for the "très jeune" age category
   equipChoix: null, // [choiceGroupIdx]: chosen option index, for the current profil's equipement_choix
   equipCustomText: {}, // {choiceGroupIdx: string} — free text for "(à préciser)" options
@@ -7712,7 +8919,7 @@ function loadSave(id) {
   if (!entry) return;
   state = JSON.parse(JSON.stringify(entry.state));
   state.savedId = id;
-  state.step = 12; // saves are only offered once a fiche exists, so resume there
+  state.step = 13; // saves are only offered once a fiche exists, so resume there
   applyStateCompat();
 }
 // Backfills fields that didn't exist yet when an older save/export was
@@ -7736,6 +8943,16 @@ function applyStateCompat() {
   if (state.drBonusManuel === undefined || state.drBonusManuel === null) state.drBonusManuel = 0;
   if (state.pcBonusManuel === undefined || state.pcBonusManuel === null) state.pcBonusManuel = 0;
   if (state.pmBonusManuel === undefined || state.pmBonusManuel === null) state.pmBonusManuel = 0;
+  if (!state.caracBonusManuel) state.caracBonusManuel = {};
+  if (!state.competencePoints) state.competencePoints = {};
+  if (!state.competenceBonusManuel) state.competenceBonusManuel = {};
+  if (!state.competenceMaitriseChoices) state.competenceMaitriseChoices = {};
+  if (state.humainCompetenceChoice === undefined) state.humainCompetenceChoice = null;
+  if (state.playMode === undefined) state.playMode = false;
+  if (state.pvActuel === undefined) state.pvActuel = null;
+  if (state.pmActuel === undefined) state.pmActuel = null;
+  if (state.pcActuel === undefined) state.pcActuel = null;
+  if (state.drActuel === undefined) state.drActuel = null;
   if (!state.rankBorrow) state.rankBorrow = {};
   if (state.rankBorrowPicking === undefined) state.rankBorrowPicking = null;
   if (state.rankBorrowPickingProfil === undefined) state.rankBorrowPickingProfil = null;
@@ -7915,6 +9132,11 @@ function finalCaracValue(code) {
   if (pc.plus === code) v += 1;
   if (pc.minus === code) v -= 1;
   v += ageCaracDelta(code);
+  v += Number((state.caracBonusManuel || {})[code]) || 0;
+  const pe = peuple();
+  if (pe && Array.isArray(pe.modificateurs_fixes)) {
+    v += pe.modificateurs_fixes.filter(m => m.code === code).reduce((s,m) => s + m.delta, 0);
+  }
   return v;
 }
 
@@ -7926,18 +9148,188 @@ function isSpell(titre) { return titre.includes('*'); }
 // jumping to "Apparence physique" once a peuple is chosen, so the person
 // doesn't miss it below the fold.
 let pendingScrollTarget = null;
+// A slim, always-visible line under the progress rail (once there's
+// enough data to compute it) showing the character's name, level, DEF and
+// PV — so their effect is visible right away without jumping to "Voir la
+// fiche" after every change.
+function miniSummaryHtml() {
+  if (state.profilIdx===null || state.peupleIdx===null) return '';
+  if (!CARAC_ORDER.every(c => state.assign[c]!==undefined)) return '';
+  let s;
+  try { s = computeSheet(); } catch (e) { return ''; }
+  const nom = state.nom ? escapeHtml(state.nom) : 'Héros sans nom';
+  return `<div class="mini-summary">
+    <span class="ms-name">${nom}</span>
+    <span class="ms-stat">Niv. ${state.niveau}</span>
+    <span class="ms-stat">DEF ${s.def}</span>
+    <span class="ms-stat">PV ${s.pv}</span>
+  </div>`;
+}
+
+// ===== Mode Jeu (dice roller) — phase 1 =====
+// Tests de caractéristique, compétence et attaque : tout est déjà calculé
+// ailleurs dans l'app, donc ces jets se résument à "d20 + valeur connue".
+// Le journal des jets est volontairement hors de `state` (non sauvegardé
+// avec le personnage) : c'est un aide-mémoire de session, pas une donnée
+// de fiche.
+let rollLog = [];
+let freeRollCount = 1; // current selection for the free dice roller, kept outside `state` like rollLog (a session convenience, not character data)
+let freeRollSides = 20;
+function rollDie(sides) { return 1 + Math.floor(Math.random()*sides); }
+function pushRoll(label, detail, total, critical) {
+  rollLog.unshift({label, detail, total, critical, ts: Date.now()});
+  if (rollLog.length > 15) rollLog.length = 15;
+}
+function rollD20(label, bonus) {
+  const d = rollDie(20);
+  const total = d + bonus;
+  const critical = d===20 ? 'success' : (d===1 ? 'fail' : null);
+  pushRoll(label, `d20 [${d}] ${bonus>=0?'+':''}${bonus}`, total, critical);
+  render();
+}
+function rollRecup() {
+  const s = computeSheet();
+  const sides = Number(String(s.fam.stats.de_recup).replace(/[^0-9]/g,'')) || 6;
+  const rolls = Array.from({length: s.drCount}, () => rollDie(sides));
+  const sum = rolls.reduce((a,b)=>a+b, 0);
+  const niveauBonus = Math.floor(s.niveau / 2);
+  const total = sum + niveauBonus;
+  pushRoll('Dé de récupération', `${s.drCount}${s.fam.stats.de_recup} [${rolls.join(', ')}] + ${niveauBonus} (½ niv.)`, total);
+  render();
+}
+function rollFree() {
+  const rolls = Array.from({length: freeRollCount}, () => rollDie(freeRollSides));
+  const total = rolls.reduce((a,b)=>a+b, 0);
+  const critical = (freeRollSides===20 && freeRollCount===1) ? (rolls[0]===20?'success':(rolls[0]===1?'fail':null)) : null;
+  pushRoll(`${freeRollCount}d${freeRollSides}`, `[${rolls.join(', ')}]`, total, critical);
+  render();
+}
+function rollLogHtml() {
+  if (!rollLog.length) return `<p class="hint" style="text-align:center;">Vos jets s'afficheront ici.</p>`;
+  return rollLog.map(r => `<div class="roll-entry ${r.critical ? 'crit-'+r.critical : ''}">
+    <div class="roll-entry-head">
+      <span class="roll-label">${escapeHtml(r.label)}${r.critical==='success' ? ' <span class="crit-badge success">20 naturel !</span>' : ''}${r.critical==='fail' ? ' <span class="crit-badge fail">1 naturel !</span>' : ''}</span>
+      <span class="roll-total">${r.total}</span>
+    </div>
+    <div class="roll-detail">${escapeHtml(r.detail)}</div>
+  </div>`).join('');
+}
+function playModeHtml() {
+  const s = computeSheet();
+  const compOn = state.settings && state.settings.systemeCompetences;
+  const nom = state.nom ? escapeHtml(state.nom) : 'Héros sans nom';
+
+  const caracButtons = CARAC_ORDER.map(code => {
+    const v = s[code];
+    return `<button class="roll-btn" data-action="roll-carac" data-code="${code}">
+      <span class="rb-name">${code}</span><span class="rb-bonus">${v>=0?'+':''}${v}</span>
+    </button>`;
+  }).join('');
+
+  const armeButtons = (state.armes||[]).filter(a => a.nom && a.nom.trim()).map((slot, i) => {
+    const total = armeAttaqueTotale(s, slot);
+    return `<button class="roll-btn wide" data-action="roll-arme" data-idx="${i}">
+      <span class="rb-name">${escapeHtml(slot.nom)}</span><span class="rb-bonus">d20 ${total>=0?'+':''}${total}</span>
+    </button>`;
+  }).join('');
+
+  let compButtons = '';
+  if (compOn) {
+    compButtons = DATA.competences.map(comp => {
+      const fv = competenceFinalValue(comp);
+      return `<button class="roll-btn wide" data-action="roll-competence" data-comp="${comp.nom}">
+        <span class="rb-name">${comp.nom}</span><span class="rb-bonus">d20 ${fv.total>=0?'+':''}${fv.total}</span>
+      </button>`;
+    }).join('');
+  }
+
+  const resourceRow = (label, code, maxVal) => {
+    const current = state[code] === null || state[code] === undefined ? maxVal : state[code];
+    return `<div class="resource-row">
+      <span class="resource-label">${label}</span>
+      <div class="resource-box"><span class="rbox-lbl">Max</span><span class="rbox-val">${maxVal}</span></div>
+      <div class="resource-box actuel"><span class="rbox-lbl">Actuel</span><input type="number" class="rbox-input" data-action-input="resource-actuel" data-code="${code}" value="${current}"></div>
+    </div>`;
+  };
+  const resourcesHtml = `<div class="section-div">Ressources</div>
+    ${resourceRow('PV', 'pvActuel', s.pv)}
+    ${resourceRow('PM', 'pmActuel', s.pm)}
+    ${resourceRow('PC', 'pcActuel', s.pc)}
+    ${resourceRow('DR', 'drActuel', s.drCount)}`;
+
+  return `
+    <div class="header">
+      <div class="title-row">
+        <div class="brand">🎲 Mode Jeu</div>
+        <button class="settings-btn" data-action="play-mode-close" aria-label="Quitter">✕</button>
+      </div>
+      <div class="mini-summary" style="margin-top:8px; padding-top:0; border-top:none;">
+        <span class="ms-name">${nom}</span>
+        <span class="ms-stat">Niv. ${s.niveau}</span>
+        <span class="ms-stat">Init. ${s.initiative>=0?'+':''}${s.initiative}</span>
+        <span class="ms-stat">DEF ${s.def}</span>
+        <span class="ms-stat">PV ${s.pv}</span>
+      </div>
+    </div>
+    <div class="content"><div class="scene" id="scene">
+      ${resourcesHtml}
+
+      <div class="section-div">Journal des jets</div>
+      <div class="roll-log">${rollLogHtml()}</div>
+
+      <div class="section-div">Attaques</div>
+      ${armeButtons || `<p class="hint">Aucune arme renseignée — ajoutez-en à l'étape Équipement.</p>`}
+
+      <div class="section-div">Caractéristiques</div>
+      <div class="roll-grid">${caracButtons}</div>
+
+      <div class="section-div">Divers</div>
+      <button class="roll-btn wide" data-action="roll-recup">
+        <span class="rb-name">Dé de récupération</span><span class="rb-bonus">${s.drCount}${s.fam.stats.de_recup} + ½ niv.</span>
+      </button>
+
+      <div class="section-div">Jet libre</div>
+      <div class="dcard">
+        <div class="carac-row">
+          <div class="carac-id"><span class="carac-name">Nombre de dés</span></div>
+          <select class="val-select" style="width:80px;" data-action-select="free-roll-count">
+            ${[1,2,3,4,5,6,7,8,9,10].map(n => `<option value="${n}" ${freeRollCount===n?'selected':''}>${n}</option>`).join('')}
+          </select>
+        </div>
+        <div class="carac-row">
+          <div class="carac-id"><span class="carac-name">Type de dé</span></div>
+          <select class="val-select" style="width:80px;" data-action-select="free-roll-sides">
+            ${[4,6,8,10,12,20,100].map(n => `<option value="${n}" ${freeRollSides===n?'selected':''}>d${n}</option>`).join('')}
+          </select>
+        </div>
+        <button class="roll-btn wide" style="margin-top:8px;" data-action="roll-free">
+          <span class="rb-name">Lancer</span><span class="rb-bonus">${freeRollCount}d${freeRollSides}</span>
+        </button>
+      </div>
+
+      ${compOn ? `<div class="section-div">Compétences</div>${compButtons}` : ''}
+    </div></div>
+  `;
+}
+
 function render() {
   const app = document.getElementById('app');
+  if (state.playMode) {
+    app.innerHTML = playModeHtml();
+    bindEvents();
+    return;
+  }
   app.innerHTML = `
     <div class="header">
       <div class="title-row">
         <div class="brand">✦ Forger un héros</div>
         <div class="header-right">
-          <div class="steplabel">${state.step===12? 'Fiche' : 'Étape ' + (state.step) + ' / 11'}</div>
+          <div class="steplabel">${state.step===13? 'Fiche' : 'Étape ' + (state.step) + ' / 12'}</div>
           <button class="settings-btn" data-action="settings-open" aria-label="Réglages">${GEAR_ICON}</button>
         </div>
       </div>
       <div class="rail">${railHtml()}</div>
+      ${state.step!==13 ? miniSummaryHtml() : ''}
     </div>
     <div class="content"><div class="scene" id="scene">${sceneHtml()}</div></div>
     ${footerHtml()}
@@ -7953,7 +9345,7 @@ function render() {
 
 function railHtml() {
   let segs = '';
-  for (let i=1;i<=11;i++){
+  for (let i=1;i<=12;i++){
     let cls = i < state.step ? 'done' : (i===state.step ? 'active' : '');
     // Completed steps are clickable so the person can jump straight back to
     // review or change an earlier choice, instead of only stepping back one
@@ -7980,8 +9372,9 @@ function sceneHtml() {
     case 8: return step7_voiepeuple();
     case 9: return step8_progression();
     case 10: return step9_equipement();
-    case 11: return step10_touchefinale();
-    case 12: return step11_fiche();
+    case 11: return step_competences();
+    case 12: return step10_touchefinale();
+    case 13: return step11_fiche();
     default: return '';
   }
 }
@@ -8007,15 +9400,17 @@ function step1_famille() {
     <button class="chip" data-action="import-open" style="margin-bottom:16px;">⭱ Importer un personnage (fichier .json)</button>
   `;
 
+  const showSuppProfils = state.settings && state.settings.profilsSupplementaires;
   let cards = DATA.families.map((f,i) => {
     const key = FAMKEY(f.famille);
     const sel = state.familleIdx===i ? 'selected' : '';
+    const profilsForSub = showSuppProfils ? f.profils : f.profils.filter(p => !p.supplementaire);
     return `<div class="card ${sel}" data-action="famille" data-idx="${i}">
       <div class="card-head">
         <div class="card-icon">${ICONS[key]}</div>
         <div>
           <div class="card-name">${f.famille.replace('Famille des ','').replace(/^./,c=>c.toUpperCase())}</div>
-          <div class="card-sub">${f.profils.map(p=>p.nom).join(' · ')}</div>
+          <div class="card-sub">${profilsForSub.map(p=>p.nom).join(' · ')}</div>
         </div>
       </div>
       <div class="card-desc">${f.description}</div>
@@ -8074,6 +9469,7 @@ function step3_religion() {
     </div>`;
   } else if (specialisteChosen) {
     body += `<p class="hint" style="margin-top:12px;">Choisissez le dieu unique dont vous portez la parole. Vous maîtrisez son arme sacrée et obtenez automatiquement sa capacité divine.</p>
+      <input class="name-input" id="deityFilterInput" style="margin-bottom:8px;" type="text" placeholder="🔎 Filtrer par nom ou domaine…">
       <div class="deity-list">
         ${DATA.pantheon_osgild.map(d => `<button class="deity-row ${state.pretreDieuNom===d.nom?'on':''}" data-action="pretre-dieu" data-nom="${escapeHtml(d.nom)}">
           <span class="deity-nom">${escapeHtml(d.nom)}</span>
@@ -8224,6 +9620,18 @@ function randomizeAssign() {
   const assign = {};
   keyCodes.forEach((c,i) => { assign[c] = topVals[i]; });
   otherCodes.forEach((c,i) => { assign[c] = restVals[i]; });
+
+  // Some peuples cap a characteristic's final value outright (e.g. a Fée's
+  // FOR must end up at -2 or lower) — if the random draw broke that, swap
+  // it for another assigned value that does fit, so "Randomize" never
+  // hands back a build the player couldn't have picked manually.
+  CARAC_ORDER.forEach(code => {
+    const baseCap = caracBaseCapFromPeupleCeiling(code);
+    if (baseCap === null || assign[code] <= baseCap) return;
+    const swapWith = CARAC_ORDER.find(c2 => c2 !== code && assign[c2] <= baseCap);
+    if (swapWith) { const tmp = assign[code]; assign[code] = assign[swapWith]; assign[swapWith] = tmp; }
+  });
+
   state.assign = assign;
 }
 
@@ -8241,11 +9649,50 @@ function achatSpent() {
   });
   return spent;
 }
+// The sum of a peuple's always-on fixed modifiers for one characteristic
+// (see "modificateurs_fixes" — e.g. a Fée's -2 FOR), independent of any
+// plus/minus choice, age category, or later manual voie bonus.
+function fixedDeltaFromPeuple(code) {
+  const pe = peuple();
+  if (!pe || !Array.isArray(pe.modificateurs_fixes)) return 0;
+  return pe.modificateurs_fixes.filter(m => m.code === code).reduce((s,m) => s + m.delta, 0);
+}
+// Some peuples cap a characteristic's FINAL value outright (e.g. "Créature
+// très petite" limits FOR to -2 or lower for fées/farfadets) — a ceiling on
+// the result, not a modifier in itself. Returns that ceiling, or null.
+function caracFinalCap(code) {
+  const pe = peuple();
+  if (!pe || !Array.isArray(pe.caracteristiques_cap)) return null;
+  const c = pe.caracteristiques_cap.find(c => c.code === code);
+  return c ? c.max_final : null;
+}
+// Given a cap on the final value and the peuple's fixed delta already
+// baked in, the highest BASE value the player may still assign.
+function caracBaseCapFromPeupleCeiling(code) {
+  const cap = caracFinalCap(code);
+  if (cap === null) return null;
+  return cap - fixedDeltaFromPeuple(code);
+}
+
 function achatAvailableValues(code) {
   const current = state.assign[code] || 0;
   const budget = achatBudget();
   const spentOthers = achatSpent() - (ACHAT_COST[current] || 0);
-  return [0,1,2,3,4].filter(v => spentOthers + ACHAT_COST[v] <= budget);
+  let values = [0,1,2,3,4].filter(v => spentOthers + ACHAT_COST[v] <= budget);
+  const baseCap = caracBaseCapFromPeupleCeiling(code);
+  if (baseCap !== null) values = values.filter(v => v <= baseCap);
+  return values;
+}
+
+// A short heads-up when the peuple caps a characteristic's final value
+// outright (e.g. "Créature très petite" limits a Fée's FOR to -2 or
+// lower) — explains why some options are missing from that row's dropdown,
+// instead of just silently offering fewer values.
+function caracCapNoteHtml() {
+  const pe = peuple();
+  if (!pe || !Array.isArray(pe.caracteristiques_cap) || !pe.caracteristiques_cap.length) return '';
+  const parts = pe.caracteristiques_cap.map(c => `${c.code} ≤ ${c.max_final}`).join(', ');
+  return `<div class="warn">⚠️ Valeur finale plafonnée pour ce peuple : ${parts}. Les valeurs de base trop élevées pour respecter ce plafond une fois le modificateur de peuple appliqué ne sont pas proposées ci-dessous.</div>`;
 }
 
 function step4_caracteristiques() {
@@ -8292,6 +9739,7 @@ function step4_serie(p, methodSwitcher) {
 
   return `<div class="eyebrow">${p.nom}</div>
     <h1 class="scene-title">Répartir les caractéristiques</h1>
+    ${caracCapNoteHtml()}
     <p class="lede">Choisissez une série de valeurs, puis répartissez-la entre les sept caractéristiques. ★ = caractéristiques associées au profil.</p>
     ${methodSwitcher}
     <div class="choice-btns">${serieBtns}</div>
@@ -8350,6 +9798,7 @@ function step4_achat(p, methodSwitcher) {
 
   return `<div class="eyebrow">${p.nom}</div>
     <h1 class="scene-title">Répartir les caractéristiques ${settingBadgeHtml('Méthode par achat')}</h1>
+    ${caracCapNoteHtml()}
     <p class="lede">Toutes les caractéristiques démarrent à 0. Achetez des valeurs plus élevées selon le barème (+1 : 1 pt, +2 : 2 pts, +3 : 4 pts, +4 : 6 pts) pour un total de 7 points. ★ = caractéristiques associées au profil.</p>
     ${methodSwitcher}
 
@@ -8392,7 +9841,10 @@ function remainingCounts(excludeCode) {
 }
 function availableValuesForRow(code) {
   const counts = remainingCounts(code);
-  return Object.keys(counts).map(Number).filter(v => counts[v] > 0).sort((a,b)=>b-a);
+  let values = Object.keys(counts).map(Number).filter(v => counts[v] > 0);
+  const baseCap = caracBaseCapFromPeupleCeiling(code);
+  if (baseCap !== null) values = values.filter(v => v <= baseCap);
+  return values.sort((a,b)=>b-a);
 }
 function remainingHintText() {
   const rem = remainingValues();
@@ -8418,6 +9870,10 @@ function step5_modpeuple() {
   } else {
     body = plusMinusPicker(mod.plus, mod.minus);
   }
+  if (Array.isArray(pe.modificateurs_fixes) && pe.modificateurs_fixes.length) {
+    const parts = pe.modificateurs_fixes.map(m => `${m.delta>0?'+':''}${m.delta} ${m.code}`).join(' · ');
+    body += `<p class="hint" style="margin-top:12px;">Modificateurs fixes de ce peuple (déjà appliqués, aucun choix requis) : ${parts}.</p>`;
+  }
   return `<div class="eyebrow">${pe.nom}</div>
     <h1 class="scene-title">Modificateur de peuple</h1>
     ${ageAdjustmentsReminderHtml()}
@@ -8431,7 +9887,7 @@ function step5_modpeuple() {
         <div class="carac-id"><span class="carac-code">${code}</span><span class="carac-name">${CARAC_NOMS[code]}</span></div>
         <div class="carac-controls">
           <span style="font-size:13px;color:#7a6b4c;">${base>0?'+':''}${base}</span>
-          ${delta!==0 ? `<span class="mod-pill ${delta>0?'plus':'minus'}">${delta>0?'+1':'-1'}</span>` : ''}
+          ${delta!==0 ? `<span class="mod-pill ${delta>0?'plus':'minus'}">${delta>0?'+':''}${delta}</span>` : ''}
           <span class="final-val">${fin>0?'+':''}${fin}</span>
         </div>
       </div>`;
@@ -8531,25 +9987,43 @@ function step6_voies() {
     ${divineChoice}`;
 }
 
+// A demi-elfe doesn't have a single fixed voie de peuple — the player picks
+// either the Humain/Elfe sylvain/Elfe haut voie (the long-standing "borrows
+// another peuple's voie" rule), or, once "Voies supplémentaires
+// officielles" is on, the demi-elfe's own dedicated voie. Centralised here
+// so every render site (progression, print sheet, step7) resolves it the
+// same way instead of repeating the lookup.
+function demiElfeVoieSource() {
+  if (!state.demiElfeVoie) return null;
+  if (state.demiElfeVoie === 'Demi‑elfe' || state.demiElfeVoie === 'Demi-elfe') {
+    const pe = peuple();
+    const v = pe.voies.find(v => v.supplementaire);
+    return v ? {peuple: pe, voie: v} : null;
+  }
+  const src = DATA.peoples.find(p2 => p2.nom.startsWith(state.demiElfeVoie));
+  return src ? {peuple: src, voie: src.voies[0]} : null;
+}
+
 function step7_voiepeuple() {
   const pe = peuple();
   const isDemiElfe = pe.nom.startsWith('Demi‑elfe') || pe.nom.startsWith('Demi-elfe');
   const mageVoieChosen = state.mageBonus && state.mageBonus.type==='mage';
 
   if (isDemiElfe) {
+    const showSupp = state.settings && state.settings.voiesSupplementaires;
     const options = [
       {key:'Humain', label:'Voie de l\u2019Humain'},
       {key:'Elfe sylvain', label:'Voie de l\u2019Elfe sylvain'},
       {key:'Elfe haut', label:'Voie de l\u2019Elfe haut'},
     ];
-    let picker = `<p style="color:#cfc2a3;font-size:14.5px;">Le demi-elfe ne possède pas de voie dédiée. Selon l'éducation de votre personnage, choisissez la voie de l'humain, de l'elfe sylvain ou de l'elfe haut.</p>
+    if (showSupp) options.push({key:'Demi‑elfe', label:'Voie du demi-elfe (officielle)'});
+    let picker = `<p style="color:#cfc2a3;font-size:14.5px;">Le demi-elfe n'a pas de voie dédiée dans le livre de base. Selon l'éducation de votre personnage, choisissez la voie de l'humain, de l'elfe sylvain ou de l'elfe haut${showSupp ? ', ou sa propre voie officielle' : ''}.</p>
       <div class="choice-btns">${options.map(o=>`<button class="chip ${state.demiElfeVoie===o.key?'on':''}" data-action="demielfevoie" data-key="${o.key}">${o.label}</button>`).join('')}</div>`;
     let detail = '';
-    if (state.demiElfeVoie) {
-      const src = DATA.peoples.find(p2 => p2.nom.startsWith(state.demiElfeVoie));
-      const v = src.voies[0];
-      const r1 = v.ranks[0];
-      detail = `<div class="dcard"><div class="dcard-title">${titleCase(v.nom)} — rang 1 (gratuit)</div>
+    const src = demiElfeVoieSource();
+    if (src) {
+      const r1 = src.voie.ranks[0];
+      detail = `<div class="dcard"><div class="dcard-title">${titleCase(src.voie.nom)} — rang 1 (gratuit)</div>
         <div class="rank-item" style="border-top:none;"><div class="rank-body"><div class="rank-title">${r1.titre}${isSpell(r1.titre)?' <span class="spell-star">✦</span>':''}</div><div class="rank-text">${r1.texte}</div></div></div></div>`;
     }
     return `<div class="eyebrow">${pe.nom}</div><h1 class="scene-title">Voie de peuple</h1>${picker}${detail}`;
@@ -8667,6 +10141,27 @@ function armesSectionHtml() {
     ${rows}`;
 }
 
+// Guesses the starting armour/shield from a profil's fixed equipment text
+// (e.g. "chemise de mailles (DEF +4)"), so the DEF calculation isn't stuck
+// on "Aucune" by default when the character's own equipment already says
+// otherwise. Purely a starting suggestion — the player can still change it
+// freely afterward, and this never runs again once they do.
+function detectArmorFromEquipText(text) {
+  const norm = s => s.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const t = norm(text || '');
+  let armureIdx = 0, bouclierIdx = 0;
+  DATA.armures.forEach((a, i) => {
+    if (i === 0) return;
+    const names = a.nom.split(',').map(s => norm(s.trim()));
+    if (names.some(n => t.includes(n))) armureIdx = i;
+  });
+  DATA.boucliers.forEach((b, i) => {
+    if (i === 0) return;
+    if (t.includes(norm(b.nom))) bouclierIdx = i;
+  });
+  return {armureIdx, bouclierIdx};
+}
+
 function armureSectionHtml() {
   if (state.armureIdx === null || state.armureIdx === undefined) state.armureIdx = 0;
   if (state.bouclierIdx === null || state.bouclierIdx === undefined) state.bouclierIdx = 0;
@@ -8675,7 +10170,7 @@ function armureSectionHtml() {
   const s = computeSheet();
   return `<div class="dcard">
     <div class="dcard-title">Armure &amp; bouclier portés</div>
-    <p class="hint" style="margin:0 0 8px;">Le bonus de DEF de l'armure s'ajoute au total, mais elle peut aussi plafonner le bonus d'AGI qui compte pour la DEF. Choisissez ce que votre personnage porte réellement (à ajuster librement).</p>
+    <p class="hint" style="margin:0 0 8px;">Le bonus de DEF de l'armure s'ajoute au total, mais elle peut aussi plafonner le bonus d'AGI qui compte pour la DEF. Pré-rempli d'après l'équipement de départ de votre profil — modifiable librement.</p>
     <div class="carac-row">
       <div class="carac-id"><span class="carac-name">Armure</span></div>
       <select class="val-select" style="width:190px;" data-action-select="armure">
@@ -8950,8 +10445,8 @@ function computeSheet() {
   const isDemiElfe = pe.nom.startsWith('Demi‑elfe') || pe.nom.startsWith('Demi-elfe');
   let peupleVoieRank1 = null, peupleVoieNom = null, peupleVoieObj = null;
   if (isDemiElfe && state.demiElfeVoie) {
-    const src = DATA.peoples.find(p2 => p2.nom.startsWith(state.demiElfeVoie));
-    peupleVoieObj = src.voies[0];
+    const src = demiElfeVoieSource();
+    peupleVoieObj = src && src.voie;
   } else if (!isDemiElfe) {
     peupleVoieObj = pe.voies[0];
   }
@@ -9012,6 +10507,132 @@ function traitPickerHtml(label, options, key, current) {
   </div>`;
 }
 
+// ===== Système de compétences (optional rule) =====
+// Which skills a character has mastered: their profil's list, their
+// peuple's list, Humain's one skill of choice, and 2 skills per opened
+// hybrid voie (chosen freely among that profil's own list).
+function competenceMastered(nom) {
+  const p = profil(), pe = peuple();
+  if ((DATA.competences_profil[p.nom] || []).includes(nom)) return true;
+  if ((DATA.competences_peuple[pe.nom] || []).includes(nom)) return true;
+  if ((pe.nom.startsWith('Humain')) && state.humainCompetenceChoice === nom) return true;
+  return Object.values(state.competenceMaitriseChoices || {}).some(arr => Array.isArray(arr) && arr.includes(nom));
+}
+function competenceCostPerPoint(nom) { return competenceMastered(nom) ? 1 : 2; }
+function competencePointsBudget() { return state.niveau * 3; }
+function competencePointsSpent() {
+  return Object.entries(state.competencePoints || {}).reduce((sum,[nom,pts]) => sum + (Number(pts)||0) * competenceCostPerPoint(nom), 0);
+}
+// The characteristic used for a skill's test — for skills with more than
+// one listed (Athlétisme "Variable", Équitation "AGI ou CHA"), this shows
+// the best of the candidates, since the actual choice is situational.
+function competenceCaracInfo(comp) {
+  const s = computeSheet();
+  let codes;
+  if (comp.carac === 'Variable') codes = ['AGI','FOR','CON'];
+  else if (comp.carac.includes(' ou ')) codes = comp.carac.split(' ou ').map(c=>c.trim());
+  else codes = [comp.carac];
+  const best = codes.reduce((a,b) => s[b] > s[a] ? b : a, codes[0]);
+  return {codes, best, value: s[best]};
+}
+function competenceFinalValue(comp) {
+  const invested = Number((state.competencePoints||{})[comp.nom]) || 0;
+  const manualBonus = Number((state.competenceBonusManuel||{})[comp.nom]) || 0;
+  const cap = Math.min(state.niveau + 5, 15);
+  const skillBonus = Math.max(0, Math.min(invested + manualBonus, cap));
+  const carac = competenceCaracInfo(comp);
+  return {skillBonus, cap, caracCode: carac.best, caracValue: carac.value, total: skillBonus + carac.value};
+}
+// The 2-skills-of-choice a hybrid voie grants once opened — one picker per
+// active hybrid slot, offered from that slot's own profil skill list.
+function hybridCompetenceSlots() {
+  const out = [];
+  (state.extraSlots||[]).forEach((slot, slotIdx) => {
+    if (!slot || slot.rank < 1) return;
+    const isHybrid = !(slot.familleIdx===state.familleIdx && slot.profilIdx===state.profilIdx);
+    if (!isHybrid) return;
+    const srcFam = DATA.families[slot.familleIdx];
+    const srcProfil = srcFam && srcFam.profils[slot.profilIdx];
+    if (!srcProfil) return;
+    out.push({key: `slot-${slotIdx}`, profilNom: srcProfil.nom, list: DATA.competences_profil[srcProfil.nom] || []});
+  });
+  return out;
+}
+
+function step_competences() {
+  if (!state.competencePoints) state.competencePoints = {};
+  if (!state.competenceBonusManuel) state.competenceBonusManuel = {};
+  if (!state.competenceMaitriseChoices) state.competenceMaitriseChoices = {};
+  const pe = peuple();
+  const spent = competencePointsSpent();
+  const budget = competencePointsBudget();
+  const remaining = budget - spent;
+
+  let extraHtml = '';
+  if (pe.nom.startsWith('Humain')) {
+    extraHtml += `<div class="dcard">
+      <div class="dcard-title">Compétence humaine au choix</div>
+      <p class="hint" style="margin:0 0 8px;">En plus d'Artisanat, un humain maîtrise une compétence supplémentaire de son choix.</p>
+      <select class="val-select" style="width:100%;" data-action-select="humain-competence">
+        <option value="">— Choisir —</option>
+        ${DATA.competences.map(c => `<option value="${c.nom}" ${state.humainCompetenceChoice===c.nom?'selected':''}>${c.nom}</option>`).join('')}
+      </select>
+    </div>`;
+  }
+  hybridCompetenceSlots().forEach(hs => {
+    const already = new Set([...(DATA.competences_profil[profil().nom]||[]), ...(DATA.competences_peuple[pe.nom]||[])]);
+    const available = hs.list.filter(c => !already.has(c));
+    const chosen = state.competenceMaitriseChoices[hs.key] || [];
+    extraHtml += `<div class="dcard">
+      <div class="dcard-title">Maîtrises supplémentaires — ${hs.profilNom}</div>
+      <p class="hint" style="margin:0 0 8px;">Choisissez 2 compétences de ${hs.profilNom} dont vous obtenez la maîtrise (${chosen.length}/2).</p>
+      <div class="choice-btns">
+        ${available.map(c => `<button class="chip ${chosen.includes(c)?'on':''}" data-action="competence-maitrise-choice" data-key="${hs.key}" data-comp="${c}">${c}</button>`).join('')}
+      </div>
+    </div>`;
+  });
+
+  const rows = DATA.competences.map(comp => {
+    const mastered = competenceMastered(comp.nom);
+    const cost = competenceCostPerPoint(comp.nom);
+    const invested = Number((state.competencePoints[comp.nom])) || 0;
+    const manual = Number((state.competenceBonusManuel[comp.nom])) || 0;
+    const fv = competenceFinalValue(comp);
+    const armorNote = (comp.carac==='AGI' || comp.carac==='CON' || comp.carac==='Variable' || comp.carac.includes('AGI'))
+      ? ' · malus d\'armure possible' : '';
+    return `<div class="dcard">
+      <div class="dcard-title">${comp.nom} <span style="font-weight:400; color:#8a7b5c;">(${comp.carac})</span> ${mastered?'<span class="tag key" style="margin-left:6px;">Maîtrisée</span>':''}</div>
+      <p class="hint" style="margin:0 0 8px;">${comp.desc}${armorNote}</p>
+      <div class="carac-row">
+        <div class="carac-id"><span class="carac-name">Points investis (coût ${cost}/point)</span></div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="chip" style="padding:4px 12px; color:var(--ink); border-color:var(--parchment-edge);" data-action="competence-point-dec" data-comp="${comp.nom}">−</button>
+          <span style="min-width:20px; text-align:center; color:var(--ink); font-weight:700;">${invested}</span>
+          <button class="chip" style="padding:4px 12px; color:var(--ink); border-color:var(--parchment-edge);" data-action="competence-point-inc" data-comp="${comp.nom}">+</button>
+        </div>
+      </div>
+      <div class="carac-row">
+        <div class="carac-id"><span class="carac-name">Bonus des voies</span></div>
+        <input class="name-input" style="margin:0; width:70px; text-align:right;" type="number" step="1" data-action-input="competence-bonus-manuel" data-comp="${comp.nom}" value="${manual}">
+      </div>
+      <p class="hint" style="margin:8px 0 0; text-align:center;">${fv.skillBonus} (compétence, plafond ${fv.cap}) + ${fv.caracValue} ${fv.caracCode} = <strong>${fv.total>=0?'+':''}${fv.total}</strong></p>
+    </div>`;
+  }).join('');
+
+  return `<div class="eyebrow">${settingBadgeHtml('Système de compétences')}</div>
+    <h1 class="scene-title">Compétences</h1>
+    <p class="lede">Chaque niveau accorde 3 points de compétence (1 point pour une compétence maîtrisée, 2 pour une compétence non maîtrisée). Valeur maximale : niveau + 5, plafonnée à 15.</p>
+    <div class="level-stepper">
+      <div class="stepper-points"><span class="n">${remaining}</span><span class="lbl">pts restants (sur ${budget})</span></div>
+    </div>
+    ${remaining<0 ? `<div class="warn">Vous avez dépensé plus de points que votre niveau n'en accorde.</div>` : ''}
+    ${remaining>0 ? `<div class="warn">⚠️ Il vous reste ${remaining} point${remaining>1?'s':''} de compétence non dépensé${remaining>1?'s':''}.</div>` : ''}
+    <p class="hint">Rappel — le malus d'armure s'applique aux compétences basées sur l'AGI ou la CON. Une capacité qui donne un bonus de (rang + 2) à un test de caractéristique peut être convertie, au choix, en 4 points de compétence (5 pour une voie de prestige) à investir dans une compétence du même profil, au lieu du bonus de caractéristique — un choix définitif à faire vous-même selon la capacité concernée.</p>
+    ${extraHtml}
+    ${rows}
+  `;
+}
+
 function step10_touchefinale() {
   ensureProgression();
   const INT = finalCaracValue('INT');
@@ -9056,6 +10677,18 @@ function step10_touchefinale() {
     </div>
     <p class="hint" style="margin:-2px 0 8px; text-align:right;">${formula}</p>`;
 
+  if (!state.caracBonusManuel) state.caracBonusManuel = {};
+  const caracBonusRows = CARAC_ORDER.map(code => {
+    const val = Number(state.caracBonusManuel[code]) || 0;
+    const finalVal = finalCaracValue(code);
+    return `<div class="carac-row">
+        <div class="carac-id"><span class="carac-name">${CARAC_NOMS[code]} (${code})</span></div>
+        <input class="name-input" style="margin:0; width:70px; text-align:right;" type="number" step="1"
+          data-action-input="carac-bonus-manuel" data-code="${code}" value="${val}">
+      </div>
+      <p class="hint" style="margin:-2px 0 8px; text-align:right;">${finalVal>0?'+':''}${finalVal} ${code} au total</p>`;
+  }).join('');
+
   return `
     <div class="eyebrow">Dernière étape</div>
     <h1 class="scene-title">Touche finale</h1>
@@ -9082,6 +10715,11 @@ function step10_touchefinale() {
     <div class="section-div">Bonus des voies</div>
     <p class="hint">Certaines capacités accordent un bonus brut à une statistique (Peau de pierre, Volonté héroïque, etc.), sans qu'il soit possible de le calculer automatiquement à partir du texte des voies. Centralisez-les ici — les totaux ci-dessous les intègrent déjà.</p>
     <div class="dcard">
+      <div class="dcard-title">Caractéristiques</div>
+      ${caracBonusRows}
+    </div>
+    <div class="dcard">
+      <div class="dcard-title">Statistiques dérivées</div>
       ${bonusRow('Points de vigueur (PV)', 'pv-bonus-manuel', sBonus.pvBonusManuel, `${sBonus.pv} PV au total`)}
       ${bonusRow('Dé de récupération', 'dr-bonus-manuel', sBonus.drBonusManuel, `${sBonus.drCount} × ${sBonus.fam.stats.de_recup} au total`)}
       ${bonusRow('Points de chance (PC)', 'pc-bonus-manuel', sBonus.pcBonusManuel, `${sBonus.pc} PC au total`)}
@@ -9130,6 +10768,9 @@ function step11_fiche() {
     ${capaRemaining > 0 ? `<div class="warn">⚠️ Il vous reste ${capaRemaining} point${capaRemaining>1?'s':''} de capacité non dépensé${capaRemaining>1?'s':''} au niveau ${s.niveau}. <a data-action="goto" data-step="9" style="color:inherit; text-decoration:underline;">Retourner à la progression</a> pour les utiliser.</div>` : ''}
 
     ${portraitHtml}
+
+    <button class="btn btn-next gold print-btn" data-action="play-mode-open">🎲 Passer en mode Jeu</button>
+    <p class="hint" style="margin-top:-10px;">Lancez vos dés directement depuis la fiche — caractéristiques, attaques et compétences déjà calculées.</p>
 
     <button class="btn btn-next steel print-btn" data-action="save">💾 Sauvegarder le personnage</button>
     <p class="hint" style="margin-top:-10px;">${
@@ -9195,6 +10836,7 @@ function progressionSectionHtml(s) {
       <div class="stepper-points"><span class="n">${remaining}</span><span class="lbl">Pts de capacité restants (sur ${total})</span></div>
     </div>
     ${remaining<0 ? `<div class="warn">Vous avez dépensé plus de points que ce niveau n'en accorde — retirez un rang ou remontez de niveau.</div>` : ''}
+    ${remaining>0 ? `<div class="warn">⚠️ Il vous reste ${remaining} point${remaining>1?'s':''} de capacité non dépensé${remaining>1?'s':''} — répartissez-${remaining>1?'les':'le'} dans les voies ci-dessous avant de continuer (ou laissez-${remaining>1?'les':'le'} volontairement en réserve).</div>` : ''}
     ${ageAdjustmentsReminderHtml()}
   `;
 
@@ -9295,12 +10937,15 @@ function slotsSectionHtml(s) {
 function slotPickerHtml(slotIdx) {
   const used = usedVoieKeys();
   const showSuppVoiesTop = state.settings && state.settings.voiesSupplementaires;
+  const showSuppProfilsTop = state.settings && state.settings.profilsSupplementaires;
   if (!state.pickingSlotProfile) {
     let html = `<div class="dcard">
-      <div class="dcard-title" style="margin-bottom:8px;">Emplacement ${slotIdx+1} — quel profil ?</div>`;
+      <div class="dcard-title" style="margin-bottom:8px;">Emplacement ${slotIdx+1} — quel profil ?</div>
+      <input class="name-input" id="slotProfilFilterInput" style="margin-bottom:8px;" type="text" placeholder="🔎 Filtrer par nom…">`;
     DATA.families.forEach((fam, fi) => {
       html += `<div class="eyebrow" style="margin-top:8px;">${fam.famille}</div><div class="choice-btns">`;
       fam.profils.forEach((pr, pi) => {
+        if (pr.supplementaire && !showSuppProfilsTop) return;
         const anyLeft = pr.voies.some((v,vi) => (!v.supplementaire || showSuppVoiesTop) && !used.has(`${fi}-${pi}-${vi}`));
         if (!anyLeft) return;
         const isPrimary = fi===state.familleIdx && pi===state.profilIdx;
@@ -9480,9 +11125,11 @@ function borrowKeyFor(kind, idx) {
 // family/profil filters (picker step 1) — a profil qualifies if ANY of its
 // alternative constraint sets could match it.
 function borrowAllowedProfils(borrowData) {
+  const showSuppProfils = state.settings && state.settings.profilsSupplementaires;
   const out = [];
   DATA.families.forEach((fam, fi) => {
     fam.profils.forEach((p, pi) => {
+      if (p.supplementaire && !showSuppProfils) return;
       const ok = borrowData.alternatives.some(alt => {
         if (alt.familles && !alt.familles.includes(fam.famille)) return false;
         if (alt.excludeFamilles && alt.excludeFamilles.includes(fam.famille)) return false;
@@ -9567,6 +11214,7 @@ function borrowPickerHtml(v, key, ownedRank) {
   } else if (active) {
     const allowed = borrowAllowedProfils(br.borrow);
     html += `<p class="hint" style="margin:0 0 8px;">Choisissez un profil :</p>
+      ${allowed.length > 6 ? `<input class="name-input" id="borrowProfilFilterInput" style="margin-bottom:8px;" type="text" placeholder="🔎 Filtrer par nom…">` : ''}
       <div class="choice-btns">
         ${allowed.map(a => `<button class="chip" data-action="borrow-pick-profil" data-key="${key}" data-fam="${a.familleIdx}" data-prof="${a.profilIdx}">${a.profilNom}</button>`).join('')}
       </div>`;
@@ -9641,7 +11289,11 @@ function closeSettings() {
 function renderSettingsScreen() {
   const el = document.getElementById('settingsScreen');
   if (!el) return;
+  const prevScroll = el.querySelector('.settings-body');
+  const scrollTop = prevScroll ? prevScroll.scrollTop : 0;
   el.innerHTML = settingsScreenHtml();
+  const newScroll = el.querySelector('.settings-body');
+  if (newScroll) newScroll.scrollTop = scrollTop;
   el.querySelectorAll('[data-action]').forEach(b => {
     if (b.tagName === 'SELECT') return;
     b.addEventListener('click', onAction);
@@ -9788,7 +11440,7 @@ function closePreview() {
 function renderPrintSheet() {
   const container = document.getElementById('printSheet');
   if (!container) return;
-  if (state.step !== 12) { container.innerHTML = ''; return; }
+  if (state.step !== 13) { container.innerHTML = ''; return; }
 
   const s = computeSheet();
   ensureArmes();
@@ -9802,8 +11454,8 @@ function renderPrintSheet() {
     const mv = voieWithDivineOverride(DATA.mage_voies[0], 'mage');
     voiePeupleHtml = psVoieBox(mv.nom, mv.ranks, state.mageVoieRank);
   } else if (isDemiElfe && state.demiElfeVoie) {
-    const src = DATA.peoples.find(p2 => p2.nom.startsWith(state.demiElfeVoie));
-    const pv = voieWithBorrowOverride(voieWithDivineOverride(src.voies[0], 'peuple'), borrowKeyFor('peuple', null));
+    const src = demiElfeVoieSource();
+    const pv = voieWithBorrowOverride(voieWithDivineOverride(src.voie, 'peuple'), borrowKeyFor('peuple', null));
     voiePeupleHtml = psVoieBox(pv.nom, pv.ranks, state.peupleRank);
   } else if (!isDemiElfe) {
     const pv = voieWithBorrowOverride(voieWithDivineOverride(pe.voies[0], 'peuple'), borrowKeyFor('peuple', null));
@@ -9925,14 +11577,30 @@ function renderPrintSheet() {
         return `<div class="ps-langbox" style="margin-top:8px;"><div class="lab">Capacité divine — ${escapeHtml(dieu.nom)} (rang ${dieu.capacite_rang})</div><p><strong>${escapeHtml(dieu.capacite_titre)} :</strong> ${escapeHtml(dieu.capacite_texte)}</p></div>`;
       })() : ''}
 
-      <div class="ps-boxlabel" style="margin-top:12px;">Description &amp; historique</div>
-      <div class="ps-histoire">${histoireHtml(state.histoire)}</div>
-      ${state.secret ? `<div class="ps-langbox" style="margin-top:10px;"><div class="lab">Secret intime</div><p>${escapeHtml(state.secret)}</p></div>` : ''}
+      <div class="ps-boxlabel" style="margin-top:12px;">Autres possessions</div>
+      <div class="ps-langbox" style="margin-top:0; min-height:60px;"></div>
 
       <div class="ps-voies-section">
-        <div class="ps-boxlabel">Voies</div>
+        <div class="ps-boxlabel">Description &amp; historique</div>
+        <div class="ps-histoire">${histoireHtml(state.histoire)}</div>
+        ${state.secret ? `<div class="ps-langbox" style="margin-top:10px;"><div class="lab">Secret intime</div><p>${escapeHtml(state.secret)}</p></div>` : ''}
+
+        <div class="ps-boxlabel" style="margin-top:12px;">Voies</div>
         <div class="ps-voiegrid">${voieSlots.join('')}</div>
       </div>
+
+      ${(state.settings && state.settings.systemeCompetences) ? `<div class="ps-competences-section">
+        <div class="ps-boxlabel">Compétences</div>
+        <table class="ps-competences-table">
+          <tr><th style="width:34%;">Compétence</th><th style="width:14%;">Carac.</th><th style="width:14%;">Bonus</th><th style="width:14%;">Total</th><th>Maîtrisée</th></tr>
+          ${DATA.competences.map(comp => {
+            const fv = competenceFinalValue(comp);
+            const mastered = competenceMastered(comp.nom);
+            return `<tr><td style="text-align:left;">${comp.nom}</td><td>${fv.caracCode}</td><td>${fv.skillBonus>0?'+':''}${fv.skillBonus||0}</td><td>${fv.total>=0?'+':''}${fv.total}</td><td>${mastered?'✓':''}</td></tr>`;
+          }).join('')}
+        </table>
+        <p class="hint" style="margin-top:6px;">Test de compétence = d20 + bonus + caractéristique. Le malus d'armure s'applique aux compétences basées sur l'AGI ou la CON.</p>
+      </div>` : ''}
 
       <div class="ps-foot">Fiche générée automatiquement — inspirée du gabarit officiel Chroniques Oubliées Fantasy, Black Book Éditions.</div>
     </div>
@@ -9963,13 +11631,13 @@ function escapeHtml(s) {
 
 // ===== Footer / nav =====
 function footerHtml() {
-  if (state.step===12) {
+  if (state.step===13) {
     return `<div class="footer"><div class="footer-inner">
       <button class="btn btn-prev" data-action="prev" style="flex:1;">← Revenir modifier</button>
     </div></div>`;
   }
   const canNext = validateStep(state.step);
-  const nextLabel = state.step===10 ? 'Voir la fiche ✦' : 'Suivant →';
+  const nextLabel = state.step===12 ? 'Voir la fiche ✦' : 'Suivant →';
   return `<div class="footer"><div class="footer-inner">
     ${state.step>1 ? `<button class="btn btn-prev" data-action="prev">←</button>` : ''}
     <button class="btn btn-next ${state.step===10?'gold':''}" data-action="next" ${canNext?'':'disabled'}>${nextLabel}</button>
@@ -10018,14 +11686,35 @@ function validateStep(step) {
     }
     case 9: return true;
     case 10: return true;
+    case 11: return true;
+    case 12: return true;
     default: return true;
   }
 }
 
 // ===== Event binding =====
+// Client-side filtering only — no re-render, so it never steals focus
+// mid-typing. `itemSelector` elements are shown/hidden based on whether
+// their own text contains the typed query.
+function bindListFilter(inputSelector, itemSelector) {
+  const input = document.querySelector(inputSelector);
+  if (!input) return;
+  input.addEventListener('input', e => {
+    const q = e.target.value.trim().toLowerCase();
+    document.querySelectorAll(itemSelector).forEach(el => {
+      const match = !q || el.textContent.toLowerCase().includes(q);
+      el.style.display = match ? '' : 'none';
+    });
+  });
+}
+
 function bindEvents() {
   const nomInput = document.getElementById('nomInput');
   if (nomInput) nomInput.addEventListener('input', e => { state.nom = e.target.value; updateFooterOnly(); });
+
+  bindListFilter('#deityFilterInput', '.deity-row');
+  bindListFilter('#slotProfilFilterInput', 'button[data-action="slot-pick-profile"]');
+  bindListFilter('#borrowProfilFilterInput', 'button[data-action="borrow-pick-profil"]');
 
   const histoireInput = document.getElementById('histoireInput');
   if (histoireInput) histoireInput.addEventListener('input', e => { state.histoire = e.target.value; });
@@ -10145,6 +11834,29 @@ function bindEvents() {
     el.addEventListener('input', e => { state[field] = Number(e.target.value) || 0; });
     el.addEventListener('change', () => render());
   });
+  document.querySelectorAll('[data-action-input="carac-bonus-manuel"]').forEach(el => {
+    el.addEventListener('input', e => {
+      if (!state.caracBonusManuel) state.caracBonusManuel = {};
+      state.caracBonusManuel[e.target.dataset.code] = Number(e.target.value) || 0;
+    });
+    el.addEventListener('change', () => render());
+  });
+  const humainCompEl = document.querySelector('[data-action-select="humain-competence"]');
+  if (humainCompEl) humainCompEl.addEventListener('change', e => { state.humainCompetenceChoice = e.target.value || null; render(); });
+  document.querySelectorAll('[data-action-input="competence-bonus-manuel"]').forEach(el => {
+    el.addEventListener('input', e => {
+      if (!state.competenceBonusManuel) state.competenceBonusManuel = {};
+      state.competenceBonusManuel[e.target.dataset.comp] = Number(e.target.value) || 0;
+    });
+    el.addEventListener('change', () => render());
+  });
+  document.querySelectorAll('[data-action-input="resource-actuel"]').forEach(el => {
+    el.addEventListener('input', e => { state[e.target.dataset.code] = e.target.value === '' ? null : Number(e.target.value); });
+  });
+  const freeCountEl = document.querySelector('[data-action-select="free-roll-count"]');
+  if (freeCountEl) freeCountEl.addEventListener('change', e => { freeRollCount = Number(e.target.value); render(); });
+  const freeSidesEl = document.querySelector('[data-action-select="free-roll-sides"]');
+  if (freeSidesEl) freeSidesEl.addEventListener('change', e => { freeRollSides = Number(e.target.value); render(); });
 }
 
 function updateFooterOnly() {
@@ -10168,6 +11880,7 @@ function onAction(e) {
       state.extraSlots = null; state.pickingSlot = null; state.pickingSlotProfile = null;
       state.prestigeChoice = null; state.prestigeRank = 0; state.prestigePicking = false;
       state.rankBorrow = {}; state.rankBorrowPicking = null; state.rankBorrowPickingProfil = null;
+      state.armureIdx = 0; state.bouclierIdx = 0;
       state.step = 2; window.scrollTo(0,0); // auto-advance once a family is chosen
       break;
     case 'profil': {
@@ -10175,6 +11888,9 @@ function onAction(e) {
       state.equipChoix = null; state.equipCustomText = {};
       state.pretreType = null; state.pretreDieuNom = null;
       state.rankBorrow = {}; state.rankBorrowPicking = null; state.rankBorrowPickingProfil = null;
+      const detected = detectArmorFromEquipText(profil().equipement_depart);
+      state.armureIdx = detected.armureIdx;
+      state.bouclierIdx = detected.bouclierIdx;
       // Auto-advance once a profil is chosen — skip straight past the
       // Prêtre-only religion step for everyone else, same as "Suivant".
       let nextStep = 3;
@@ -10283,6 +11999,35 @@ function onAction(e) {
     case 'borrow-back':
       state.rankBorrowPickingProfil = null;
       break;
+    case 'competence-point-inc': {
+      if (!state.competencePoints) state.competencePoints = {};
+      const nom = el.dataset.comp;
+      const cost = competenceCostPerPoint(nom);
+      const current = Number(state.competencePoints[nom]) || 0;
+      const manual = Number((state.competenceBonusManuel||{})[nom]) || 0;
+      const cap = Math.min(state.niveau + 5, 15);
+      const withinCap = current + manual < cap;
+      if (withinCap && competencePointsSpent() + cost <= competencePointsBudget()) {
+        state.competencePoints[nom] = current + 1;
+      }
+      break;
+    }
+    case 'competence-point-dec': {
+      if (!state.competencePoints) state.competencePoints = {};
+      const nom = el.dataset.comp;
+      state.competencePoints[nom] = Math.max(0, (Number(state.competencePoints[nom])||0) - 1);
+      break;
+    }
+    case 'competence-maitrise-choice': {
+      if (!state.competenceMaitriseChoices) state.competenceMaitriseChoices = {};
+      const key = el.dataset.key, comp = el.dataset.comp;
+      const arr = state.competenceMaitriseChoices[key] || [];
+      const idx = arr.indexOf(comp);
+      if (idx >= 0) arr.splice(idx, 1);
+      else if (arr.length < 2) arr.push(comp);
+      state.competenceMaitriseChoices[key] = arr;
+      break;
+    }
     case 'borrow-pick-profil':
       state.rankBorrowPickingProfil = {familleIdx: Number(el.dataset.fam), profilIdx: Number(el.dataset.prof)};
       break;
@@ -10310,6 +12055,7 @@ function onAction(e) {
       if (validateStep(state.step)) {
         let n = state.step + 1;
         if (n === 3 && !isPretre()) n = 4;
+        if (n === 11 && !(state.settings && state.settings.systemeCompetences)) n = 12;
         state.step = n;
         window.scrollTo(0,0);
       }
@@ -10318,13 +12064,14 @@ function onAction(e) {
     case 'prev': {
       let n = state.step - 1;
       if (n === 3 && !isPretre()) n = 2;
+      if (n === 11 && !(state.settings && state.settings.systemeCompetences)) n = 10;
       state.step = n;
       window.scrollTo(0,0);
       break;
     }
     case 'restart': {
       const keepSettings = state.settings; // app-wide preference, survives creating a new hero
-      state = {step:1, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', genre:null, monnaie:null, armureIdx:0, bouclierIdx:0, defBonusManuel:0, armes:null, initBonusManuel:0, pvBonusManuel:0, drBonusManuel:0, pcBonusManuel:0, pmBonusManuel:0, ageBonusChoice:null, equipChoix:null, equipCustomText:{}, pretreType:null, pretreDieuNom:null, pretreDivineVoieIdx:null, pretreDivineTarget:null, rankBorrow:{}, rankBorrowPicking:null, rankBorrowPickingProfil:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
+      state = {step:1, nom:'', portrait:null, histoire:'', languesChoisies:[], langueSlotIsTalent:[], ideal:'', travers:'', secret:'', age:'', taille:'', poids:'', genre:null, monnaie:null, armureIdx:0, bouclierIdx:0, defBonusManuel:0, armes:null, initBonusManuel:0, pvBonusManuel:0, drBonusManuel:0, pcBonusManuel:0, pmBonusManuel:0, caracBonusManuel:{}, competencePoints:{}, competenceBonusManuel:{}, competenceMaitriseChoices:{}, humainCompetenceChoice:null, playMode:false, pvActuel:null, pmActuel:null, pcActuel:null, drActuel:null, ageBonusChoice:null, equipChoix:null, equipCustomText:{}, pretreType:null, pretreDieuNom:null, pretreDivineVoieIdx:null, pretreDivineTarget:null, rankBorrow:{}, rankBorrowPicking:null, rankBorrowPickingProfil:null, savedId:null, niveau:1, peupleRank:null, mageVoieRank:null, profilVoieRanks:null, extraSlots:null, pickingSlot:null, pickingSlotProfile:null, prestigeChoice:null, prestigeRank:0, prestigePicking:false, settings:keepSettings, showSettings:false, familleIdx:null, profilIdx:null, peupleIdx:null, serie:null, assign:{}, methodeCarac:null, caracFaibles:[], peupleChoice:{}, demiElfeVoie:null, voiesChoisies:[], mageBonus:null};
       window.scrollTo(0,0);
       break;
     }
@@ -10490,6 +12237,38 @@ function onAction(e) {
     case 'export-current':
       exportCurrentCharacter();
       return;
+    case 'play-mode-open':
+      state.playMode = true;
+      rollLog = [];
+      render();
+      return;
+    case 'play-mode-close':
+      state.playMode = false;
+      render();
+      return;
+    case 'roll-carac': {
+      const s = computeSheet();
+      const code = el.dataset.code;
+      rollD20(`Test de ${code}`, s[code]);
+      return;
+    }
+    case 'roll-arme': {
+      const s = computeSheet();
+      const slot = (state.armes||[])[Number(el.dataset.idx)];
+      if (slot) rollD20(slot.nom || 'Attaque', armeAttaqueTotale(s, slot));
+      return;
+    }
+    case 'roll-competence': {
+      const comp = DATA.competences.find(c => c.nom === el.dataset.comp);
+      if (comp) rollD20(comp.nom, competenceFinalValue(comp).total);
+      return;
+    }
+    case 'roll-recup':
+      rollRecup();
+      return;
+    case 'roll-free':
+      rollFree();
+      return;
     case 'import-open':
       { const el2 = document.getElementById('importFileInput'); if (el2) el2.click(); }
       return;
@@ -10537,6 +12316,7 @@ function onAction(e) {
       const key = el.dataset.key;
       state.settings[key] = !state.settings[key];
       renderSettingsScreen();
+      render(); // the underlying step (peuples/profils/voies lists, etc.) may depend on this setting too
       return;
     }
     case 'crop-cancel':
